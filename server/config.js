@@ -5,7 +5,7 @@ var path 		= require('path')
 
 if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
 	module.exports = {
-		db: 'mongodb://127.0.0.1/sunzora',
+		conString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
 		redis: {
 			host: '127.0.0.1',
 			port: '6379'
@@ -15,7 +15,7 @@ if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
 	}
 } else if (os.hostname() == 'li60-94') {
 	module.exports = {
-		db: 'mongodb://127.0.0.1/sunzora',
+		conString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
 		redis: {
 			host: '127.0.0.1',
 			port: '6379'

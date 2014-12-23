@@ -2,6 +2,7 @@
 var express 		= require('express')
   , os 				= require('os')
   , path			= require('path')
+  , pg 				= require('pg')
   ,	bodyParser 		= require('body-parser')
   , cookieParser    = require('cookie-parser')
   , serveStatic     = require('serve-static')
@@ -15,10 +16,7 @@ var express 		= require('express')
 var app = express();
 var config = require('./server/config')
 
-var pg = require('pg');
-var conString = "postgres://postgres:irdlhajbis@localhost:5432/postgres";
-
-pg.connect(conString, function(err, client, done) {
+pg.connect(config.conString, function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
   }
