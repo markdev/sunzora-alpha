@@ -6,7 +6,6 @@ var express 		= require('express')
   , cookieParser    = require('cookie-parser')
   , serveStatic     = require('serve-static')
   , expressSession  = require('express-session')
-  , mongoose        = require('mongoose')
   , passport		= require('passport')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			= require('multer')
@@ -14,14 +13,14 @@ var express 		= require('express')
   ;
 
 var app = express();
-var config = require('./server/config')
+//var config = require('./server/config')
 
 //initialize database
-require('./server/db')(config);
+//require('./server/db')(config);
 
 //init User model
-var UserSchema = require('./server/models/User').User
-  , User = mongoose.model('User')
+//var UserSchema = require('./server/models/User').User
+//  , User = mongoose.model('User')
 
 // Configure express
 app.set('views', __dirname + '/server/views');
