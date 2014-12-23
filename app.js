@@ -84,12 +84,6 @@ passport.use(new LocalStrategy({
 	}
 ));
 
-/*
-app.use(multer({
-	dest: "./images/tmp"
-}));
-*/
-
 //configure routes
 require('./server/routes/api-routes')(app);
 
