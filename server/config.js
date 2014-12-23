@@ -34,4 +34,3 @@ if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
     	port: process.env.PORT || 2345
 	}	
 }
-}
