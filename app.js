@@ -2,11 +2,11 @@
 var express 		= require('express')
   , os 				= require('os')
   , path			= require('path')
+  , pg 				= require('pg')
   ,	bodyParser 		= require('body-parser')
   , cookieParser    = require('cookie-parser')
   , serveStatic     = require('serve-static')
   , expressSession  = require('express-session')
-  , mongoose        = require('mongoose')
   , passport		= require('passport')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			= require('multer')
@@ -16,14 +16,34 @@ var express 		= require('express')
 var app = express();
 var config = require('./server/config')
 
+pg.connect(config.conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * FROM test_table', function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows);
+    //output: 1
+  });
+});
+
+app.listen(config.port);
+console.log("app is listening on port " + config.port + "...");
+
 //initialize database
-require('./server/db')(config);
+//require('./server/db')(config);
 
 //init User model
-var UserSchema = require('./server/models/User').User
-  , User = mongoose.model('User')
+//var UserSchema = require('./server/models/User').User
+//  , User = mongoose.model('User')
 
 // Configure express
+/*
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
@@ -84,8 +104,9 @@ passport.use(new LocalStrategy({
 	}
 ));
 
+app.use(multer({
+	dest: "./images/tmp"
+}));
+*/
 //configure routes
-require('./server/routes/api-routes')(app);
-
-app.listen(config.port);
-console.log("app is listening on port " + config.port + "...");
+//require('./server/routes/api-routes')(app);
