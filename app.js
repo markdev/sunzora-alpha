@@ -13,7 +13,29 @@ var express 		= require('express')
   ;
 
 var app = express();
-//var config = require('./server/config')
+var config = require('./server/config')
+
+var pg = require('pg');
+var conString = "postgres://postgres:irdlhajbis@localhost:5432/postgres";
+
+pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * FROM test_table', function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows);
+    //output: 1
+  });
+});
+
+app.listen(config.port);
+console.log("app is listening on port " + config.port + "...");
 
 //initialize database
 //require('./server/db')(config);
@@ -23,6 +45,7 @@ var app = express();
 //  , User = mongoose.model('User')
 
 // Configure express
+/*
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
@@ -83,8 +106,9 @@ passport.use(new LocalStrategy({
 	}
 ));
 
+app.use(multer({
+	dest: "./images/tmp"
+}));
+*/
 //configure routes
-require('./server/routes/api-routes')(app);
-
-app.listen(config.port);
-console.log("app is listening on port " + config.port + "...");
+//require('./server/routes/api-routes')(app);
