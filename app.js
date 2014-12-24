@@ -16,7 +16,7 @@ var express 		= require('express')
 var app = express();
 var config = require('./server/config')
 
-pg.connect(config.conString, function(err, client, done) {
+pg.connect(conString, function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
   }
