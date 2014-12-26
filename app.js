@@ -11,12 +11,14 @@ var express 		= require('express')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			= require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
+  , fs              = require('fs')
   ;
 
 var app = express();
 var config = require('./server/config')
+var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
 
-pg.connect(conString, function(err, client, done) {
+pg.connect(config.conString, function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
   }

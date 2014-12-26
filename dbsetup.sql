@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS sunzora;
+/*DROP DATABASE IF EXISTS sunzora;*/
 
 CREATE DATABASE sunzora
   WITH OWNER = postgres
@@ -7,8 +7,6 @@ CREATE DATABASE sunzora
        LC_COLLATE = 'C'
        LC_CTYPE = 'C'
        CONNECTION LIMIT = -1;
-
-USE sunzora;
 
 CREATE TABLE contest
 (
@@ -23,6 +21,31 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE contest
+  OWNER TO postgres;
+
+CREATE TABLE "user"
+(
+  username character varying(100)[],
+  password character(40),
+  user_id integer NOT NULL,
+  CONSTRAINT "User_pkey" PRIMARY KEY (user_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "user"
+  OWNER TO postgres;
+
+CREATE TABLE permission
+(
+  permission_id integer NOT NULL,
+  name character varying(100),
+  CONSTRAINT permission_pkey PRIMARY KEY (permission_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE permission
   OWNER TO postgres;
 
 CREATE TABLE entry
@@ -44,18 +67,6 @@ WITH (
 );
 ALTER TABLE entry
   OWNER TO postgres;
-
-CREATE TABLE permission
-(
-  permission_id integer NOT NULL,
-  name character varying(100),
-  CONSTRAINT permission_pkey PRIMARY KEY (permission_id)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE permission
-  OWNER TO postgres
 
 CREATE TABLE permission_link
 (
@@ -92,17 +103,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE rating
-  OWNER TO postgres;
-
-CREATE TABLE "user"
-(
-  username character varying(100)[],
-  password character(40),
-  user_id integer NOT NULL,
-  CONSTRAINT "User_pkey" PRIMARY KEY (user_id)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE "user"
   OWNER TO postgres;
