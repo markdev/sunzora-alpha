@@ -81,20 +81,35 @@ passport.use(new LocalStrategy({
 	}
 ));
 
-pg.connect(config.conString, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query('SELECT * FROM test_table', function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
+pg.connect(config.preconString, function(err, client, done) {//connect to default DB
+  	if(err) {
+    	return console.error('error fetching client from pool', err);//exception for connecting
+  	}
+  	client.query('CREATE DATABASE sunzora WITH OWNER = postgre;', function(err, result) {//Attempt to create Sunzora
+       	done();// close connection
 
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows);
-    //output: 1
-  });
+    	if(err) {
+    	  console.log('sunzora DB already set up');//ignore error if sunzora already set up
+   		}
+
+   		pg.connect(config.postconString, function(err, client0rg, done) {//connect to Sunzora DB
+
+   			if (err) {
+   				return console.error('error fetching client from pool', err);//exception for connecting to Sunzora
+   			}
+   			//Run the SQL statements
+    		client0rg.query('SELECT * FROM public.contest', function(err, result0) {
+    		done();
+    		//Run the SQL statements
+    		if (err) {
+    			return console.error('error running query', err);//exception if SQL fails
+    		}
+
+    	console.log(result0.rows);
+    	//output: 1
+    		});
+  		});
+	});
 });
 
 app.listen(config.port);
