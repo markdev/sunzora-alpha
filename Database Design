@@ -1,0 +1,37 @@
+Sunzora Database Elements
+
+Table: contest
+Columns:
+- title (character varying 100)
+- description (character varying 250)
+- end_date (timestamp with time zone)
+- start_date (timestamp with time zone)
++ contest_id (integer)
+
+Table: users
+Columns:
+- username (character varying 100)
+- password (character 40)
++ user_id (integer)
+
+Table: permission
+Columns:
++ permission_id (integer)
+- name (character varying 100)
+
+Table: entry
+Columns:
+- contest_id (integer)
++ entry_id (integer)
+- user_id (integer)
+- text_details (character varying 250)
+
+Table: permission_link
++ user_id (integer)
+- permission_id (integer)
+
+Table: rating
++ rating_id (integer)
+- entry_id (integer)
+- user_id (integer)
+- selected_rating (smallint)

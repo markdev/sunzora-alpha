@@ -91,7 +91,8 @@ CREATE TABLE rating
   entry_id integer NOT NULL,
   user_id integer,
   selected_rating smallint,
-  CONSTRAINT rating_pkey PRIMARY KEY (entry_id),
+  rating_id integer NOT NULL,
+  CONSTRAINT rating_pkey PRIMARY KEY (rating_id),
   CONSTRAINT rating_entry_id_fkey FOREIGN KEY (entry_id)
       REFERENCES entry (entry_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
