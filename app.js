@@ -16,34 +16,6 @@ var express 		= require('express')
 var app = express();
 var config = require('./server/config')
 
-pg.connect(config.conString, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query('SELECT * FROM test_table', function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
-
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows);
-    //output: 1
-  });
-});
-
-app.listen(config.port);
-console.log("app is listening on port " + config.port + "...");
-
-//initialize database
-//require('./server/db')(config);
-
-//init User model
-//var UserSchema = require('./server/models/User').User
-//  , User = mongoose.model('User')
-
-// Configure express
-/*
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
@@ -72,6 +44,7 @@ passport.serializeUser(function(user, done) {
 	}
 });
 
+/*
 passport.deserializeUser(function(id, done) {
 	console.log("Deserializing User");
 	User.findOne({_id:id}).exec(function(err, user) {
@@ -83,7 +56,7 @@ passport.deserializeUser(function(id, done) {
 		}
 	})
 });
-
+*/
 passport.use(new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
@@ -91,6 +64,7 @@ passport.use(new LocalStrategy({
 	function(username, password, done) {
 		console.log("DEBUG 2");
 		console.log("Email: " + username);
+		/*
 		User.findOne({email:username}).exec(function(err, user) {
 			console.log("DEBUG 3");
 			if (user && user.authenticate(password)) {
@@ -101,12 +75,64 @@ passport.use(new LocalStrategy({
 				return done(null, false);
 			}
 		});
+		*/
 	}
 ));
 
-app.use(multer({
-	dest: "./images/tmp"
-}));
+pg.connect(config.conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * FROM test_table', function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
+
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows);
+    //output: 1
+  });
+});
+
+app.listen(config.port);
+console.log("app is listening on port " + config.port + "...");
+
+
+
+/*
+Let's keep things simple and just put the api here
 */
-//configure routes
-//require('./server/routes/api-routes')(app);
+app.get('/views/*', function(req, res) {
+	var file = req.params[0];
+	res.render('../../public/app/views/' + file);
+});
+
+//render layout
+app.get('*', function(req, res) {
+	var currentUser = {};
+	if(req.user) {
+		currentUser = {
+			_id: req.user._id
+			, firstName: req.user.firstName
+			, lastName: req.user.lastName
+			, email: req.user.email
+			, roles: req.user.roles
+		}
+	}
+	res.render('layout', {
+		currentUser: currentUser
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
