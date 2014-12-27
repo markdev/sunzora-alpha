@@ -20,6 +20,12 @@ angular
 				, templateUrl: '/views/default'
 			})
 
+			.state('root.home', {
+				  url: ''
+				, parent: 'root'
+				, templateUrl: '/views/test'
+			})
+
 			// log in
 			.state('login', {
 				  url: '/login'
@@ -37,8 +43,19 @@ angular
 			.state('contests', {
 				  abstract: true
 				, url: '/contest'
-				, templateUrl: '/views/contestList'
+				, templateUrl: '/views/default'
+				, controller: function($scope) {
+					$scope.title = 'contests';
+				}
 			})
+
+			// contests
+			.state('contests.list', {
+				  url: '/contest'
+				, templateUrl: '/views/contestList'
+				, controller: 'ContestListCtrl'
+			})
+
 
 			// contest details
 			.state('contests.details', {
@@ -75,9 +92,19 @@ angular
 				, controller: 'ContestResultsCtrl'
 			})
 
-			// about
+			// contests
 			.state('about', {
-				  url: '/about'
+				  abstract: true
+				, url: '/about'
+				, templateUrl: '/views/default'
+				, controller: function($scope) {
+					$scope.title = 'about';
+				}
+			})
+
+			// about
+			.state('about.sunzora', {
+				  url: ''
 				, templateUrl: '/views/about'
 				, controller: 'AboutCtrl'
 			})

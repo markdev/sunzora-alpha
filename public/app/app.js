@@ -10,7 +10,6 @@ angular
 		, 'ui.router'
 	])
 	.run(function($rootScope) {
-		console.log("Roger dodger");
 		/*
 		$rootScope.currentUser = window.currentUser;
 		console.log($rootScope.currentUser);

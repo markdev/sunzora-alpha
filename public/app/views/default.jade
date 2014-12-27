@@ -1,3 +1,24 @@
-h1 here be default
+header(class="main")
+	nav
+		a(class="title" ui-sref="root.home")
+		div(class="welcomeUser")
+			table
+				tr
+					td
+						img(class="avatarThumb" ng-src="{{avatarSrc}}")
+					td
+						span Hello, {{currentUser.email}}!	
+
+h1 I be defaulting
 
 ui-view
+
+footer(class="main")
+	nav
+		ul
+			li(class="navitem" ng-class='{ "active" : title == "contests"}' id="contests")
+				a(ui-sref="contest.list") Contest
+			li(class="navitem" ng-class='{ "active" : title == "about.sunzora"}' id="about")
+				a(ui-sref="about.sunzora") About
+			li(class="navitem" ng-class='{ "active" : title == "about"}' id="about")
+				a(ui-sref="logout") Log Out

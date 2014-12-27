@@ -4,7 +4,7 @@ $bodyBackground: #EEE;
 $sunzoraOrange: #FFA834;
 $headline: #FFF;
 $headerHeight: 7em;
-$footerHeight: 7em;
+$footerHeight: 4em;
 $bodyWidth: 49em;
 
 /* clear your css here */
@@ -17,3 +17,89 @@ body {
 	background-color: $bodyBackground;
 	font-family: "Comic Sans MS", Arial;
 }
+
+header.main {
+	position: fixed;
+	height: 6em;
+	width: 100%;
+	background-color: $sunzoraOrange;
+	nav {
+		display: table;
+		margin: 0 auto;
+		padding-top: 1em;
+		width: $bodyWidth;
+		a.title {
+			display: block;
+			float: left;
+			width: 30%;
+			height: 4em;
+			background-size: 100% 100%;
+			background-image: url("/img/icons/sunzorawhite.png"); 
+			&:hover {
+				background-image: url("/img/icons/sunzoragray.png");
+				cursor: pointer;
+			}
+		}
+		div.welcomeUser {
+			display: block;
+			float: left;
+			width: 12em;
+			height: 4.5em;
+			text-align: center;
+			padding-top: 1em;
+			vertical-align: middle;
+			color: #fff;
+			font-size: .75em;
+			img.avatarThumb {
+				width: 4em;
+				height: 4em; 
+			} 
+		}
+		a.search {
+			display: block;
+			float: right;
+			width: 5em;
+			height: 5em;
+			background-size: 100% 100%;
+			background-image: url("/img/icons/searchwhite.png");
+			&:hover {
+				background-image: url("/img/icons/searchgray.png");
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+
+footer.main {
+	position: fixed;
+	bottom: 0;
+	height: $footerHeight;
+	width: 100%;
+	background-color: $sunzoraOrange;
+	nav {
+		display: table;
+		margin: 0 auto;
+		ul {
+			list-style-type: none;
+			li.navitem {
+				width: 6em;
+				color: $bodyBackground;
+				height: 6em;
+				float: left;
+				margin: .25em 1em;
+				cursor: pointer;
+				background-size: 100% 100%;
+				a {
+					display: block;
+					width: inherit;
+					height: inherit;
+					font-size: 1.5em;
+					color: #EEE;
+				}
+			}
+		}
+	}
+}
+
+
