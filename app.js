@@ -11,10 +11,12 @@ var express 		= require('express')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			= require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
+  , fs              = require('fs')
   ;
 
 var app = express();
 var config = require('./server/config')
+var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
 
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
