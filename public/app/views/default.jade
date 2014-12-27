@@ -5,13 +5,10 @@ header(class="main")
 			table
 				tr
 					td
-						img(class="avatarThumb" ng-src="{{avatarSrc}}")
-					td
 						span Hello, {{currentUser.email}}!	
 
-h1 I be defaulting
-
-ui-view
+section(class="mainBody")
+	ui-view
 
 footer(class="main")
 	nav

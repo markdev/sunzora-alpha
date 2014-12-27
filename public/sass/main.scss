@@ -70,11 +70,39 @@ header.main {
 	}
 }
 
+section.mainBody {
+	padding-top: $headerHeight;
+	padding-bottom: $footerHeight;
+	width: $bodyWidth;
+	margin: auto;
+	h1.title {
+		text-align: center;
+	}
+	nav.bigLinks {
+		ul {
+			list-style-type: none;
+			div.menuItem {
+				border-top: 2px solid black;
+				padding: .5em 0em;
+				&.active {
+					background-color: $sunzoraOrange;
+				}
+				a {
+					text-decoration: none;
+				}
+				img.thumbnail {
+					width: 3em;
+					height: 3em;
+				}
+			}
+		}
+	}
+}
 
 footer.main {
 	position: fixed;
-	bottom: 0;
-	height: $footerHeight;
+	bottom: 20px;
+	height: 7em;
 	width: 100%;
 	background-color: $sunzoraOrange;
 	nav {
