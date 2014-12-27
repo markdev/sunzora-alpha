@@ -23,6 +23,13 @@ angular
 				}
 			})
 
+			.state('root.home', {
+				  url: ''
+				, parent: 'root' // any problems here?
+				, templateUrl: '/views/home/main'
+				, controller: 'SunzoraHomepageCtrl'
+			})
+
 	// end state config
 	})
 

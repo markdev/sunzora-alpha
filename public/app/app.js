@@ -7,6 +7,7 @@ angular
 		// add in custom dependencies here
 		  'ngRoute'
 		, 'ngTouch'
+		, 'ui.router'
 	])
 	.run(function($rootScope) {
 		console.log("Roger dodger");
