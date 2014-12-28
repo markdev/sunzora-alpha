@@ -11,6 +11,16 @@ angular
 		var urlBase = "/api/users/login"
 		var SunzoraFactory = {};
 
+		SunzoraFactory.getAllContests = function() {
+			console.log("Getting contests");
+			var deferred = $q.defer();
+			$http.get("/api/contests")
+				.success(function(contests) {
+					deferred.resolve(contests)
+				})
+			return deferred.promise;
+		}
+
 		/*
 		SunzoraFactory.test = function() {
 			return "this came from the sunzora factory";

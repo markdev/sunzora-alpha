@@ -7,12 +7,26 @@ angular
 		console.log('SunzoraCtrl loaded');
 	}])
 
+	.controller('SunzoraRootCtrl', ['$scope', '$state', function($scope, $state) {
+		$state.go('contests.list');
+	}])
+
 	.controller('LoginCtrl', ['$scope', function($scope) {
 		console.log('LoginCtrl loaded');
 	}])
 
 	.controller('LogoutCtrl', ['$scope', function($scope) {
 		console.log('LogoutCtrl loaded');
+	}])
+
+	.controller('ContestListCtrl', ['$scope', 'SunzoraFactory', function($scope, SunzoraFactory) {
+		$scope.foo = "this is foo";
+		SunzoraFactory.getAllContests()
+			.then(function(response) {
+				if (response.success == true) {
+					$scope.contests = response.contests;
+				}
+			})
 	}])
 
 	.controller('ContestDetailsCtrl', ['$scope', function($scope) {

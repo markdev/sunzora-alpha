@@ -46,6 +46,9 @@ passport.serializeUser(function(user, done) {
 	}
 });
 
+passport.deserializeUser(function(id, done) {
+	return done(null, false);	
+});
 /*
 passport.deserializeUser(function(id, done) {
 	console.log("Deserializing User");
@@ -105,6 +108,24 @@ console.log("app is listening on port " + config.port + "...");
 /*
 Let's keep things simple and just put the api here
 */
+app.get('/api/contests', function(req, res, next) {
+	var contests = [
+		{ 
+			title: "How should we use sunzora?",
+			deadline: "Feb 1, 2015"
+		},
+		{ 
+			title: "HHow can sunzora make money?",
+			deadline: "January 15, 2015"
+		},
+		{ 
+			title: "What's the first thing sunzora should do?",
+			deadline: "Feb 3, 2015"
+		}
+	];
+	res.send({success: true, contests: contests});
+})
+
 app.get('/views/*', function(req, res) {
 	var file = req.params[0];
 	res.render('../../public/app/views/' + file);

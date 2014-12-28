@@ -24,6 +24,7 @@ angular
 				  url: ''
 				, parent: 'root'
 				, templateUrl: '/views/test'
+				, controller: 'SunzoraRootCtrl'
 			})
 
 			// log in
@@ -42,7 +43,7 @@ angular
 			// contests
 			.state('contests', {
 				  abstract: true
-				, url: '/contest'
+				, url: '/'
 				, templateUrl: '/views/default'
 				, controller: function($scope) {
 					$scope.title = 'contests';

@@ -100,9 +100,9 @@ section.mainBody {
 }
 
 footer.main {
-	position: fixed;
-	bottom: 20px;
-	height: 7em;
+	position: absolute;
+	bottom: 0px;
+	height: 4em;
 	width: 100%;
 	background-color: $sunzoraOrange;
 	nav {
