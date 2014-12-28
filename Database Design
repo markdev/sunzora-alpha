@@ -1,0 +1,60 @@
+Sunzora Database Elements
+
+Table: contest
+Columns:
+- title (character varying 100)
+    The short description of the contest
+- description (character varying 250)
+    The long description of the contest describing purpose and guidelines for entries
+- end_date (timestamp with time zone)
+    Timestamp when contest will end
+- start_date (timestamp with time zone)
+    Timestamp when contest is created
++ contest_id (integer)
+    primary key of contests providing an enumerated unique ID for each contest
+
+Table: users
+Columns:
+- username (character varying 100)
+    Username of the user, chosen by the user
+- password (character 40)
+    Password chosen by the user
++ user_id (integer)
+    primary key of users providing an enumerated unique ID for each user
+
+Table: permission
+Columns:
++ permission_id (integer)
+    primary key of permissions providing an enumerated unique ID for each permission
+- name (character varying 100)
+    English name of the permission for easy reading
+
+Table: entry
+Columns:
+- contest_id (integer)
+    Foreign key connecting entry back to the contest it belongs to
++ entry_id (integer)
+    primary key of entries providing an enumerated unique ID for each entry
+- user_id (integer)
+    Foreign key connecting entry back to the user that submitted it
+- text_details (character varying 250)
+    the submitted text value entered by the user (this is the entry itself)
+
+Table: permission_link
++ link_id (integer)
+    primary key of links between users and permissions providing an enumerated unique ID for each link
+- user_id (integer)
+    foreign key connecting link back to user that the link pertains to 
+- permission_id (integer)
+    foreign key connecting link back to permission that the link pertains to
+    
+
+Table: rating
++ rating_id (integer)
+    primary key of rating providing an enumerated unique ID for the specific rating
+- entry_id (integer)
+    foreign key connecting rating to the entry it is providing a rating for
+- user_id (integer)
+    foreign key connecting rating to the user that submitted it
+- selected_rating (smallint)
+    value of the rating that was selected by the user

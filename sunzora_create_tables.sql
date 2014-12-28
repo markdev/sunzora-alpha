@@ -1,13 +1,3 @@
-/*DROP DATABASE IF EXISTS sunzora;*/
-
-CREATE DATABASE sunzora
-  WITH OWNER = postgres
-       ENCODING = 'UTF8'
-       TABLESPACE = pg_default
-       LC_COLLATE = 'C'
-       LC_CTYPE = 'C'
-       CONNECTION LIMIT = -1;
-
 CREATE TABLE contest
 (
   title character varying(100),
@@ -70,10 +60,9 @@ ALTER TABLE entry
 
 CREATE TABLE permission_link
 (
-  link_id integer NOT NULL,
   user_id integer NOT NULL,
   permission_id integer,
-  CONSTRAINT permission_link_pkey PRIMARY KEY (link_id),
+  CONSTRAINT permission_link_pkey PRIMARY KEY (user_id),
   CONSTRAINT permission_link_permission_id_fkey FOREIGN KEY (permission_id)
       REFERENCES permission (permission_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
