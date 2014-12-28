@@ -111,14 +111,17 @@ Let's keep things simple and just put the api here
 app.get('/api/contests', function(req, res, next) {
 	var contests = [
 		{ 
+			id: 1,
 			title: "How should we use sunzora?",
 			deadline: "Feb 1, 2015"
 		},
 		{ 
+			id: 2,
 			title: "HHow can sunzora make money?",
 			deadline: "January 15, 2015"
 		},
 		{ 
+			id: 3,
 			title: "What's the first thing sunzora should do?",
 			deadline: "Feb 3, 2015"
 		}

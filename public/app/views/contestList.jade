@@ -1,5 +1,16 @@
-h1 kaka peepee
-h1 {{ foo }}
-
-ul(class="bigItemList" ng-repeat="contest in contests")
-	li {{ contest.title }}
+ul(class="contests" ng-repeat="contest in contests")
+	li
+		div 
+			table
+				tr
+					td.title
+						span {{ contest.title }}
+						br
+						span {{ contest.deadline }}
+					td.buttons
+						table
+							tr
+								td
+									a(class="details" ui-sref="contests.details({{ contest.id }})") A
+								td
+									a(class="judge" ui-sref="contests.judge({{ contest.id }})") B
