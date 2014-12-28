@@ -141,86 +141,10 @@ pg.connect(config.postgresconString, function(err, client, done) {
     });
 });
 
+require('./server/routes/api-routes')(app);
+
 app.listen(config.port);
 console.log("app is listening on port " + config.port + "...");
-
-
-
-/*
-Let's keep things simple and just put the api here
-*/
-app.get('/api/contests', function(req, res, next) {
-	var contests = [
-		{ 
-			id: 1,
-			title: "How should we use sunzora?",
-			deadline: "Feb 1, 2015"
-		},
-		{ 
-			id: 2,
-			title: "HHow can sunzora make money?",
-			deadline: "January 15, 2015"
-		},
-		{ 
-			id: 3,
-			title: "What's the first thing sunzora should do?",
-			deadline: "Feb 3, 2015"
-		}
-	];
-	res.send({success: true, contests: contests});
-})
-
-app.get('/api/contests/:id?', function(req, res, next) {
-	var contest = {
-			id: 1, 
-			title: "this is a contest",
-			description: "Enter suggestions for how to use this thing and blah blah"
-		};
-	res.send({success: true, contest: contest});
-})
-
-app.get('/api/entriesAndScores/:id?', function(req, res, next) {
-	var entries = [
-			{ content: "Use it to make more xontests about how to use it", score: 3.4 },
-			{ content: "Make group decisions in the Fire Triangle", score: 5.4 },
-			{ content: "American Idol style contests for different street performers", score: 7.3 },
-			{ content: "Heebie jeebies", score: 7.3 }
-		];
-	res.send({success: true, entries: entries});
-})
-
-app.post('/api/contests', function(req, res, next) {
-	console.log(req.body);
-	res.send({success: true});
-})
-
-app.get('/views/*', function(req, res) {
-	var file = req.params[0];
-	res.render('../../public/app/views/' + file);
-});
-
-//render layout
-app.get('*', function(req, res) {
-	var currentUser = {};
-	if(req.user) {
-		currentUser = {
-			_id: req.user._id
-			, firstName: req.user.firstName
-			, lastName: req.user.lastName
-			, email: req.user.email
-			, roles: req.user.roles
-		}
-	}
-	res.render('layout', {
-		currentUser: currentUser
-	});
-});
-
-
-
-
-
-
 
 
 
