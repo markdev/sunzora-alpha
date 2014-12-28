@@ -35,6 +35,7 @@ angular
 
 	.controller('ContestCreateCtrl', ['$scope', function($scope) {
 		console.log('ContestCreateCtrl loaded');
+		console.log('Why the reroute?');
 	}])
 
 	.controller('ContestAddEntryCtrl', ['$scope', function($scope) {

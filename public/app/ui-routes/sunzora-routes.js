@@ -60,7 +60,7 @@ angular
 
 			// contest details
 			.state('contests.details', {
-				  url: '/:id'
+				  url: '/details/:id'
 				, templateUrl: '/views/contestDetails'
 				, controller: 'ContestDetailsCtrl'
 			})
