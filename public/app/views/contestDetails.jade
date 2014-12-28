@@ -1,9 +1,9 @@
 table
 	tr
 		td
-			button(ui-sref="contests.list") Back to list
+			a(ui-sref="contests.list") Back to list
 		td
-			button(ui-sref="contests.create") Add New Entry
+			a(ui-sref="contests.addEntry({id: '{{contest.id}}' })") Add New Entry
 hr
 h1.title {{ contest.title }}
 

@@ -30,10 +30,10 @@ angular
 	}])
 
 	.controller('ContestDetailsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
-		console.log($stateParams);
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
+					console.log(response.contest);
 					$scope.contest = response.contest;
 				}
 			})
@@ -63,8 +63,13 @@ angular
 		}
 	}])
 
-	.controller('ContestAddEntryCtrl', ['$scope', function($scope) {
-		console.log('ContestAddEntryCtrl loaded');
+	.controller('ContestAddEntryCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+		SunzoraFactory.getContestById($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.contest = response.contest;
+				}
+			})
 	}])
 
 	.controller('ContestJudgeCtrl', ['$scope', function($scope) {

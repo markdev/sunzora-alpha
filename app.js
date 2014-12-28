@@ -130,7 +130,8 @@ app.get('/api/contests', function(req, res, next) {
 })
 
 app.get('/api/contests/:id?', function(req, res, next) {
-	var contest = { 
+	var contest = {
+			id: 1, 
 			title: "this is a contest",
 			description: "Enter suggestions for how to use this thing and blah blah"
 		};
