@@ -84,35 +84,58 @@ passport.use(new LocalStrategy({
 	}
 ));
 
-pg.connect(config.preconString, function(err, client, done) {//connect to default DB
-  	if(err) {
-    	return console.error('error fetching client from pool', err);//exception for connecting
-  	}
-  	client.query(sunzoracreate, function(err, result) {//Attempt to create Sunzora
-       	done();// close connection
+/* initialization of database
+Connect to Postgres{
+  Drop Sunzora{
+    Create Sunzora{
+      Connect to Sunzora{
+        Create Tables{
+        } 
+      }
+    }
+  }
+}*/
+//Initiate Connection: Postgres DB
+pg.connect(config.postgresconString, function(err, client, done) {
+    if(err) {
+      return console.error('Postgres connection issue: ', err);//exception for connecting
+    }
+    //DROP Sunzora DB
+    client.query(sunzoradrop, function(err, result) {
+      done();
 
-    	if(err) {
-    	  console.log('sunzora DB already set up', err);//ignore error if sunzora already set up
-   		}
+      if(err) {
+          console.log('dropping sunzora:', err);//ignore error if sunzora does not exist
+      }
 
-   		pg.connect(config.postconString, function(err, client, done) {//connect to Sunzora DB
+        //CREATE Sunzora DB
+        client.query(sunzoracreate, function(err, result) {
 
-   			if (err) {
-   				return console.error('error fetching client from pool', err);//exception for connecting to Sunzora
-   			}
-   			//Run the SQL statements
-    		client.query(tablecreate, function(err, result) {
-    		done();
-    		//Run the SQL statements
-    		if (err) {
-    			return console.error('error running query', err);//exception if SQL fails
-    		}
+          done();
 
-    	console.log(result.rows);
-    	//output: 1
-    		});
-  		});
-	});
+          if(err) {
+            console.log('creating sunzora:', err);//ignore error if sunzora already set up
+          }
+    		//Initiate Connection: Sunzora DB
+            pg.connect(config.sunzoraconString, function(err, client, done) {
+
+                if (err) {
+                  return console.error('Sunzora connection issue: ', err);//exception for connecting
+                }
+                //CREATE Sunzora Tables
+                client.query(tablecreate, function(err, result) {
+                  done();
+        
+                  if (err) {
+                    return console.error('error running query', err);//exception if SQL fails
+                  }
+
+                console.log(result.rows);
+                });
+            });
+      //output: 1
+        });
+    });
 });
 
 app.listen(config.port);

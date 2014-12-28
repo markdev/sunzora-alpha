@@ -5,8 +5,8 @@ var path 		= require('path')
 
 if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
 	module.exports = {
-		preconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
-		postconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
+		postgresconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
+		sunzoraconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
 		redis: {
 			host: '127.0.0.1',
 			port: '6379'
@@ -16,8 +16,8 @@ if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
 	}
 } else if (os.hostname() == 'li60-94') {
 	module.exports = {
-		preconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
-		postconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
+		postgresconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
+		sunzoraconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
 		redis: {
 			host: '127.0.0.1',
 			port: '6379'
@@ -27,8 +27,8 @@ if (os.hostname() == 'Marks-MacBook-Pro-11.local') {
 	}	
 } else if (os.hostname() == 'Thomass-MacBook-Pro.local') {
 	module.exports = {
-		preconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
-		postconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
+		postgresconString: "postgres://postgres:irdlhajbis@localhost:5432/postgres",
+		sunzoraconString: "postgres://postgres:irdlhajbis@localhost:5432/sunzora",
 		redis: {
 			host: '127.0.0.1',
 			port: '6379'
