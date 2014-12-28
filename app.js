@@ -17,6 +17,9 @@ var express 		= require('express')
 var app = express();
 var config = require('./server/config')
 var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
+var sunzoracreate = fs.readFileSync('sunzora_create_db.sql').toString();
+var sunzoradrop = fs.readFileSync('sunzora_drop_db.sql').toString();
+var tablecreate = fs.readFileSync('sunzora_create_tables.sql').toString();
 
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
@@ -85,27 +88,27 @@ pg.connect(config.preconString, function(err, client, done) {//connect to defaul
   	if(err) {
     	return console.error('error fetching client from pool', err);//exception for connecting
   	}
-  	client.query('CREATE DATABASE sunzora WITH OWNER = postgre;', function(err, result) {//Attempt to create Sunzora
+  	client.query(sunzoracreate, function(err, result) {//Attempt to create Sunzora
        	done();// close connection
 
     	if(err) {
-    	  console.log('sunzora DB already set up');//ignore error if sunzora already set up
+    	  console.log('sunzora DB already set up', err);//ignore error if sunzora already set up
    		}
 
-   		pg.connect(config.postconString, function(err, client0rg, done) {//connect to Sunzora DB
+   		pg.connect(config.postconString, function(err, client, done) {//connect to Sunzora DB
 
    			if (err) {
    				return console.error('error fetching client from pool', err);//exception for connecting to Sunzora
    			}
    			//Run the SQL statements
-    		client0rg.query('SELECT * FROM public.contest', function(err, result0) {
+    		client.query(tablecreate, function(err, result) {
     		done();
     		//Run the SQL statements
     		if (err) {
     			return console.error('error running query', err);//exception if SQL fails
     		}
 
-    	console.log(result0.rows);
+    	console.log(result.rows);
     	//output: 1
     		});
   		});
