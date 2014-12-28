@@ -33,9 +33,22 @@ angular
 		console.log('ContestDetailsCtrl loaded');
 	}])
 
-	.controller('ContestCreateCtrl', ['$scope', function($scope) {
-		console.log('ContestCreateCtrl loaded');
-		console.log('Why the reroute?');
+	.controller('ContestCreateCtrl', ['$scope', '$state', 'SunzoraFactory', function($scope, $state, SunzoraFactory) {
+		$scope.ctitle = "My contest"; // calling it ctitle to avoid collisions with top level title
+		$scope.description = "this be the desc of my contest";
+		$scope.deadline = "1/1/2011";
+		$scope.submit = function() {
+			var postData = {};
+			postData.title = $scope.ctitle;
+			postData.description = $scope.description;
+			postData.deadline = $scope.deadline;
+			SunzoraFactory.createContest(postData)
+				.then(function(response) {
+					if (response.success == true) {
+						$state.go("contests.list")
+					}
+				})
+		}
 	}])
 
 	.controller('ContestAddEntryCtrl', ['$scope', function($scope) {

@@ -21,6 +21,16 @@ angular
 			return deferred.promise;
 		}
 
+		SunzoraFactory.createContest = function(postData) {
+			console.log("Getting contests");
+			var deferred = $q.defer();
+			$http.post("/api/contests", postData)
+				.success(function(response) {
+					deferred.resolve(response)
+				})
+			return deferred.promise;
+		}
+
 		/*
 		SunzoraFactory.test = function() {
 			return "this came from the sunzora factory";

@@ -129,6 +129,11 @@ app.get('/api/contests', function(req, res, next) {
 	res.send({success: true, contests: contests});
 })
 
+app.post('/api/contests', function(req, res, next) {
+	console.log(req.body);
+	res.send({success: true});
+})
+
 app.get('/views/*', function(req, res) {
 	var file = req.params[0];
 	res.render('../../public/app/views/' + file);
