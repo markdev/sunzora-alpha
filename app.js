@@ -129,6 +129,24 @@ app.get('/api/contests', function(req, res, next) {
 	res.send({success: true, contests: contests});
 })
 
+app.get('/api/contests/:id?', function(req, res, next) {
+	var contest = { 
+			title: "this is a contest",
+			description: "Enter suggestions for how to use this thing and blah blah"
+		};
+	res.send({success: true, contest: contest});
+})
+
+app.get('/api/entriesAndScores/:id?', function(req, res, next) {
+	var entries = [
+			{ content: "Use it to make more xontests about how to use it", score: 3.4 },
+			{ content: "Make group decisions in the Fire Triangle", score: 5.4 },
+			{ content: "American Idol style contests for different street performers", score: 7.3 },
+			{ content: "Heebie jeebies", score: 7.3 }
+		];
+	res.send({success: true, entries: entries});
+})
+
 app.post('/api/contests', function(req, res, next) {
 	console.log(req.body);
 	res.send({success: true});

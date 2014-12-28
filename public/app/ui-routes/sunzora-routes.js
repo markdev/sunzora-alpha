@@ -43,7 +43,7 @@ angular
 			// contests
 			.state('contests', {
 				  abstract: true
-				, url: '/'
+				, url: ''
 				, templateUrl: '/views/default'
 				, controller: function($scope) {
 					$scope.title = 'contests';

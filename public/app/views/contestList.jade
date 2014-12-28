@@ -13,6 +13,6 @@ ul(class="contests" ng-repeat="contest in contests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.details({{ contest.id }})") A
+									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") A
 								td
-									a(class="judge" ui-sref="contests.judge({{ contest.id }})") B
+									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") B

@@ -12,7 +12,6 @@ angular
 		var SunzoraFactory = {};
 
 		SunzoraFactory.getAllContests = function() {
-			console.log("Getting contests");
 			var deferred = $q.defer();
 			$http.get("/api/contests")
 				.success(function(contests) {
@@ -22,11 +21,28 @@ angular
 		}
 
 		SunzoraFactory.createContest = function(postData) {
-			console.log("Getting contests");
 			var deferred = $q.defer();
 			$http.post("/api/contests", postData)
 				.success(function(response) {
 					deferred.resolve(response)
+				})
+			return deferred.promise;
+		}
+
+		SunzoraFactory.getContestById = function(id) {
+			var deferred = $q.defer();
+			$http.get("/api/contests/" + id)
+				.success(function(contest) {
+					deferred.resolve(contest)					
+				})
+			return deferred.promise;
+		}
+
+		SunzoraFactory.getEntriesAndScoresByContestId = function(id) {
+			var deferred = $q.defer();
+			$http.get("/api/entriesAndScores/" + id)
+				.success(function(response) {
+					deferred.resolve(response)					
 				})
 			return deferred.promise;
 		}

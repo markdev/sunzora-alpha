@@ -29,8 +29,20 @@ angular
 			})
 	}])
 
-	.controller('ContestDetailsCtrl', ['$scope', function($scope) {
-		console.log('ContestDetailsCtrl loaded');
+	.controller('ContestDetailsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+		console.log($stateParams);
+		SunzoraFactory.getContestById($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.contest = response.contest;
+				}
+			})
+		SunzoraFactory.getEntriesAndScoresByContestId($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.entries = response.entries;
+				}
+			})
 	}])
 
 	.controller('ContestCreateCtrl', ['$scope', '$state', 'SunzoraFactory', function($scope, $state, SunzoraFactory) {
