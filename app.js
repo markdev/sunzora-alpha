@@ -45,7 +45,7 @@ app.use(serveStatic(__dirname + '/public'));
 
 passport.serializeUser(function(user, done) {
 	if(user) {
-		done(null, user._id);
+		done(null, user);
 	}
 });
 
@@ -72,6 +72,13 @@ passport.use(new LocalStrategy({
 	function(username, password, done) {
 		console.log("DEBUG 2");
 		console.log("Email: " + username);
+		if (username=="mark.karavan@gmail.com" && password=="mark") {
+			console.log("authenticated!");
+			return done(null, {email: 'mark.karavan@gmail.com'});
+		} else {
+			console.log("not found");
+			return done(null, false);
+		}
 		/*
 		User.findOne({email:username}).exec(function(err, user) {
 			console.log("DEBUG 3");

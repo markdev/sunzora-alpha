@@ -2,6 +2,7 @@ var api = require('../controllers/sunzora');
 
 module.exports = function(app) {
 
+	app.post('/api/login' 					, api.login);
 	app.get('/api/contests'					, api.getAllContests);
 	app.get('/api/contests/:id?'			, api.getContestById);
 	app.get('/api/entriesAndScores/:id?'	, api.getEntriesAndScoresByContestId);

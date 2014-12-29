@@ -10,7 +10,6 @@ angular
 		, 'ui.router'
 	])
 	.run(function($rootScope) {
-		/*
 		$rootScope.currentUser = window.currentUser;
 		console.log($rootScope.currentUser);
         // this is a hacky way to do a redirect, but $state.go() doesn't work for some reason
@@ -19,7 +18,6 @@ angular
                 window.location.replace('/login');
             }
         })
-		*/
 	})
 
 // end file

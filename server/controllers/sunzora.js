@@ -1,3 +1,24 @@
+var passport 	= require('passport');
+
+exports.login = function(req, res, next) {
+	console.log(req.body);
+	req.body.email = req.body.email.toLowerCase();
+	passport.authenticate('local', function(err, user) {
+		if(err) {
+			console.log("debug 1");
+			res.send({success:false, message: "Error authenticating user."});
+		}
+		if(!user) {
+			console.log("debug 2");
+			res.send({success:false, message: "Matching user not found."});
+		}
+		req.logIn(user, function(err) {
+			if(err) {return next(err);}
+			res.send({success:true, user: user});
+		});
+	})(req, res, next);
+}
+
 exports.getAllContests =  function(req, res, next) {
 	var contests = [
 		{ 

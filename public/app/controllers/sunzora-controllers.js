@@ -11,8 +11,24 @@ angular
 		$state.go('contests.list');
 	}])
 
-	.controller('LoginCtrl', ['$scope', function($scope) {
-		console.log('LoginCtrl loaded');
+	.controller('LoginCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
+		$scope.email = "mark.karavan@gmail.com";
+		$scope.password = "mark";
+		$scope.submit = function() {
+			console.log("sub");
+			var postData = {};
+			postData.email = $scope.email;
+			postData.password = $scope.password;
+			SunzoraFactory.login(postData)
+				.then(function(response) {
+					if (response.success == true) {
+						$rootScope.currentUser = response.user;
+						$state.go('contests.list');
+					} else {
+						console.log("fail");
+					}
+				})
+		};
 	}])
 
 	.controller('LogoutCtrl', ['$scope', function($scope) {

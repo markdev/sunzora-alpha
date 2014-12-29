@@ -11,6 +11,24 @@ angular
 		var urlBase = "/api/users/login"
 		var SunzoraFactory = {};
 
+		SunzoraFactory.login = function(postData) {
+			var deferred = $q.defer();
+			console.log("postdata from factory");
+			console.log(postData);
+			$http.post("/api/login", postData)
+				.success(function(response) {
+					if (response.success) {
+						deferred.resolve(response);
+					} else {
+						deferred.resolve(response);
+					}
+				})
+				.error(function(err, user) {
+					deferred.resolve(err);
+				});
+			return deferred.promise;		
+		}
+
 		SunzoraFactory.getAllContests = function() {
 			var deferred = $q.defer();
 			$http.get("/api/contests")
