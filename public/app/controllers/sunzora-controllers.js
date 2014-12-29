@@ -145,8 +145,10 @@ angular
 			}
 			adjustButtons();
 		}
-
-		console.log($scope.entries.length);		
+		$scope.rateThis = function(score) {
+			$scope.entries[$scope.current].rating = score;
+			console.log($scope.entries);
+		}	
 	}])
 
 	.controller('ContestResultsCtrl', ['$scope', function($scope) {
