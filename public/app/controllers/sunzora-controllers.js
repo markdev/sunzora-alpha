@@ -15,7 +15,6 @@ angular
 		$scope.email = "mark.karavan@gmail.com";
 		$scope.password = "mark";
 		$scope.submit = function() {
-			console.log("sub");
 			var postData = {};
 			postData.email = $scope.email;
 			postData.password = $scope.password;
@@ -29,6 +28,7 @@ angular
 					}
 				})
 		};
+		$scope.submit();
 	}])
 
 	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
@@ -83,13 +83,26 @@ angular
 		}
 	}])
 
-	.controller('ContestAddEntryCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+	.controller('ContestAddEntryCtrl', ['$scope', '$state', '$stateParams', 'SunzoraFactory', function($scope, $state, $stateParams, SunzoraFactory) {
+		$scope.content = "This is the entry";
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
 					$scope.contest = response.contest;
 				}
 			})
+		$scope.submit = function() {
+			console.log("submitting");
+			var postData = {};
+			postData.content = $scope.content;
+			postData.contest = $stateParams.id;
+			SunzoraFactory.createEntry(postData)
+				.then(function(response) {
+					if (response.success == true) {
+						$state.go("contests.details", { id: $stateParams.id } );
+					}
+				})
+		};
 	}])
 
 	.controller('ContestJudgeCtrl', ['$scope', function($scope) {

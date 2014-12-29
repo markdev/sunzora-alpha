@@ -68,3 +68,8 @@ exports.createNewContest = function(req, res, next) {
 	console.log(req.body);
 	res.send({success: true});
 }
+
+exports.createEntry = function(req, res, next) {
+	console.log(req.body);
+	res.send({success: true});
+}

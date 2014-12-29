@@ -8,6 +8,7 @@ module.exports = function(app) {
 	app.get('/api/contests/:id?'			, api.getContestById);
 	app.get('/api/entriesAndScores/:id?'	, api.getEntriesAndScoresByContestId);
 	app.post('/api/contests'				, api.createNewContest);
+	app.post('/api/entry' 					, api.createEntry);
 
 	app.get('/views/*', function(req, res) {
 		var file = req.params[0];

@@ -75,6 +75,14 @@ angular
 			return deferred.promise;
 		}
 
+		SunzoraFactory.createEntry = function(postData) {
+			var deferred = $q.defer();
+			$http.post("/api/entry", postData)
+				.success(function(response) {
+					deferred.resolve(response)					
+				})
+			return deferred.promise;
+		}
 		/*
 		SunzoraFactory.test = function() {
 			return "this came from the sunzora factory";

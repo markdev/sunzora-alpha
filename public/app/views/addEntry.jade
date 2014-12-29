@@ -1,1 +1,10 @@
 button(ui-sref="contests.details({id: '{{contest.id}}' })") Back to Details
+hr
+
+h1.title {{contest.title}}
+
+label Enter an entry to this contest:
+br
+textarea(id="entry" ng-model="content")
+br
+button(ng-click="submit()") Submit Entry

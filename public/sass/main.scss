@@ -111,6 +111,10 @@ section.mainBody {
 	h1.title {
 		text-align: center;
 	}
+	textarea#entry {
+		width: 30em;
+		height: 5em;
+	}
 	ul.contests {
 		list-style-type: none;
 		div {
