@@ -1,1 +1,10 @@
-h1 this be contest judging
+h1 Judging: {{ contest.title }}
+
+table
+	tr
+		td
+			button(ng-if="!first" ng-click="slideLeft()") Left
+		td
+			div#judgeContent {{ entries[current].title }}
+		td
+			button(ng-if="!last" ng-click="slideRight()") Right

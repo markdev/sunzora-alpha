@@ -115,6 +115,11 @@ section.mainBody {
 		width: 30em;
 		height: 5em;
 	}
+	div#judgeContent {
+		width: 300px;
+		height: 200px;
+		border: 1px solid black;
+	}
 	ul.contests {
 		list-style-type: none;
 		div {

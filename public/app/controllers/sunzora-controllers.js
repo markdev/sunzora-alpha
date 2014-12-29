@@ -105,8 +105,48 @@ angular
 		};
 	}])
 
-	.controller('ContestJudgeCtrl', ['$scope', function($scope) {
-		console.log('ContestJudgeCtrl loaded');
+	.controller('ContestJudgeCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+		SunzoraFactory.getContestById($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.contest = response.contest;
+				}
+			})
+		$scope.current = 0;
+		$scope.first = true;
+		$scope.last = null;
+		$scope.entries = [
+			{ title: "This is the first entry", rating: null },
+			{ title: "This is the second entry", rating: null },
+			{ title: "This is the third entry", rating: null },
+			{ title: "This is the fourth entry", rating: null },
+			{ title: "This is the fifth entry", rating: null }
+		];
+		var adjustButtons = function() {
+			$scope.first = ($scope.current == 0)?  true : false;
+			$scope.last = ($scope.current == ($scope.entries.length-1))? true : false;
+		}
+		var getNewEntry = function() {
+			SunzoraFactory.getNewEntry($stateParams.id)
+				.then(function(response) {
+					if (response.success) {
+						$scope.entries[$scope.entries.length] = response.entry;
+					} 
+				})
+		}
+		$scope.slideLeft = function() {
+			$scope.current -= 1;
+			adjustButtons();
+		}
+		$scope.slideRight = function() {
+			$scope.current += 1;
+			if ($scope.entries.length - $scope.current < 3) {
+				getNewEntry();
+			}
+			adjustButtons();
+		}
+
+		console.log($scope.entries.length);		
 	}])
 
 	.controller('ContestResultsCtrl', ['$scope', function($scope) {

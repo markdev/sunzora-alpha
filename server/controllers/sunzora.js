@@ -73,3 +73,9 @@ exports.createEntry = function(req, res, next) {
 	console.log(req.body);
 	res.send({success: true});
 }
+
+exports.randomEntryByContestId = function(req, res, next) {
+	console.log(req.param("id"));
+	var entry = { title: "This shit was dynamically generated", rating: null };
+	res.send({success: true, entry: entry});
+}

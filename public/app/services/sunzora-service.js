@@ -83,6 +83,15 @@ angular
 				})
 			return deferred.promise;
 		}
+
+		SunzoraFactory.getNewEntry = function(contestId) {
+			var deferred = $q.defer();
+			$http.get("/api/randomEntryByContestId/" + contestId)
+				.success(function(response) {
+					deferred.resolve(response)					
+				})
+			return deferred.promise;
+		}
 		/*
 		SunzoraFactory.test = function() {
 			return "this came from the sunzora factory";
