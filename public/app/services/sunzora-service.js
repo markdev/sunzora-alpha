@@ -29,6 +29,16 @@ angular
 			return deferred.promise;		
 		}
 
+		SunzoraFactory.logout = function() {
+			var deferred = $q.defer();
+			$http.post("/api/logout")
+				.success(function(response){
+					console.log(response);
+					deferred.resolve(response);
+				})
+			return deferred.promise;			
+		}
+
 		SunzoraFactory.getAllContests = function() {
 			var deferred = $q.defer();
 			$http.get("/api/contests")

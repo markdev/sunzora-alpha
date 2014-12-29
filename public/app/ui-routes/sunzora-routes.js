@@ -37,6 +37,7 @@ angular
 			// log out
 			.state('logout', {
 				  url: '/logout'
+				, templateUrl: '/views/logout'
 				, controller: 'LogoutCtrl'
 			})
 

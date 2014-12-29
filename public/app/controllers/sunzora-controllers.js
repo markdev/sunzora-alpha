@@ -31,8 +31,12 @@ angular
 		};
 	}])
 
-	.controller('LogoutCtrl', ['$scope', function($scope) {
-		console.log('LogoutCtrl loaded');
+	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
+		SunzoraFactory.logout()
+			.then(function(data) {
+				$rootScope.currentUser = {};
+				$state.go('login');
+			})
 	}])
 
 	.controller('ContestListCtrl', ['$scope', 'SunzoraFactory', function($scope, SunzoraFactory) {

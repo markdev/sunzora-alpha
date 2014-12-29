@@ -18,6 +18,39 @@ body {
 	font-family: "Comic Sans MS", Arial;
 }
 
+/* Login Page */
+div.loginPage {
+	header {
+		width: 100%;
+		height: 15em;
+		background-color: $sunzoraOrange;
+		padding-top: 3em;
+		h2, img {
+			display: block;
+			text-align: center;
+			color: $headline;
+			margin: 0 auto;
+			font-size: 4em;
+		}
+	}
+	section.body {
+		width: 100%;
+		div.loginForm {
+			width: 20em;
+			display: block;
+			text-align: center;
+			margin: 0 auto;
+			label {
+				font-size: 1.6em;
+			}
+			input {
+				width: 15em;
+				height: 2em;
+			}
+		}
+	}
+}
+
 header.main {
 	position: fixed;
 	height: 6em;
