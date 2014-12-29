@@ -10,6 +10,7 @@ module.exports = function(app) {
 	app.post('/api/contests'				, api.createNewContest);
 	app.post('/api/entry' 					, api.createEntry);
 	app.get('/api/randomEntryByContestId/:id?', api.randomEntryByContestId);
+	app.post('/api/addRating' 				, api.addRating);
 
 	app.get('/views/*', function(req, res) {
 		var file = req.params[0];

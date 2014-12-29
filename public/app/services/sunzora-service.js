@@ -93,6 +93,16 @@ angular
 			return deferred.promise;
 		}
 
+		SunzoraFactory.addRating = function(postData) {
+			var deferred = $q.defer();
+			$http.post("/api/addRating", postData)
+				.success(function(response) {
+					deferred.resolve(response)
+				})
+			return deferred.promise;
+		}
+
+
 		return SunzoraFactory;
 	}])
 	;

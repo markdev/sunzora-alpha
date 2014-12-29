@@ -116,11 +116,11 @@ angular
 		$scope.first = true;
 		$scope.last = null;
 		$scope.entries = [
-			{ title: "This is the first entry", rating: null },
-			{ title: "This is the second entry", rating: null },
-			{ title: "This is the third entry", rating: null },
-			{ title: "This is the fourth entry", rating: null },
-			{ title: "This is the fifth entry", rating: null }
+			{ id: 1, title: "This is the first entry", rating: null },
+			{ id: 2, title: "This is the second entry", rating: null },
+			{ id: 3, title: "This is the third entry", rating: null },
+			{ id: 4, title: "This is the fourth entry", rating: null },
+			{ id: 5, title: "This is the fifth entry", rating: null }
 		];
 		var adjustButtons = function() {
 			$scope.first = ($scope.current == 0)?  true : false;
@@ -146,8 +146,13 @@ angular
 			adjustButtons();
 		}
 		$scope.rateThis = function(score) {
-			$scope.entries[$scope.current].rating = score;
-			console.log($scope.entries);
+			var postData = {};
+			postData.score = score;
+			postData.entry = $scope.entries[$scope.current].id;
+			SunzoraFactory.addRating(postData)
+				.then(function(response) {
+					$scope.entries[$scope.current].rating = score;
+				})
 		}	
 	}])
 
