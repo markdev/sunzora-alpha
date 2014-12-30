@@ -28,7 +28,7 @@ angular
 					}
 				})
 		};
-		$scope.submit();
+		//$scope.submit();
 	}])
 
 	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
@@ -40,7 +40,6 @@ angular
 	}])
 
 	.controller('ContestListCtrl', ['$scope', 'SunzoraFactory', function($scope, SunzoraFactory) {
-		$scope.foo = "this is foo";
 		SunzoraFactory.getAllContests()
 			.then(function(response) {
 				if (response.success == true) {
@@ -156,10 +155,22 @@ angular
 		}	
 	}])
 
-	.controller('ContestResultsCtrl', ['$scope', function($scope) {
-		console.log('ContestResultsCtrl loaded');
+	.controller('ContestResultsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+		SunzoraFactory.getContestById($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					console.log(response.contest);
+					$scope.contest = response.contest;
+				}
+			})
+		SunzoraFactory.getResultsByContestId($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.entries = response.entries;
+				}
+			})
 	}])
 
 	.controller('AboutCtrl', ['$scope', function($scope) {
-		console.log('AboutCtrl loaded');
+		// this is probably going to be static text
 	}])

@@ -4,7 +4,7 @@ ul(class="contests" ng-repeat="contest in contests")
 	li
 		div 
 			table
-				tr
+				tr(ng-if="contest.completed == false")
 					td.title
 						span {{ contest.title }}
 						br
@@ -16,3 +16,13 @@ ul(class="contests" ng-repeat="contest in contests")
 									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") A
 								td
 									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") B
+				tr(ng-if="contest.completed == true")
+					td.title
+						span {{ contest.title }}
+						br
+						span {{ contest.deadline }}
+					td.buttons
+						table
+							tr
+								td
+									a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") A

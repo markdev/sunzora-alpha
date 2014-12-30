@@ -29,17 +29,20 @@ exports.getAllContests =  function(req, res, next) {
 		{ 
 			id: 1,
 			title: "How should we use sunzora?",
-			deadline: "Feb 1, 2015"
+			deadline: "Feb 1, 2015",
+			completed: false
 		},
 		{ 
 			id: 2,
 			title: "HHow can sunzora make money?",
-			deadline: "January 15, 2015"
+			deadline: "January 15, 2015",
+			completed: false
 		},
 		{ 
 			id: 3,
 			title: "What's the first thing sunzora should do?",
-			deadline: "Feb 3, 2015"
+			deadline: "Feb 3, 2015",
+			completed: true
 		}
 	];
 	res.send({success: true, contests: contests});
@@ -83,4 +86,14 @@ exports.randomEntryByContestId = function(req, res, next) {
 exports.addRating = function(req, res, next) {
 	console.log(req.body);
 	res.send({success: true});
+}
+
+exports.getResultsByContest = function(req, res, next) {
+	console.log("Here I am");
+	var entries = [
+			{ content: "American Idol style contests for different street performers", score: 7.3 },
+			{ content: "Make group decisions in the Fire Triangle", score: 5.4 },
+			{ content: "Use it to make more xontests about how to use it", score: 3.4 }
+		];
+	res.send({success: true, entries: entries});
 }

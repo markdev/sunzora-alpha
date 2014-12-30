@@ -11,6 +11,7 @@ module.exports = function(app) {
 	app.post('/api/entry' 					, api.createEntry);
 	app.get('/api/randomEntryByContestId/:id?', api.randomEntryByContestId);
 	app.post('/api/addRating' 				, api.addRating);
+	app.get('/api/resultsByContest/:id?' 		, api.getResultsByContest);
 
 	app.get('/views/*', function(req, res) {
 		var file = req.params[0];

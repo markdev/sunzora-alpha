@@ -102,6 +102,15 @@ angular
 			return deferred.promise;
 		}
 
+		SunzoraFactory.getResultsByContestId = function(id) {
+			var deferred = $q.defer();
+			$http.get("/api/resultsByContest/" + id)
+				.success(function(response) {
+					deferred.resolve(response)					
+				})
+			return deferred.promise;
+		}
+
 
 		return SunzoraFactory;
 	}])
