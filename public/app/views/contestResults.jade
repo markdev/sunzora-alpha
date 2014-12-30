@@ -1,0 +1,24 @@
+h1 RESULTS
+table
+	tr
+		td
+			a(ui-sref="contests.list") Back to list
+		td
+			//TODO: make this link dynamic
+			a(ui-sref="contests.addEntry({id: '1' })") Add New Entry
+hr
+h1.title {{ contest.title }}
+
+label Description
+p {{ contest.description }}
+
+table
+	tr
+		td
+			label Your entries
+		td
+			label Score:
+	tr(class="entries" ng-repeat="entry in entries")
+		td {{ entry.content }}
+		td {{ entry.score }}
+

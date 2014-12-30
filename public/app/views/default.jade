@@ -1,0 +1,21 @@
+header(class="main")
+	nav
+		a(class="title" ui-sref="root.home")
+		div(class="welcomeUser")
+			table
+				tr
+					td
+						span Hello, {{currentUser.email}}!	
+
+section(class="mainBody")
+	ui-view
+
+footer(class="main")
+	nav
+		ul
+			li(class="navitem" ng-class='{ "active" : title == "contests"}' id="contests")
+				a(ui-sref="contests.list") Contest
+			li(class="navitem" ng-class='{ "active" : title == "about.sunzora"}' id="about")
+				a(ui-sref="about.sunzora") About
+			li(class="navitem" ng-class='{ "active" : title == "about"}' id="about")
+				a(ui-sref="logout") Log Out

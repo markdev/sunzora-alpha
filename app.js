@@ -11,39 +11,16 @@ var express 		= require('express')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			= require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
+  , fs              = require('fs')
   ;
 
 var app = express();
 var config = require('./server/config')
+var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
+var sunzoracreate = fs.readFileSync('sunzora_create_db.sql').toString();
+var sunzoradrop = fs.readFileSync('sunzora_drop_db.sql').toString();
+var tablecreate = fs.readFileSync('sunzora_create_tables.sql').toString();
 
-pg.connect(config.conString, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query('SELECT * FROM test_table', function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
-
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows);
-    //output: 1
-  });
-});
-
-app.listen(config.port);
-console.log("app is listening on port " + config.port + "...");
-
-//initialize database
-//require('./server/db')(config);
-
-//init User model
-//var UserSchema = require('./server/models/User').User
-//  , User = mongoose.model('User')
-
-// Configure express
-/*
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
@@ -68,10 +45,14 @@ app.use(serveStatic(__dirname + '/public'));
 
 passport.serializeUser(function(user, done) {
 	if(user) {
-		done(null, user._id);
+		done(null, user);
 	}
 });
 
+passport.deserializeUser(function(id, done) {
+	return done(null, false);	
+});
+/*
 passport.deserializeUser(function(id, done) {
 	console.log("Deserializing User");
 	User.findOne({_id:id}).exec(function(err, user) {
@@ -83,7 +64,7 @@ passport.deserializeUser(function(id, done) {
 		}
 	})
 });
-
+*/
 passport.use(new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
@@ -91,6 +72,14 @@ passport.use(new LocalStrategy({
 	function(username, password, done) {
 		console.log("DEBUG 2");
 		console.log("Email: " + username);
+		if (username=="mark.karavan@gmail.com" && password=="mark") {
+			console.log("authenticated!");
+			return done(null, {email: 'mark.karavan@gmail.com'});
+		} else {
+			console.log("not found");
+			return done(null, false);
+		}
+		/*
 		User.findOne({email:username}).exec(function(err, user) {
 			console.log("DEBUG 3");
 			if (user && user.authenticate(password)) {
@@ -101,12 +90,71 @@ passport.use(new LocalStrategy({
 				return done(null, false);
 			}
 		});
+		*/
 	}
 ));
 
-app.use(multer({
-	dest: "./images/tmp"
-}));
-*/
-//configure routes
-//require('./server/routes/api-routes')(app);
+/* initialization of database
+Connect to Postgres{
+  Drop Sunzora{
+    Create Sunzora{
+      Connect to Sunzora{
+        Create Tables{
+        } 
+      }
+    }
+  }
+}*/
+//Initiate Connection: Postgres DB
+pg.connect(config.postgresconString, function(err, client, done) {
+    if(err) {
+      return console.error('Postgres connection issue: ', err);//exception for connecting
+    }
+    //DROP Sunzora DB
+    client.query(sunzoradrop, function(err, result) {
+      done();
+
+      if(err) {
+          console.log('dropping sunzora:', err);//ignore error if sunzora does not exist
+      }
+
+        //CREATE Sunzora DB
+        client.query(sunzoracreate, function(err, result) {
+
+          done();
+
+          if(err) {
+            console.log('creating sunzora:', err);//ignore error if sunzora already set up
+          }
+    		//Initiate Connection: Sunzora DB
+            pg.connect(config.sunzoraconString, function(err, client, done) {
+
+                if (err) {
+                  return console.error('Sunzora connection issue: ', err);//exception for connecting
+                }
+                //CREATE Sunzora Tables
+                client.query(tablecreate, function(err, result) {
+                  done();
+        
+                  if (err) {
+                    return console.error('error running query', err);//exception if SQL fails
+                  }
+
+                console.log(result.rows);
+                });
+            });
+      //output: 1
+        });
+    });
+});
+
+require('./server/routes/api-routes')(app);
+
+app.listen(config.port);
+console.log("app is listening on port " + config.port + "...");
+
+
+
+
+
+

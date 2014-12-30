@@ -1,0 +1,21 @@
+button(ui-sref="contests.list") Back to contests
+hr
+table
+	tr 
+		td
+			label Contest Name
+		td
+			input(type="text" ng-model="ctitle")
+	tr 
+		td
+			label Contest Description
+		td
+			input(type="text" ng-model="description")
+	tr 
+		td
+			label Contest Deadline
+		td
+			input(type="text" ng-model="deadline")
+	tr
+		td(colspan="2")
+			button(ng-click="submit()") Submit
