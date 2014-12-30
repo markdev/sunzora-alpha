@@ -41,11 +41,9 @@ Columns:
     the submitted text value entered by the user (this is the entry itself)
 
 Table: permission_link
-+ link_id (integer)
-    primary key of links between users and permissions providing an enumerated unique ID for each link
-- user_id (integer)
++ user_id (integer)
     foreign key connecting link back to user that the link pertains to 
-- permission_id (integer)
++ permission_id (integer)
     foreign key connecting link back to permission that the link pertains to
     
 

@@ -61,8 +61,8 @@ ALTER TABLE entry
 CREATE TABLE permission_link
 (
   user_id integer NOT NULL,
-  permission_id integer,
-  CONSTRAINT permission_link_pkey PRIMARY KEY (user_id),
+  permission_id integer NOT NULL,
+  CONSTRAINT permission_link_pkey PRIMARY KEY (user_id, permission_id),
   CONSTRAINT permission_link_permission_id_fkey FOREIGN KEY (permission_id)
       REFERENCES permission (permission_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
