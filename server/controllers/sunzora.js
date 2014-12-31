@@ -1,5 +1,8 @@
-var passport 	= require('passport');
+var passport 	= require('passport')
+ , pg   		= require('pg')
+ ;
 
+var config = require('./server/config')
 /**
 	Notes:
 	- I've used the convention uid, cid, and eid to refer to user id, contest id, and entry id
@@ -90,8 +93,8 @@ exports.getAllContests =  function(req, res, next) {
 	var contests = [
 		{ 
 			id: 1,
-			title: "How should we use sunzora?",
-			deadline: "Feb 1, 2015",
+			title: "How should we use sunzora??????",
+			deadline: "Feb 2, 2015",
 			completed: false
 		},
 		{ 
@@ -107,6 +110,7 @@ exports.getAllContests =  function(req, res, next) {
 			completed: true
 		},
 	];
+
 	res.send({success: true, contests: contests});
 }
 
@@ -135,7 +139,7 @@ exports.getAllActiveContests =  function(req, res, next) {
 	var contests = [
 		{ 
 			id: 1,
-			title: "How should we use sunzora?",
+			title: "How should we use sunzora??",
 			deadline: "Feb 1, 2015",
 			completed: false
 		},
@@ -152,6 +156,22 @@ exports.getAllActiveContests =  function(req, res, next) {
 			completed: true
 		},
 	];
+
+		pg.connect(config.postgresconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		client.query('SELECT * FROM public.contest;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     
+    		console.log(result.rows);
+    		});
+    });
+
 	res.send({success: true, contests: contests});
 }
 
