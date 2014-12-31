@@ -43,7 +43,7 @@ exports.getAllContests =  function(req, res, next) {
 			title: "What's the first thing sunzora should do?",
 			deadline: "Feb 3, 2015",
 			completed: true
-		}
+		},
 	];
 	res.send({success: true, contests: contests});
 }
