@@ -8,7 +8,6 @@ angular
 
 	.factory('SunzoraFactory', ['$http', '$q', function($http, $q) {
 
-		var urlBase = "/api/users/login"
 		var SunzoraFactory = {};
 
 		SunzoraFactory.login = function(postData) {

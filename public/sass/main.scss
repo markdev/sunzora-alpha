@@ -1,5 +1,4 @@
 /*  Watch the BootstrapBay Tutorials on youtube: https://www.youtube.com/watch?v=E_BrfH10OTc */
-
 $bodyBackground: #EEE;
 $sunzoraOrange: #FFA834;
 $headline: #FFF;
@@ -34,7 +33,9 @@ div.loginPage {
 		}
 	}
 	section.body {
+		margin: 0 auto;
 		width: 100%;
+		display: block;
 		div.loginForm {
 			width: 20em;
 			display: block;
@@ -45,7 +46,13 @@ div.loginPage {
 			}
 			input {
 				width: 15em;
-				height: 2em;
+				height: 1.5em;
+				margin: 1em 0em;
+			}
+			button {
+				width: 10em;
+				height: 3em;
+				margin: 1em 0em;
 			}
 		}
 	}
@@ -106,8 +113,16 @@ header.main {
 section.mainBody {
 	padding-top: $headerHeight;
 	padding-bottom: $footerHeight;
-	width: $bodyWidth;
+	//width: $bodyWidth;
+	width: auto;
 	margin: auto;
+	display: block;
+	button.createContest {
+		display: block;
+		width: 10em;
+		height: 3em;
+		margin: 10px auto;
+	}
 	h1.title {
 		text-align: center;
 	}
@@ -155,7 +170,7 @@ section.mainBody {
 }
 
 footer.main {
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
 	height: 4em;
 	width: 100%;

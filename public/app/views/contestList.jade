@@ -1,4 +1,4 @@
-button(ui-sref="contests.create") Create Contest
+button(class="createContest" ui-sref="contests.create") Create Contest
 
 ul(class="contests" ng-repeat="contest in contests")
 	li
@@ -13,9 +13,9 @@ ul(class="contests" ng-repeat="contest in contests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") A
+									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
 								td
-									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") B
+									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
 				tr(ng-if="contest.completed == true")
 					td.title
 						span {{ contest.title }}
@@ -25,4 +25,4 @@ ul(class="contests" ng-repeat="contest in contests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") A
+									a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details
