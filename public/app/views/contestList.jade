@@ -15,9 +15,9 @@ ul(class="contests" ng-repeat="contest in activeContests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
+									button(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
 								td
-									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
+									button(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
 hr
 h1.title Completed Contests				
 ul(class="contests" ng-repeat="contest in completedContests")
@@ -30,4 +30,4 @@ ul(class="contests" ng-repeat="contest in completedContests")
 						br
 						span {{ contest.deadline }}
 					td.buttons
-						a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details
+						button(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details

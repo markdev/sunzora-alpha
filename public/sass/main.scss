@@ -119,7 +119,7 @@ section.mainBody {
 	display: block;
 	button.createContest {
 		display: block;
-		width: 10em;
+		width: 20em;
 		height: 3em;
 		margin: 10px auto;
 	}
@@ -154,17 +154,6 @@ section.mainBody {
 			}
 			td.buttons {
 				text-align: center;
-				a {
-					display: block;
-					width: 3em;
-					height: 3em;
-					&.details {
-						background-color: #F00;
-					}
-					&.judge {
-						background-color: #0F0;
-					}
-				}
 			}
 		}
 	}
