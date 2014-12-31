@@ -2,7 +2,8 @@ var passport 	= require('passport')
  , pg   		= require('pg')
  ;
 
-var config = require('./server/config')
+var SunzoraconString = "postgres://postgres:irdlhajbis@localhost:5432/sunzora";
+
 /**
 	Notes:
 	- I've used the convention uid, cid, and eid to refer to user id, contest id, and entry id
@@ -111,6 +112,21 @@ exports.getAllContests =  function(req, res, next) {
 		},
 	];
 
+/*		pg.connect(config.postgresconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		client.query('SELECT * FROM public.contest;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     
+    		console.log(result.rows);
+    		});
+    });*/
+
 	res.send({success: true, contests: contests});
 }
 
@@ -136,7 +152,7 @@ exports.getAllContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllActiveContests =  function(req, res, next) {
-	var contests = [
+	/*var contests = [
 		{ 
 			id: 1,
 			title: "How should we use sunzora??",
@@ -155,24 +171,27 @@ exports.getAllActiveContests =  function(req, res, next) {
 			deadline: "Feb 3, 2015",
 			completed: true
 		},
-	];
+	];*/
 
-		pg.connect(config.postgresconString, function(err, client, done) {
+	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('SELECT * FROM public.contest;', function(err, result) {
+    		client.query('SELECT * FROM public.contest WHERE contest.end_date > current_timestamp;', function(err, result) {
       			done();
 
       			if(err) {
           			console.log('error:', err);
       			}
-     
+     		
+
     		console.log(result.rows);
+
+    		res.send({success: true, contests: result.rows});
     		});
     });
 
-	res.send({success: true, contests: contests});
+	//res.send({success: true, contests: contests});
 }
 
 
@@ -198,7 +217,7 @@ exports.getAllActiveContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllCompletedContests =  function(req, res, next) {
-	var contests = [
+/*	var contests = [
 		{ 
 			id: 1,
 			title: "How should we use sunzora?",
@@ -217,8 +236,26 @@ exports.getAllCompletedContests =  function(req, res, next) {
 			deadline: "Feb 3, 2015",
 			completed: true
 		},
-	];
-	res.send({success: true, contests: contests});
+	];*/
+
+	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		client.query('SELECT * FROM public.contest WHERE contest.end_date <= current_timestamp;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true, contests: result.rows});
+    		});
+    });
+//	res.send({success: true, contests: contests});
 }
 
 
