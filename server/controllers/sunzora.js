@@ -113,6 +113,97 @@ exports.getAllContests =  function(req, res, next) {
 
 
 /**
+	Goal: Gets all active contests, sorted by deadline
+	Parameters: nothing
+	Returns: contests =
+	[
+		{
+			id: 1234,
+			title: "Contest1",
+			deadline: "1/31/2015 11:46:13",
+		},
+		{
+			id: 1235,
+			title: "Contest2",
+			deadline: "1/29/2015 11:46:13",
+		}
+	]
+	Notes:
+	- Active contests at the top, expired contests at the bottom
+*/
+exports.getAllActiveContests =  function(req, res, next) {
+	var contests = [
+		{ 
+			id: 1,
+			title: "How should we use sunzora?",
+			deadline: "Feb 1, 2015",
+			completed: false
+		},
+		{ 
+			id: 2,
+			title: "HHow can sunzora make money?",
+			deadline: "January 15, 2015",
+			completed: false
+		},
+		{ 
+			id: 3,
+			title: "What's the first thing sunzora should do?",
+			deadline: "Feb 3, 2015",
+			completed: true
+		},
+	];
+	res.send({success: true, contests: contests});
+}
+
+
+
+
+/**
+	Goal: Gets all completed contests, sorted by deadline
+	Parameters: nothing
+	Returns: contests =
+	[
+		{
+			id: 1234,
+			title: "Contest1",
+			deadline: "1/31/2014 11:46:13",
+		},
+		{
+			id: 1235,
+			title: "Contest2",
+			deadline: "1/29/2014 11:46:13",
+		}
+	]
+	Notes:
+	- Active contests at the top, expired contests at the bottom
+*/
+exports.getAllCompletedContests =  function(req, res, next) {
+	var contests = [
+		{ 
+			id: 1,
+			title: "How should we use sunzora?",
+			deadline: "Feb 1, 2015",
+			completed: false
+		},
+		{ 
+			id: 2,
+			title: "HHow can sunzora make money?",
+			deadline: "January 15, 2015",
+			completed: false
+		},
+		{ 
+			id: 3,
+			title: "What's the first thing sunzora should do?",
+			deadline: "Feb 3, 2015",
+			completed: true
+		},
+	];
+	res.send({success: true, contests: contests});
+}
+
+
+
+/**
 	Goal: Get a particular contest
 	Parameters: req.param('id')
 	Returns: contest = 

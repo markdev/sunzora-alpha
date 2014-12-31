@@ -6,7 +6,6 @@ $headerHeight: 7em;
 $footerHeight: 4em;
 $bodyWidth: 49em;
 
-
 /* clear your css here */
 html, body, ul, ol, header, h2, h1 {
 	margin: 0;
@@ -154,6 +153,7 @@ section.mainBody {
 				width: 25em;
 			}
 			td.buttons {
+				text-align: center;
 				a {
 					display: block;
 					width: 3em;

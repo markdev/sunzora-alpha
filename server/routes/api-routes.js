@@ -5,6 +5,8 @@ module.exports = function(app) {
 	app.post('/api/login' 					, api.login);
 	app.post('/api/logout' 					, api.logout);
 	app.get('/api/contests'					, api.getAllContests);
+	app.get('/api/contestsActive'			, api.getAllActiveContests);
+	app.get('/api/contestsComplete'			, api.getAllCompletedContests);
 	app.get('/api/contests/:cid'			, api.getContestById);
 	app.get('/api/entriesAndScores/:uid/:cid'	, api.getEntriesAndScoresByUserIdAndContestId);
 	app.post('/api/contests'				, api.createNewContest);
@@ -36,6 +38,8 @@ module.exports = function(app) {
 	});
 
 }
+
+
 
 
 

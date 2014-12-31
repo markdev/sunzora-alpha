@@ -47,6 +47,24 @@ angular
 			return deferred.promise;
 		}
 
+		SunzoraFactory.getAllActiveContests = function() {
+			var deferred = $q.defer();
+			$http.get("/api/contestsActive")
+				.success(function(contests) {
+					deferred.resolve(contests)
+				})
+			return deferred.promise;
+		}
+
+		SunzoraFactory.getAllCompletedContests = function() {
+			var deferred = $q.defer();
+			$http.get("/api/contestsComplete")
+				.success(function(contests) {
+					deferred.resolve(contests)
+				})
+			return deferred.promise;
+		}
+
 		SunzoraFactory.createContest = function(postData) {
 			var deferred = $q.defer();
 			$http.post("/api/contests", postData)
@@ -65,9 +83,9 @@ angular
 			return deferred.promise;
 		}
 
-		SunzoraFactory.getEntriesAndScoresByContestId = function(uid, cid) {
+		SunzoraFactory.getEntriesAndScoresByContestId = function(id) {
 			var deferred = $q.defer();
-			$http.get("/api/entriesAndScores/" + uid + "/" + cid)
+			$http.get("/api/entriesAndScores/" + id)
 				.success(function(response) {
 					deferred.resolve(response)					
 				})
@@ -83,9 +101,9 @@ angular
 			return deferred.promise;
 		}
 
-		SunzoraFactory.getNewEntry = function(uid, cid) {
+		SunzoraFactory.getNewEntry = function(contestId) {
 			var deferred = $q.defer();
-			$http.get("/api/randomEntryByUserIdAndContestId/" + uid + "/" + cid)
+			$http.get("/api/randomEntryByContestId/" + contestId)
 				.success(function(response) {
 					deferred.resolve(response)					
 				})
