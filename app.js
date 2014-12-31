@@ -74,7 +74,7 @@ passport.use(new LocalStrategy({
 		console.log("Email: " + username);
 		if (username=="mark.karavan@gmail.com" && password=="mark") {
 			console.log("authenticated!");
-			return done(null, {id: 1, email: 'mark.karavan@gmail.com'});
+			return done(null, {id: 1, email: 'mark.karavan@gmail.com', permissions: ['submit_entry', 'create_contest'] });
 		} else {
 			console.log("not found");
 			return done(null, false);

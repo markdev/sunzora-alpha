@@ -113,11 +113,10 @@ header.main {
 section.mainBody {
 	padding-top: $headerHeight;
 	padding-bottom: $footerHeight;
-	//width: $bodyWidth;
 	width: auto;
 	margin: auto;
 	display: block;
-	button.createContest {
+	button.centerButton {
 		display: block;
 		width: 20em;
 		height: 3em;
@@ -129,6 +128,11 @@ section.mainBody {
 	textarea#entry {
 		width: 30em;
 		height: 5em;
+	}
+	table#createContestContent {
+		margin: auto;
+		width: auto;
+		background-color: #f00;
 	}
 	div#judgeContent {
 		width: 300px;

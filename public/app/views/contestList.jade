@@ -1,6 +1,7 @@
-button(class="createContest" ui-sref="contests.create") Create Contest
+div(ng-if="canCreate")
+	button(class="centerButton" ui-sref="contests.create") Create Contest
+	hr
 
-hr
 h1.title Active Contests
 ul(class="contests" ng-repeat="contest in activeContests")
 	li
