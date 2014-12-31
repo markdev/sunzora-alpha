@@ -1,35 +1,38 @@
-h1 Judging: {{ contest.title }}
+button(class="centerButton" ui-sref="contests.list") Back to contests
+hr
 
-table
+h1.title Judging: {{ contest.title }}
+
+table#judgeContent
 	tr
-		td
+		td(class="slider")
 			button(ng-if="!first" ng-click="slideLeft()") Left
 		td
-			div#judgeContent {{ entries[current].title }}
-		td
+			div {{ entries[current].title }}
+		td(class="slider")
 			button(ng-if="!last" ng-click="slideRight()") Right
 br
 
-table
+table#judgeRating
 	tr
 		td
-			div(class="rateButton" id="1" ng-class="{'red' : entries[current].rating == 1}" ng-click="rateThis(1)") 1
+			button(class="rateButton" id="1" ng-class="{'red' : entries[current].rating == 1}" ng-click="rateThis(1)") 1
 		td
-			div(class="rateButton" id="2" ng-class="{'red' : entries[current].rating == 2}" ng-click="rateThis(2)") 2
+			button(class="rateButton" id="2" ng-class="{'red' : entries[current].rating == 2}" ng-click="rateThis(2)") 2
 		td
-			div(class="rateButton" id="3" ng-class="{'red' : entries[current].rating == 3}" ng-click="rateThis(3)") 3
+			button(class="rateButton" id="3" ng-class="{'red' : entries[current].rating == 3}" ng-click="rateThis(3)") 3
 		td
-			div(class="rateButton" id="4" ng-class="{'red' : entries[current].rating == 4}" ng-click="rateThis(4)") 4
+			button(class="rateButton" id="4" ng-class="{'red' : entries[current].rating == 4}" ng-click="rateThis(4)") 4
 		td
-			div(class="rateButton" id="5" ng-class="{'red' : entries[current].rating == 5}" ng-click="rateThis(5)") 5
+			button(class="rateButton" id="5" ng-class="{'red' : entries[current].rating == 5}" ng-click="rateThis(5)") 5
 	tr
 		td
-			div(class="rateButton" id="6" ng-class="{'red' : entries[current].rating == 6}" ng-click="rateThis(6)") 6
+			button(class="rateButton" id="6" ng-class="{'red' : entries[current].rating == 6}" ng-click="rateThis(6)") 6
 		td
-			div(class="rateButton" id="7" ng-class="{'red' : entries[current].rating == 7}" ng-click="rateThis(7)") 7
+			button(class="rateButton" id="7" ng-class="{'red' : entries[current].rating == 7}" ng-click="rateThis(7)") 7
 		td
-			div(class="rateButton" id="8" ng-class="{'red' : entries[current].rating == 8}" ng-click="rateThis(8)") 8
+			button(class="rateButton" id="8" ng-class="{'red' : entries[current].rating == 8}" ng-click="rateThis(8)") 8
 		td
-			div(class="rateButton" id="9" ng-class="{'red' : entries[current].rating == 9}" ng-click="rateThis(9)") 9
+			button(class="rateButton" id="9" ng-class="{'red' : entries[current].rating == 9}" ng-click="rateThis(9)") 9
 		td
-			div(class="rateButton" id="10" ng-class="{'red' : entries[current].rating == 10}" ng-click="rateThis(10)") 10
+			button(class="rateButton" id="10" ng-class="{'red' : entries[current].rating == 10}" ng-click="rateThis(10)") 10
