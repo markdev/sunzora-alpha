@@ -132,7 +132,19 @@ section.mainBody {
 	table#createContestContent {
 		margin: auto;
 		width: auto;
-		background-color: #f00;
+		input {
+			margin: 1em;
+		}
+		textarea {
+			width: 15em;
+			height: 5em;
+		}
+		button#submit {
+			display: block;
+			margin: auto;
+			width: 10em;
+			height: 3em;
+		}
 	}
 	div#judgeContent {
 		width: 300px;
