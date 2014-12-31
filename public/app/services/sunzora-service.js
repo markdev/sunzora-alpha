@@ -65,9 +65,9 @@ angular
 			return deferred.promise;
 		}
 
-		SunzoraFactory.getEntriesAndScoresByContestId = function(id) {
+		SunzoraFactory.getEntriesAndScoresByContestId = function(uid, cid) {
 			var deferred = $q.defer();
-			$http.get("/api/entriesAndScores/" + id)
+			$http.get("/api/entriesAndScores/" + uid + "/" + cid)
 				.success(function(response) {
 					deferred.resolve(response)					
 				})
@@ -83,9 +83,9 @@ angular
 			return deferred.promise;
 		}
 
-		SunzoraFactory.getNewEntry = function(contestId) {
+		SunzoraFactory.getNewEntry = function(uid, cid) {
 			var deferred = $q.defer();
-			$http.get("/api/randomEntryByContestId/" + contestId)
+			$http.get("/api/randomEntryByUserIdAndContestId/" + uid + "/" + cid)
 				.success(function(response) {
 					deferred.resolve(response)					
 				})

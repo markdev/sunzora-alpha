@@ -16,6 +16,7 @@ angular
 		$scope.password = "mark";
 		$scope.submit = function() {
 			var postData = {};
+			postData.uId = $rootScope.currentUser.id;
 			postData.email = $scope.email;
 			postData.password = $scope.password;
 			SunzoraFactory.login(postData)
@@ -32,6 +33,7 @@ angular
 	}])
 
 	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
+		console.log($rootScope.currentUser);
 		SunzoraFactory.logout()
 			.then(function(data) {
 				$rootScope.currentUser = {};
@@ -48,7 +50,7 @@ angular
 			})
 	}])
 
-	.controller('ContestDetailsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+	.controller('ContestDetailsCtrl', ['$scope', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $rootScope, $stateParams, SunzoraFactory) {
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
@@ -56,7 +58,7 @@ angular
 					$scope.contest = response.contest;
 				}
 			})
-		SunzoraFactory.getEntriesAndScoresByContestId($stateParams.id)
+		SunzoraFactory.getEntriesAndScoresByContestId($rootScope.currentUser.id, $stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
 					$scope.entries = response.entries;
@@ -64,12 +66,13 @@ angular
 			})
 	}])
 
-	.controller('ContestCreateCtrl', ['$scope', '$state', 'SunzoraFactory', function($scope, $state, SunzoraFactory) {
+	.controller('ContestCreateCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
 		$scope.ctitle = "My contest"; // calling it ctitle to avoid collisions with top level title
 		$scope.description = "this be the desc of my contest";
 		$scope.deadline = "1/1/2011";
 		$scope.submit = function() {
 			var postData = {};
+			postData.uId = $rootScope.currentUser.id;
 			postData.title = $scope.ctitle;
 			postData.description = $scope.description;
 			postData.deadline = $scope.deadline;
@@ -93,6 +96,7 @@ angular
 		$scope.submit = function() {
 			console.log("submitting");
 			var postData = {};
+			postData.uId = $rootScope.currentUser.id;
 			postData.content = $scope.content;
 			postData.contest = $stateParams.id;
 			SunzoraFactory.createEntry(postData)
@@ -104,7 +108,7 @@ angular
 		};
 	}])
 
-	.controller('ContestJudgeCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+	.controller('ContestJudgeCtrl', ['$scope', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $rootScope, $stateParams, SunzoraFactory) {
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
@@ -126,7 +130,7 @@ angular
 			$scope.last = ($scope.current == ($scope.entries.length-1))? true : false;
 		}
 		var getNewEntry = function() {
-			SunzoraFactory.getNewEntry($stateParams.id)
+			SunzoraFactory.getNewEntry($rootScope.currentUser.id, $stateParams.id)
 				.then(function(response) {
 					if (response.success) {
 						$scope.entries[$scope.entries.length] = response.entry;
@@ -146,6 +150,7 @@ angular
 		}
 		$scope.rateThis = function(score) {
 			var postData = {};
+			postData.uId = $rootScope.currentUser.id;
 			postData.score = score;
 			postData.entry = $scope.entries[$scope.current].id;
 			SunzoraFactory.addRating(postData)

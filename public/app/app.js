@@ -11,6 +11,7 @@ angular
 	])
 	.run(function($rootScope) {
 		$rootScope.currentUser = window.currentUser;
+		console.log("Current user");
 		console.log($rootScope.currentUser);
         // this is a hacky way to do a redirect, but $state.go() doesn't work for some reason
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
