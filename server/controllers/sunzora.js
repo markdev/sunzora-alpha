@@ -91,43 +91,24 @@ exports.logout = function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllContests =  function(req, res, next) {
-	var contests = [
-		{ 
-			id: 1,
-			title: "How should we use sunzora??????",
-			deadline: "Feb 2, 2015",
-			completed: false
-		},
-		{ 
-			id: 2,
-			title: "HHow can sunzora make money?",
-			deadline: "January 15, 2015",
-			completed: false
-		},
-		{ 
-			id: 3,
-			title: "What's the first thing sunzora should do?",
-			deadline: "Feb 3, 2015",
-			completed: true
-		},
-	];
 
-/*		pg.connect(config.postgresconString, function(err, client, done) {
+	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('SELECT * FROM public.contest;', function(err, result) {
+    		client.query('SELECT * FROM public.contest ORDER BY contest.end_date DESC;', function(err, result) {
       			done();
 
       			if(err) {
           			console.log('error:', err);
       			}
-     
-    		console.log(result.rows);
-    		});
-    });*/
+     		
 
-	res.send({success: true, contests: contests});
+    		console.log(result.rows);
+
+    		res.send({success: true, contests: result.rows});
+    		});
+    });
 }
 
 
@@ -152,26 +133,6 @@ exports.getAllContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllActiveContests =  function(req, res, next) {
-	/*var contests = [
-		{ 
-			id: 1,
-			title: "How should we use sunzora??",
-			deadline: "Feb 1, 2015",
-			completed: false
-		},
-		{ 
-			id: 2,
-			title: "HHow can sunzora make money?",
-			deadline: "January 15, 2015",
-			completed: false
-		},
-		{ 
-			id: 3,
-			title: "What's the first thing sunzora should do?",
-			deadline: "Feb 3, 2015",
-			completed: true
-		},
-	];*/
 
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
@@ -191,7 +152,6 @@ exports.getAllActiveContests =  function(req, res, next) {
     		});
     });
 
-	//res.send({success: true, contests: contests});
 }
 
 
@@ -217,26 +177,6 @@ exports.getAllActiveContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllCompletedContests =  function(req, res, next) {
-/*	var contests = [
-		{ 
-			id: 1,
-			title: "How should we use sunzora?",
-			deadline: "Feb 1, 2015",
-			completed: false
-		},
-		{ 
-			id: 2,
-			title: "HHow can sunzora make money?",
-			deadline: "January 15, 2015",
-			completed: false
-		},
-		{ 
-			id: 3,
-			title: "What's the first thing sunzora should do?",
-			deadline: "Feb 3, 2015",
-			completed: true
-		},
-	];*/
 
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
@@ -255,13 +195,13 @@ exports.getAllCompletedContests =  function(req, res, next) {
     		res.send({success: true, contests: result.rows});
     		});
     });
-//	res.send({success: true, contests: contests});
+
 }
 
 
 
 /**
-	Goal: Gedt a particular contest
+	Goal: Get a particular contest
 	Parameters: req.param('id')
 	Returns: contest = 
 	{
@@ -274,12 +214,6 @@ exports.getAllCompletedContests =  function(req, res, next) {
 exports.getContestById  = function(req, res, next) {
 	var cid = req.param('cid');
 	console.log("cid: " + cid);
-	/*var contest = {
-			id: 1, 
-			title: "this is a contest",
-			description: "Enter suggestions for how to use this thing and blah blah"
-		};
-	res.send({success: true, contest: contest});*/
 
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
@@ -319,6 +253,10 @@ exports.getContestById  = function(req, res, next) {
 	]
 	Notes:
 	- gets entries of the user for a particular contest, along with averaged scores
+	- Grab text details for contest and user
+		SELECT text_details FROM public.entry WHERE user_id = X AND contest_id = Y;
+	- Calculate Average
+
 */
 exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
@@ -330,6 +268,25 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 			{ content: "American Idol style contests for different street performers", score: 7.3 },
 			{ content: "Heebie jeebies", score: 7.3 }
 		];
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		client.query('SELECT text_details FROM public.entry WHERE user_id = uid AND contest_id = cid;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true, contests: result.rows});
+    		});
+    });*/
+
 	res.send({success: true, entries: entries});
 }
 
