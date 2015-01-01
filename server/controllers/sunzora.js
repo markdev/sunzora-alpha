@@ -261,7 +261,7 @@ exports.getAllCompletedContests =  function(req, res, next) {
 
 
 /**
-	Goal: Get a particular contest
+	Goal: Gedt a particular contest
 	Parameters: req.param('id')
 	Returns: contest = 
 	{
@@ -274,12 +274,30 @@ exports.getAllCompletedContests =  function(req, res, next) {
 exports.getContestById  = function(req, res, next) {
 	var cid = req.param('cid');
 	console.log("cid: " + cid);
-	var contest = {
+	/*var contest = {
 			id: 1, 
 			title: "this is a contest",
 			description: "Enter suggestions for how to use this thing and blah blah"
 		};
-	res.send({success: true, contest: contest});
+	res.send({success: true, contest: contest});*/
+
+	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		client.query('SELECT * FROM public.contest WHERE contest.contest_id = cid;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true, contests: result.rows});
+    		});
+    });
 }
 
 

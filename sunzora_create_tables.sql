@@ -15,7 +15,7 @@ ALTER TABLE contest
 
 CREATE TABLE users
 (
-  username text,
+  email text,
   password character(40),
   user_id integer NOT NULL,
   CONSTRAINT "User_pkey" PRIMARY KEY (user_id)
