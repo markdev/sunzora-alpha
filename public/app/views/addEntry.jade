@@ -9,9 +9,15 @@ table#topButtons(ng-controller="ContestNavCtrl")
 
 hr
 h1.title {{contest.title}}
+br
 
-label Enter an entry to this contest:
-br
-textarea(id="entry" ng-model="content")
-br
-button(ng-click="submit()") Submit Entry
+table#entryBox
+	tr
+		td
+			label Enter an entry to this contest:
+	tr
+		td
+			textarea(id="entry" ng-model="content")
+	tr
+		td
+			button(ng-click="submit()") Submit Entry

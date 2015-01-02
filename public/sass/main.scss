@@ -125,9 +125,20 @@ section.mainBody {
 	h1.title {
 		text-align: center;
 	}
-	textarea#entry {
-		width: 30em;
-		height: 5em;
+	table#entryBox {
+		margin: auto;
+		td {
+			text-align: center;
+			textarea#entry {
+				width: 30em;
+				height: 8em;
+				margin-bottom: 2em;
+			}
+			button {
+				width: 12em;
+				height: 3em;
+			}
+		}
 	}
 	table#createContestContent {
 		margin: auto;
@@ -164,13 +175,15 @@ section.mainBody {
 	}
 	table#judgeRating {
 		margin: 0 auto;
-		button.rateButton {
-			height: 50px;
-			width: 50px;
-			background-color: $sunzoraOrange;
+		div.rateButton {
+			padding: 20px;
+			height: 10px;
+			width: 10px;
+			background-image: url("/img/icons/star1.png"); 
+			background-size: 100% auto;
 		}
-		button.red {
-			background-color: #F00;
+		div.red {
+			background-image: url("/img/icons/staractive.png"); 
 		}
 	}
 	table#topButtons {
@@ -201,8 +214,9 @@ section.mainBody {
 			td.buttons {
 				text-align: center;
 				button {
-					display: block;
+					width: 5em;
 					height: 3em;
+
 					//background-color: #f00;
 				}
 			}
