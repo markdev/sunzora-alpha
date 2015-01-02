@@ -1,6 +1,13 @@
-button(ui-sref="contests.details({id: '{{contest.id}}' })") Back to Details
-hr
+table#topButtons(ng-controller="ContestNavCtrl") 
+	tr
+		td
+			button(ui-sref="contests.list") Back to contests
+		td
+			button(ng-click="goToDetails()") Details
+		td
+			button(ng-click="goToJudge()") Judge
 
+hr
 h1.title {{contest.title}}
 
 label Enter an entry to this contest:

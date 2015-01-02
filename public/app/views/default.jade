@@ -14,8 +14,8 @@ footer(class="main")
 	nav
 		ul
 			li(class="navitem" ng-class='{ "active" : title == "contests"}' id="contests")
-				a(ui-sref="contests.list") Contest
+				button(ui-sref="contests.list") Contest
 			li(class="navitem" ng-class='{ "active" : title == "about.sunzora"}' id="about")
-				a(ui-sref="about.sunzora") About
+				button(ui-sref="about.sunzora") About
 			li(class="navitem" ng-class='{ "active" : title == "about"}' id="about")
-				a(ui-sref="logout") Log Out
+				button(ui-sref="logout") Log Out

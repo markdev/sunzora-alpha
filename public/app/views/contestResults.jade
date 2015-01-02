@@ -1,18 +1,18 @@
-h1 RESULTS
-table
+table#detailsNav
 	tr
 		td
-			a(ui-sref="contests.list") Back to list
+			button(ui-sref="contests.list") Back to list
 		td
 			//TODO: make this link dynamic
-			a(ui-sref="contests.addEntry({id: '1' })") Add New Entry
+			button(ui-sref="contests.addEntry({id: '1' })") Add New Entry
 hr
+h1.title RESULTS
 h1.title {{ contest.title }}
 
 label Description
 p {{ contest.description }}
 
-table
+table#contestDetails
 	tr
 		td
 			label Your entries

@@ -173,10 +173,10 @@ section.mainBody {
 			background-color: #F00;
 		}
 	}
-	table#detailsNav {
-		margin: auto;
+	table#topButtons {
+		margin: auto 0;
 		button {
-			width: 12em;
+			width: 8em;
 			height: 3em;
 			margin: 0 2em;
 		}
@@ -200,6 +200,11 @@ section.mainBody {
 			}
 			td.buttons {
 				text-align: center;
+				button {
+					display: block;
+					height: 3em;
+					//background-color: #f00;
+				}
 			}
 		}
 	}
@@ -224,12 +229,11 @@ footer.main {
 				margin: .25em 1em;
 				cursor: pointer;
 				background-size: 100% 100%;
-				a {
+				button {
 					display: block;
-					width: inherit;
-					height: inherit;
-					font-size: 1.5em;
-					color: #EEE;
+					width: 7em;
+					height: 2em;
+					font-size: 1em;
 				}
 			}
 		}

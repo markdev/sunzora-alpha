@@ -1,10 +1,11 @@
-table#detailsNav 
+table#topButtons(ng-controller="ContestNavCtrl") 
 	tr
 		td
-			button(ui-sref="contests.list") Back to list
+			button(ui-sref="contests.list") Back to contests
 		td
-			//TODO: make this link dynamic
-			button(ui-sref="contests.addEntry({id: '1' })") Add New Entry
+			button(ng-click="goToAddEntry()") Add New Entry
+		td
+			button(ng-click="goToJudge()") Judge
 hr
 h1.title {{ contest.title }}
 

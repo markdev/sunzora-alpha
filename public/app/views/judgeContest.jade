@@ -1,4 +1,11 @@
-button(class="centerButton" ui-sref="contests.list") Back to contests
+table#topButtons(ng-controller="ContestNavCtrl") 
+	tr
+		td
+			button(ui-sref="contests.list") Back to contests
+		td
+			button(ng-click="goToDetails()") Details
+		td
+			button(ng-click="goToAddEntry()") Add New Entry
 hr
 
 h1.title Judging: {{ contest.title }}

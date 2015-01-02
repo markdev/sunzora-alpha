@@ -18,6 +18,8 @@ ul(class="contests" ng-repeat="contest in activeContests")
 								td
 									button(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
 								td
+									button(class="details" ui-sref="contests.addEntry({id: '{{contest.id}}' })") Add Entry
+								td
 									button(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
 hr
 h1.title Completed Contests				

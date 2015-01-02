@@ -39,6 +39,19 @@ angular
 			})
 	}])
 
+	.controller('ContestNavCtrl', ['$scope', '$state', '$stateParams', function($scope, $state, $stateParams) {
+		// because dynamic ui-srefs don't work.  Angular sucks
+		$scope.goToDetails = function () {
+			$state.go("contests.details", { id: $stateParams.id } );
+		}
+		$scope.goToJudge = function () {
+			$state.go("contests.judge", { id: $stateParams.id } );			
+		}
+		$scope.goToAddEntry = function () {
+			$state.go("contests.addEntry", { id: $stateParams.id } );			
+		}
+	}])
+
 	.controller('ContestListCtrl', ['$scope', '$rootScope', 'SunzoraFactory', function($scope, $rootScope, SunzoraFactory) {
 		$scope.canCreate = ($rootScope.currentUser.permissions.indexOf('create_contest') > -1)? true : false;
 		SunzoraFactory.getAllActiveContests()
