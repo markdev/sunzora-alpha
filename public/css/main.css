@@ -97,23 +97,63 @@ section.mainBody {
     margin: 10px auto; }
   section.mainBody h1.title {
     text-align: center; }
-  section.mainBody textarea#entry {
-    width: 30em;
-    height: 5em; }
+  section.mainBody table#entryBox {
+    margin: auto; }
+    section.mainBody table#entryBox td {
+      text-align: center; }
+      section.mainBody table#entryBox td textarea#entry {
+        width: 30em;
+        height: 8em;
+        margin-bottom: 2em; }
+      section.mainBody table#entryBox td button {
+        width: 12em;
+        height: 3em; }
   section.mainBody table#createContestContent {
     margin: auto;
-    width: auto;
-    background-color: #f00; }
-  section.mainBody div#judgeContent {
-    width: 300px;
-    height: 200px;
-    border: 1px solid black; }
-  section.mainBody div.rateButton {
-    height: 50px;
-    width: 50px;
-    background-color: #FFF; }
-  section.mainBody div.red {
-    background-color: #F00; }
+    width: auto; }
+    section.mainBody table#createContestContent input {
+      margin: 1em; }
+    section.mainBody table#createContestContent textarea {
+      width: 15em;
+      height: 5em; }
+    section.mainBody table#createContestContent button#submit {
+      display: block;
+      margin: auto;
+      width: 10em;
+      height: 3em; }
+  section.mainBody table#judgeContent {
+    margin: 0 auto; }
+    section.mainBody table#judgeContent td.slider {
+      width: 3em; }
+    section.mainBody table#judgeContent button {
+      height: 100px;
+      width: 50px; }
+    section.mainBody table#judgeContent div {
+      width: 275px;
+      height: 200px;
+      border: 1px solid black; }
+  section.mainBody table#judgeRating {
+    margin: 0 auto; }
+    section.mainBody table#judgeRating div.rateButton {
+      padding: 20px;
+      height: 10px;
+      width: 10px;
+      background-image: url("/img/icons/star1.png");
+      background-size: 100% auto; }
+    section.mainBody table#judgeRating div.red {
+      background-image: url("/img/icons/staractive.png"); }
+  section.mainBody table#topButtons {
+    margin: auto 0; }
+    section.mainBody table#topButtons button {
+      width: 8em;
+      height: 3em;
+      margin: 0 2em; }
+  section.mainBody table#contestDetails {
+    margin: 0 auto; }
+  section.mainBody div.descriptionBox {
+    border: 1px solid black;
+    margin: 0em 2em 2em 2em;
+    padding: 1em; }
   section.mainBody ul.contests {
     list-style-type: none; }
     section.mainBody ul.contests div {
@@ -124,6 +164,9 @@ section.mainBody {
         width: 25em; }
       section.mainBody ul.contests div td.buttons {
         text-align: center; }
+        section.mainBody ul.contests div td.buttons button {
+          width: 5em;
+          height: 3em; }
 
 footer.main {
   position: fixed;
@@ -144,11 +187,10 @@ footer.main {
         margin: .25em 1em;
         cursor: pointer;
         background-size: 100% 100%; }
-        footer.main nav ul li.navitem a {
+        footer.main nav ul li.navitem button {
           display: block;
-          width: inherit;
-          height: inherit;
-          font-size: 1.5em;
-          color: #EEE; }
+          width: 7em;
+          height: 2em;
+          font-size: 1em; }
 
 /*# sourceMappingURL=main.css.map */

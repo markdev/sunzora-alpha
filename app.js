@@ -12,6 +12,7 @@ var express 		= require('express')
   , multer			= require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
   , fs              = require('fs')
+  , vhostManager = require("express-vhost-manager")
   ;
 
 var app = express();
@@ -20,6 +21,8 @@ var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
 var sunzoracreate = fs.readFileSync('sunzora_create_db.sql').toString();
 var sunzoradrop = fs.readFileSync('sunzora_drop_db.sql').toString();
 var tablecreate = fs.readFileSync('sunzora_create_tables.sql').toString();
+
+
 
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
@@ -65,6 +68,10 @@ passport.deserializeUser(function(id, done) {
 	})
 });
 */
+
+var SunzoraconString = "postgres://postgres:irdlhajbis@localhost:5432/sunzora";
+
+
 passport.use(new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
@@ -79,6 +86,8 @@ passport.use(new LocalStrategy({
 			console.log("not found");
 			return done(null, false);
 		}
+  }
+));
 		/*
 		User.findOne({email:username}).exec(function(err, user) {
 			console.log("DEBUG 3");
@@ -91,8 +100,6 @@ passport.use(new LocalStrategy({
 			}
 		});
 		*/
-	}
-));
 
 /* initialization of database
 Connect to Postgres{
