@@ -1,6 +1,7 @@
-button(ui-sref="contests.list") Back to contests
+button(class="centerButton" ui-sref="contests.list") Back to contests
 hr
-table
+
+table#createContestContent
 	tr 
 		td
 			label Contest Name
@@ -10,12 +11,19 @@ table
 		td
 			label Contest Description
 		td
-			input(type="text" ng-model="description")
+			textarea(ng-model="description")
 	tr 
 		td
 			label Contest Deadline
 		td
-			input(type="text" ng-model="deadline")
+			select(ng-model="myMonth" ng-options='month.name for month in months')
+			select(ng-model="myDay" ng-options='day.name for day in days')
+			select(ng-model="myYear" ng-options='year.name for year in years')
+			br
+			select(ng-model="myHour" ng-options='hour.name for hour in hours')
+			span :
+			select(ng-model="myMinute" ng-options='minute.name for minute in minutes')
+
 	tr
 		td(colspan="2")
-			button(ng-click="submit()") Submit
+			button(id="submit" ng-click="submit()") Submit

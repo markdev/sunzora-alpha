@@ -1,10 +1,13 @@
-button(ui-sref="contests.create") Create Contest
+div(ng-if="canCreate")
+	button(class="centerButton" ui-sref="contests.create") Create Contest
+	hr
 
-ul(class="contests" ng-repeat="contest in contests")
+h1.title Active Contests
+ul(class="contests" ng-repeat="contest in activeContests")
 	li
 		div 
 			table
-				tr(ng-if="contest.completed == false")
+				tr
 					td.title
 						span {{ contest.title }}
 						br
@@ -13,16 +16,21 @@ ul(class="contests" ng-repeat="contest in contests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") A
+									button(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
 								td
-									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") B
-				tr(ng-if="contest.completed == true")
+									button(class="details" ui-sref="contests.addEntry({id: '{{contest.id}}' })") Add Entry
+								td
+									button(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
+hr
+h1.title Completed Contests				
+ul(class="contests" ng-repeat="contest in completedContests")
+	li
+		div 
+			table
+				tr
 					td.title
 						span {{ contest.title }}
 						br
 						span {{ contest.deadline }}
 					td.buttons
-						table
-							tr
-								td
-									a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") A
+						button(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details

@@ -1,12 +1,10 @@
 /*  Watch the BootstrapBay Tutorials on youtube: https://www.youtube.com/watch?v=E_BrfH10OTc */
-
 $bodyBackground: #EEE;
 $sunzoraOrange: #FFA834;
 $headline: #FFF;
 $headerHeight: 7em;
 $footerHeight: 4em;
 $bodyWidth: 49em;
-
 
 /* clear your css here */
 html, body, ul, ol, header, h2, h1 {
@@ -35,7 +33,9 @@ div.loginPage {
 		}
 	}
 	section.body {
+		margin: 0 auto;
 		width: 100%;
+		display: block;
 		div.loginForm {
 			width: 20em;
 			display: block;
@@ -46,7 +46,13 @@ div.loginPage {
 			}
 			input {
 				width: 15em;
-				height: 2em;
+				height: 1.5em;
+				margin: 1em 0em;
+			}
+			button {
+				width: 10em;
+				height: 3em;
+				margin: 1em 0em;
 			}
 		}
 	}
@@ -107,27 +113,94 @@ header.main {
 section.mainBody {
 	padding-top: $headerHeight;
 	padding-bottom: $footerHeight;
-	width: $bodyWidth;
+	width: auto;
 	margin: auto;
+	display: block;
+	button.centerButton {
+		display: block;
+		width: 20em;
+		height: 3em;
+		margin: 10px auto;
+	}
 	h1.title {
 		text-align: center;
 	}
-	textarea#entry {
-		width: 30em;
-		height: 5em;
+	table#entryBox {
+		margin: auto;
+		td {
+			text-align: center;
+			textarea#entry {
+				width: 30em;
+				height: 8em;
+				margin-bottom: 2em;
+			}
+			button {
+				width: 12em;
+				height: 3em;
+			}
+		}
 	}
-	div#judgeContent {
-		width: 300px;
-		height: 200px;
+	table#createContestContent {
+		margin: auto;
+		width: auto;
+		input {
+			margin: 1em;
+		}
+		textarea {
+			width: 15em;
+			height: 5em;
+		}
+		button#submit {
+			display: block;
+			margin: auto;
+			width: 10em;
+			height: 3em;
+		}
+	}
+	table#judgeContent {
+		margin: 0 auto;
+		td.slider {
+			width: 3em;
+		}
+		button {
+			//background-color: #F00;
+			height: 100px;
+			width: 50px;
+		}
+		div {
+			width: 275px;
+			height: 200px;
+			border: 1px solid black;
+		}
+	}
+	table#judgeRating {
+		margin: 0 auto;
+		div.rateButton {
+			padding: 20px;
+			height: 10px;
+			width: 10px;
+			background-image: url("/img/icons/star1.png"); 
+			background-size: 100% auto;
+		}
+		div.red {
+			background-image: url("/img/icons/staractive.png"); 
+		}
+	}
+	table#topButtons {
+		margin: auto 0;
+		button {
+			width: 8em;
+			height: 3em;
+			margin: 0 2em;
+		}
+	}
+	table#contestDetails {
+		margin: 0 auto;
+	}
+	div.descriptionBox {
 		border: 1px solid black;
-	}
-	div.rateButton {
-		height: 50px;
-		width: 50px;
-		background-color: #FFF;
-	}
-	div.red {
-		background-color: #F00;
+		margin: 0em 2em 2em 2em;
+		padding: 1em;
 	}
 	ul.contests {
 		list-style-type: none;
@@ -139,16 +212,12 @@ section.mainBody {
 				width: 25em;
 			}
 			td.buttons {
-				a {
-					display: block;
-					width: 3em;
+				text-align: center;
+				button {
+					width: 5em;
 					height: 3em;
-					&.details {
-						background-color: #F00;
-					}
-					&.judge {
-						background-color: #0F0;
-					}
+
+					//background-color: #f00;
 				}
 			}
 		}
@@ -156,7 +225,7 @@ section.mainBody {
 }
 
 footer.main {
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
 	height: 4em;
 	width: 100%;
@@ -174,12 +243,11 @@ footer.main {
 				margin: .25em 1em;
 				cursor: pointer;
 				background-size: 100% 100%;
-				a {
+				button {
 					display: block;
-					width: inherit;
-					height: inherit;
-					font-size: 1.5em;
-					color: #EEE;
+					width: 7em;
+					height: 2em;
+					font-size: 1em;
 				}
 			}
 		}

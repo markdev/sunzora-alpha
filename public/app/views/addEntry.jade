@@ -1,10 +1,23 @@
-button(ui-sref="contests.details({id: '{{contest.id}}' })") Back to Details
+table#topButtons(ng-controller="ContestNavCtrl") 
+	tr
+		td
+			button(ui-sref="contests.list") Back to contests
+		td
+			button(ng-click="goToDetails()") Details
+		td
+			button(ng-click="goToJudge()") Judge
+
 hr
-
 h1.title {{contest.title}}
+br
 
-label Enter an entry to this contest:
-br
-textarea(id="entry" ng-model="content")
-br
-button(ng-click="submit()") Submit Entry
+table#entryBox
+	tr
+		td
+			label Enter an entry to this contest:
+	tr
+		td
+			textarea(id="entry" ng-model="content")
+	tr
+		td
+			button(ng-click="submit()") Submit Entry

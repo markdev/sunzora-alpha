@@ -21,7 +21,9 @@ div.loginPage header {
     margin: 0 auto;
     font-size: 4em; }
 div.loginPage section.body {
-  width: 100%; }
+  margin: 0 auto;
+  width: 100%;
+  display: block; }
   div.loginPage section.body div.loginForm {
     width: 20em;
     display: block;
@@ -31,7 +33,12 @@ div.loginPage section.body {
       font-size: 1.6em; }
     div.loginPage section.body div.loginForm input {
       width: 15em;
-      height: 2em; }
+      height: 1.5em;
+      margin: 1em 0em; }
+    div.loginPage section.body div.loginForm button {
+      width: 10em;
+      height: 3em;
+      margin: 1em 0em; }
 
 header.main {
   position: fixed;
@@ -80,13 +87,23 @@ header.main {
 section.mainBody {
   padding-top: 7em;
   padding-bottom: 4em;
-  width: 49em;
-  margin: auto; }
+  width: auto;
+  margin: auto;
+  display: block; }
+  section.mainBody button.centerButton {
+    display: block;
+    width: 20em;
+    height: 3em;
+    margin: 10px auto; }
   section.mainBody h1.title {
     text-align: center; }
   section.mainBody textarea#entry {
     width: 30em;
     height: 5em; }
+  section.mainBody table#createContestContent {
+    margin: auto;
+    width: auto;
+    background-color: #f00; }
   section.mainBody div#judgeContent {
     width: 300px;
     height: 200px;
@@ -105,17 +122,11 @@ section.mainBody {
       font-size: .75em; }
       section.mainBody ul.contests div td.title {
         width: 25em; }
-      section.mainBody ul.contests div td.buttons a {
-        display: block;
-        width: 3em;
-        height: 3em; }
-        section.mainBody ul.contests div td.buttons a.details {
-          background-color: #F00; }
-        section.mainBody ul.contests div td.buttons a.judge {
-          background-color: #0F0; }
+      section.mainBody ul.contests div td.buttons {
+        text-align: center; }
 
 footer.main {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   height: 4em;
   width: 100%;
