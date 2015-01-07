@@ -253,9 +253,11 @@ exports.getContestById  = function(req, res, next) {
 	Notes:
 	- gets entries of the user for a particular contest, along with averaged scores
 	- Grab text details for contest and user
-		SELECT text_details FROM public.entry WHERE user_id = X AND contest_id = Y;
+		SELECT text_details FROM public.entry WHERE user_id = X AND contest_id = Y;		
 	- Calculate Average
-
+		FOR length of array of entries
+			SELECT selected_rating FROM public.rating WHERE entry_id='Z';
+			Calculate Average of selection
 */
 exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
@@ -303,10 +305,37 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	Returns: nothing
 	Notes:
 	- Just returns a {success: true} if the object inserts correctly
+
+	- Get current contest_id
+		SELECT MAX(contest_id) FROM public.contest;
+	- Insert Contest
+		INSERT INTO contest 
+		VALUES (title, description,end_date,start_date, contest_id);
 */
 exports.createNewContest = function(req, res, next) {
 	console.log(req.body);
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		NEED TO PARSE REQUEST
+    		client.query('INSERT INTO contest VALUES ("title", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05", "1"),', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true});
+    		});
+    });*/
+
 	res.send({success: true});
+
 }
 
 
@@ -326,6 +355,26 @@ exports.createNewContest = function(req, res, next) {
 */
 exports.createEntry = function(req, res, next) {
 	console.log(req.body);
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		NEED TO PARSE REQUEST
+    		client.query('INSERT INTO entry VALUES (VALUES ('cid','eid','uid','entry details')', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true});
+    		});
+    });*/
+
 	res.send({success: true});
 }
 
@@ -368,6 +417,26 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 	- Postgres may have a system for transactions with conditions for things like this, and that would be useful to know, but give that a low priority to the easy solution.
 */
 exports.addRating = function(req, res, next) {
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		NEED TO PARSE REQUEST
+    		client.query('INSERT INTO rating VALUES (VALUES ('eid','uid','selected rating','rid')', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true});
+    		});
+    });*/
+
 	res.send({success: true});
 }
 
