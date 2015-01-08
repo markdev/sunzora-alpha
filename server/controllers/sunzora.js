@@ -314,6 +314,7 @@ exports.createNewContest = function(req, res, next) {
     });
 
 	res.send({success: true});
+*/
 
 }
 
@@ -339,12 +340,7 @@ exports.createEntry = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-<<<<<<< Updated upstream
     		client.query('INSERT INTO entry (contest_id, user_id, selected_rating) VALUES (' + req.body.cid + ', ' + req.body.uid + ', ' + req.body.content + ')', function(err, result) {
-=======
-    		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO entry (contest_id, user_id, text_details) VALUES ('cid','uid','entry details')', function(err, result) {
->>>>>>> Stashed changes
       			done();
 
       			if(err) {
