@@ -77,15 +77,31 @@ passport.use(new LocalStrategy({
 		passwordField: 'password'
 	},
 	function(username, password, done) {
-		console.log("DEBUG 2");
-		console.log("Email: " + username);
-		if (username=="mark.karavan@gmail.com" && password=="mark") {
-			console.log("authenticated!");
-			return done(null, {id: 1, email: 'mark.karavan@gmail.com', permissions: ['submit_entry', 'create_contest'] });
-		} else {
-			console.log("not found");
-			return done(null, false);
-		}
+
+    if (username=="mark.karavan@gmail.com" && password=="mark") {
+      console.log("authenticated!");
+      return done(null, {id: 1, email: 'mark.karavan@gmail.com', permissions: ['submit_entry', 'create_contest'] });
+    } else {
+      console.log("not found");
+      return done(null, false);
+    }
+    /*
+    pg.connect(SunzoraconString, function(err, client, done) {
+      if(err) {
+        return console.error('Sunzora connection issue: ', err);
+      } else {
+        //shit, this should also contain the permissions
+        client.query('SELECT * FROM users WHERE email="' + username + '" AND password="' + password + '"', function(err, result) {
+          if (username==result.rows.email && password==result.rows.password) {
+            console.log("authenticated!");
+            // permissions must be serialized into an array of some sort
+            return done(null, {id: result.rows.id, email: result.rows.email, permissions: result.rows.permissions });
+          } else {
+            console.log("not found");
+            return done(null, false);
+          }
+      }
+    */
   }
 ));
 		/*
