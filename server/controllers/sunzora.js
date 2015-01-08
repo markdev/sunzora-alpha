@@ -294,12 +294,16 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		VALUES (title, description,end_date,start_date);
 */
 exports.createNewContest = function(req, res, next) {
-	pg.connect(SunzoraconString, function(err, client, done) {
+	console.log(req.body);
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('INSERT INTO contest (title, description, start_date, end_date) VALUES ("' req.body. '", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05"),', function(err, result) {
+    		NEED TO PARSE REQUEST
+    		client.query('INSERT INTO contest (title, description, start_date, end_date) VALUES ("title", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05"),', function(err, result) {
       			done();
+
       			if(err) {
           			console.log('error:', err);
       			}
@@ -337,6 +341,7 @@ exports.createEntry = function(req, res, next) {
     	}
     		client.query('INSERT INTO entry (contest_id, user_id, selected_rating) VALUES (' + req.body.cid + ', ' + req.body.uid + ', ' + req.body.content + ')', function(err, result) {
       			done();
+
       			if(err) {
           			console.log('error:', err);
       			}
@@ -345,7 +350,6 @@ exports.createEntry = function(req, res, next) {
     		res.send({success: true});
     		});
     });
-
 	res.send({success: true});
 }
 
@@ -375,13 +379,15 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('')', function(err, result) {
+    		client.query('SELECT * FROM public.entry WHERE entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = 2 AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;')', function(err, result) {
       			done();
+
       			if(err) {
           			console.log('error:', err);
       			}
      		
     		console.log(result.rows);
+
     		res.send({success: true});
     		});
     });*/
