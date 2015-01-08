@@ -96,6 +96,26 @@ WITH (
 ALTER TABLE rating
   OWNER TO postgres;
 
+CREATE OR REPLACE FUNCTION rating_upsert(eid INT, uid INT, rating_value INT2) RETURNS VOID AS
+$$
+BEGIN
+        UPDATE public.rating SET selected_rating = rating_value WHERE user_id = uid AND entry_id = eid;
+        IF found THEN
+            RETURN;
+        END IF;
+        -- not there, so try to insert the key
+        -- if someone else inserts the same key concurrently,
+        -- we could get a unique-key failure
+        BEGIN
+            INSERT INTO public.rating(entry_id, user_id, selected_rating) VALUES (eid, uid, rating_value);
+            RETURN;
+        EXCEPTION WHEN unique_violation THEN
+            -- Do nothing, and loop to try the UPDATE again.
+        END;
+END;
+$$
+LANGUAGE plpgsql;
+
 INSERT INTO contest (title, description, end_date, start_date)
 VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','now()'),
 ('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05');

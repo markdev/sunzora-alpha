@@ -421,7 +421,7 @@ exports.addRating = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO rating (entry_id, user_id, selected_rating) VALUES ('eid','uid','selected rating','rid')', function(err, result) {
+    		client.query('SELECT rating_upsert(eid, uid, CAST(rating_value AS INT2));', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
