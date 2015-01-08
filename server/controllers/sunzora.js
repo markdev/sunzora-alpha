@@ -270,7 +270,7 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = eid AND entry.contest_id = cid GROUP BY entry.text_details;', function(err, result) {
+    		client.query('SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = uid AND entry.contest_id = cid GROUP BY entry.text_details;', function(err, result) {
       			done();
 
       			if(err) {
@@ -398,7 +398,7 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('')', function(err, result) {
+    		client.query('SELECT * FROM public.entry WHERE entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = 2 AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;')', function(err, result) {
       			done();
 
       			if(err) {
