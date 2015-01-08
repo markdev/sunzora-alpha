@@ -253,11 +253,7 @@ exports.getContestById  = function(req, res, next) {
 	Notes:
 	- gets entries of the user for a particular contest, along with averaged scores
 	- Grab text details for contest and user
-		SELECT text_details FROM public.entry WHERE user_id = X AND contest_id = Y;		
-	- Calculate Average
-		FOR length of array of entries
-			SELECT selected_rating FROM public.rating WHERE entry_id='Z';
-			Calculate Average of selection
+		SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = uid AND entry.contest_id = cid GROUP BY entry.text_details;
 */
 exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
@@ -274,7 +270,7 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('SELECT text_details FROM public.entry WHERE user_id = uid AND contest_id = cid;', function(err, result) {
+    		client.query('SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = eid AND entry.contest_id = cid GROUP BY entry.text_details;', function(err, result) {
       			done();
 
       			if(err) {
@@ -306,11 +302,9 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	Notes:
 	- Just returns a {success: true} if the object inserts correctly
 
-	- Get current contest_id
-		SELECT MAX(contest_id) FROM public.contest;
 	- Insert Contest
 		INSERT INTO contest 
-		VALUES (title, description,end_date,start_date, contest_id);
+		VALUES (title, description,end_date,start_date);
 */
 exports.createNewContest = function(req, res, next) {
 	console.log(req.body);
@@ -320,7 +314,7 @@ exports.createNewContest = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO contest VALUES ("title", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05", "1"),', function(err, result) {
+    		client.query('INSERT INTO contest (title, description, start_date, end_date) VALUES ("title", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05"),', function(err, result) {
       			done();
 
       			if(err) {
@@ -361,7 +355,7 @@ exports.createEntry = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO entry VALUES (VALUES ('cid','eid','uid','entry details')', function(err, result) {
+    		client.query('INSERT INTO entry (contest_id, user_id, selected_rating) VALUES ('cid','uid','entry details')', function(err, result) {
       			done();
 
       			if(err) {
@@ -398,6 +392,26 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 	console.log(uid + " " + cid);
 	var entry = { title: "This shit was dynamically generated", rating: null };
 	res.send({success: true, entry: entry});
+
+/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		NEED TO PARSE REQUEST
+    		client.query('')', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true});
+    		});
+    });*/
+
 }
 
 
@@ -423,7 +437,7 @@ exports.addRating = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO rating VALUES (VALUES ('eid','uid','selected rating','rid')', function(err, result) {
+    		client.query('INSERT INTO rating (entry_id, user_id, selected_rating) VALUES ('eid','uid','selected rating','rid')', function(err, result) {
       			done();
 
       			if(err) {
@@ -457,6 +471,10 @@ exports.addRating = function(req, res, next) {
 			score: 7.6
 		}
 	]
+
+	Notes:
+	- Grab text details for contest and user
+		SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = cid GROUP BY entry.text_details;	
 */
 exports.getResultsByContest = function(req, res, next) {
 	var cid = req.param("cid");
@@ -467,4 +485,23 @@ exports.getResultsByContest = function(req, res, next) {
 			{ content: "Use it to make more xontests about how to use it", score: 3.4 }
 		];
 	res.send({success: true, entries: entries});
+
+	/*	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	}
+    		NEED TO PARSE REQUEST
+    		client.query('SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = cid GROUP BY entry.text_details;', function(err, result) {
+      			done();
+
+      			if(err) {
+          			console.log('error:', err);
+      			}
+     		
+
+    		console.log(result.rows);
+
+    		res.send({success: true});
+    		});
+    });*/
 }

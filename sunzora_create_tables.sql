@@ -4,7 +4,7 @@ CREATE TABLE contest
   description character varying(250),
   end_date timestamp with time zone,
   start_date timestamp with time zone,
-  contest_id integer NOT NULL,
+  contest_id serial,
   CONSTRAINT contest_pkey PRIMARY KEY (contest_id)
 )
 WITH (
@@ -17,7 +17,7 @@ CREATE TABLE users
 (
   email text,
   password character(40),
-  user_id integer NOT NULL,
+  user_id serial,
   CONSTRAINT "User_pkey" PRIMARY KEY (user_id)
 )
 WITH (
@@ -28,7 +28,7 @@ ALTER TABLE users
 
 CREATE TABLE permission
 (
-  permission_id integer NOT NULL,
+  permission_id serial,
   name character varying(100),
   CONSTRAINT permission_pkey PRIMARY KEY (permission_id)
 )
@@ -41,7 +41,7 @@ ALTER TABLE permission
 CREATE TABLE entry
 (
   contest_id integer,
-  entry_id integer NOT NULL,
+  entry_id serial,
   user_id integer,
   text_details character varying(250),
   CONSTRAINT entry_pkey PRIMARY KEY (entry_id),
@@ -81,7 +81,7 @@ CREATE TABLE rating
   entry_id integer NOT NULL,
   user_id integer,
   selected_rating smallint,
-  rating_id integer NOT NULL,
+  rating_id serial,
   CONSTRAINT rating_pkey PRIMARY KEY (rating_id),
   CONSTRAINT rating_entry_id_fkey FOREIGN KEY (entry_id)
       REFERENCES entry (entry_id) MATCH SIMPLE
@@ -96,38 +96,38 @@ WITH (
 ALTER TABLE rating
   OWNER TO postgres;
 
-INSERT INTO contest 
-VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','2014-12-29 11:46:13-05', '1'),
-('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05', '2');
+INSERT INTO contest (title, description, start_date, end_date)
+VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','2014-12-29 11:46:13-05'),
+('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05');
 
-INSERT INTO users
-VALUES ('tlebeda@gmail.com', 'pass1234', '1'),
-('mark.karavan@gmail.com', 'pass4321', '2');
+INSERT INTO users (email, password)
+VALUES ('tlebeda@gmail.com', 'pass1234'),
+('mark.karavan@gmail.com', 'pass4321');
 
-INSERT INTO permission
-VALUES ('1','submit entry'),
-('2', 'create contest');
+INSERT INTO permission (name)
+VALUES ('submit entry'),
+('create contest');
 
-INSERT INTO entry
-VALUES ('1','1','1','Blue Man Dude'),
-('1', '2', '2', 'Three Random Words'),
-('2', '3', '1', 'Now I need five words'),
-('2', '4', '1', 'I have submitted two entries'),
-('2', '5', '2', 'Mark has one submission here');
+INSERT INTO entry (contest_id, user_id, text_details)
+VALUES ('1','1', 'Blue Man Dude'),
+('1', '2', 'Three Random Words'),
+('2', '1', 'Now I need five words'),
+('2', '1', 'I have submitted two entries'),
+('2', '2', 'Mark has one submission here');
 
 INSERT INTO permission_link
 VALUES ('1', '1'),
 ('2', '1'),
 ('2', '2');
 
-INSERT INTO rating
-VALUES ('1', '1', '4', '1'),
-('2', '1', '5', '2'),
-('3', '1', '6', '3'),
-('4', '1', '7', '4'),
-('5', '1', '5', '5'),
-('1', '2', '5', '6'),
-('2', '2', '5', '7'),
-('3', '2', '5', '8'),
-('4', '2', '5', '9'),
-('5', '2', '8', '10');
+INSERT INTO rating (entry_id, user_id, selected_rating)
+VALUES ('1', '1', '4'),
+('2', '1', '5'),
+('3', '1', '6'),
+('4', '1', '7'),
+('5', '1', '5'),
+('1', '2', '5'),
+('2', '2', '5'),
+('3', '2', '5'),
+('4', '2', '5'),
+('5', '2', '8');
