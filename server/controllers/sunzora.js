@@ -301,7 +301,7 @@ exports.createNewContest = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	}
     		NEED TO PARSE REQUEST
-    		client.query('INSERT INTO contest (title, description, start_date, end_date) VALUES ("title", "description","2015-12-31 11:46:13-05","2014-12-29 11:46:13-05"),', function(err, result) {
+    		client.query('INSERT INTO contest (title, description, start_date, end_date) VALUES ("title", "description","now()","2015-12-29 11:46:13-05"),', function(err, result) {
       			done();
 
       			if(err) {
@@ -339,7 +339,12 @@ exports.createEntry = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
+<<<<<<< Updated upstream
     		client.query('INSERT INTO entry (contest_id, user_id, selected_rating) VALUES (' + req.body.cid + ', ' + req.body.uid + ', ' + req.body.content + ')', function(err, result) {
+=======
+    		NEED TO PARSE REQUEST
+    		client.query('INSERT INTO entry (contest_id, user_id, text_details) VALUES ('cid','uid','entry details')', function(err, result) {
+>>>>>>> Stashed changes
       			done();
 
       			if(err) {
@@ -409,6 +414,9 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 	- Trickier than it looks; if there is already a rating by this user for this entry, update.  If not, insert.  (In mongo, there is an action called "upsert" for things like this, but not in SQL)
 	- Use more than one query if you need to for the prototype.
 	- Postgres may have a system for transactions with conditions for things like this, and that would be useful to know, but give that a low priority to the easy solution.
+
+	Identify if rating exists
+
 */
 exports.addRating = function(req, res, next) {
 

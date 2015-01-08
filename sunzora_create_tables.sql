@@ -96,8 +96,8 @@ WITH (
 ALTER TABLE rating
   OWNER TO postgres;
 
-INSERT INTO contest (title, description, start_date, end_date)
-VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','2014-12-29 11:46:13-05'),
+INSERT INTO contest (title, description, end_date, start_date)
+VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','now()'),
 ('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05');
 
 INSERT INTO users (email, password)
