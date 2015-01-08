@@ -103,14 +103,12 @@ BEGIN
         IF found THEN
             RETURN;
         END IF;
-        -- not there, so try to insert the key
-        -- if someone else inserts the same key concurrently,
-        -- we could get a unique-key failure
+
         BEGIN
             INSERT INTO public.rating(entry_id, user_id, selected_rating) VALUES (eid, uid, rating_value);
             RETURN;
         EXCEPTION WHEN unique_violation THEN
-            -- Do nothing, and loop to try the UPDATE again.
+
         END;
 END;
 $$
