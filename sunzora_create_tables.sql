@@ -19,7 +19,7 @@ CREATE TABLE contest
   start_date timestamp with time zone,
   contest_id serial,
   user_id integer,
-  CONSTRAINT contest_pkey PRIMARY KEY (contest_id)
+  CONSTRAINT contest_pkey PRIMARY KEY (contest_id),
   CONSTRAINT contest_user_id_fkey FOREIGN KEY (user_id)
     REFERENCES users (user_id) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE NO ACTION
