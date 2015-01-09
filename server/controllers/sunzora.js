@@ -36,9 +36,10 @@ var config = require('../config')
 	- I'll take care of this one after you've got a few SQL statements running
 */
 exports.login = function(req, res, next) {
-	console.log(req.body);
+	console.log("debug1");
 	req.body.email = req.body.email.toLowerCase();
 	passport.authenticate('local', function(err, user) {
+		console.log("123");
 		if(err) {
 			console.log("debug 1");
 			res.send({success:false, message: "Error authenticating user."});
@@ -49,6 +50,7 @@ exports.login = function(req, res, next) {
 		}
 		req.logIn(user, function(err) {
 			if(err) {return next(err);}
+			console.log("debug 3");
 			res.send({success:true, user: user});
 		});
 	})(req, res, next);
@@ -377,15 +379,16 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT * FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;', function(err, result) {
+    		var sql = 'SELECT * FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;'
+    		console.log(sql);
+    		client.query(sql, function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
  		    		res.send({success: false});
       			} else {
-		    		console.log(result.rows);
-		    		res.send({success: true, result: result});
+		    		console.log(result);
+		    		res.send({success: true, result: result.rows});
       			}
     		});
     	}
@@ -417,19 +420,19 @@ exports.addRating = function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
+    	} else {
     		client.query('SELECT rating_upsert(' + req.body.eid + ', ' + req.body.uid + ', CAST(' + req.body.rating + ' AS INT2));', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
+					res.send({success: false});
+      			} else {
+		    		console.log(result.rows);
+		    		res.send({success: true});
       			}
-     		
-    		console.log(result.rows);
-    		res.send({success: true});
     		});
+    	}
     });
-
-	res.send({success: true});
 }
 
 
@@ -459,14 +462,16 @@ exports.getResultsByContest = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT entry.text_details AS content, AVG(rating.selected_rating) AS score FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = ' + cid + ' GROUP BY entry.text_details;', function(err, result) {
+    		var sql = 'SELECT entry.text_details AS content, CAST(AVG(rating.selected_rating) AS DECIMAL(10,2)) AS score FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = ' + cid + ' GROUP BY entry.text_details;' 
+    		client.query(sql, function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+		    		console.log(result.rows);
+		    		res.send({success: true, entries: result.rows});
       			}
-     		
-    		console.log(result.rows);
-    		res.send({success: true});
     		});
     	}
     });

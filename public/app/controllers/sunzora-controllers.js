@@ -12,8 +12,8 @@ angular
 	}])
 
 	.controller('LoginCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
-		$scope.email = "mark.karavan@gmail.com";
-		$scope.password = "mark";
+		$scope.email = "";
+		$scope.password = "";
 		$scope.submit = function() {
 			var postData = {};
 			postData.email = $scope.email;

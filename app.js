@@ -77,14 +77,35 @@ passport.use(new LocalStrategy({
 		passwordField: 'password'
 	},
 	function(username, password, done) {
+    console.log("debug2");
+    pg.connect(SunzoraconString, function(err, client, psDone) {
+      if(err) {
+          return console.error('Sunzora connection issue: ', err);
+      } else {
+        var sql = "SELECT users.user_id, users.email, permission.name FROM public.users, public.permission, public.permission_link WHERE users.user_id = permission_link.user_id AND permission.permission_id = permission_link.permission_id AND users.email = '" + username + "' AND users.password = '" + password + "'";
+        console.log(sql);
+        client.query(sql, function(err, result) {
+          psDone();
+            if (result.rows[0]) {
+              var user = result.rows[0];
+              var permissions = [];
+              for (var i = 0; i<result.rows.length; i++) {
+                permissions[permissions.length] = result.rows[i].name;
+              }
+              console.log(permissions);
+              console.log("authenticated!");
+              return done(null, {id: user.user_id, email: user.email, permissions: permissions });
+            } else {
+              console.log("not found");
+              return done(null, false);
+            }
+        })
+      }
+    });
+  }
+));    
 
-    if (username=="mark.karavan@gmail.com" && password=="mark") {
-      console.log("authenticated!");
-      return done(null, {id: 1, email: 'mark.karavan@gmail.com', permissions: ['submit_entry', 'create_contest'] });
-    } else {
-      console.log("not found");
-      return done(null, false);
-    }
+
     /*
     pg.connect(SunzoraconString, function(err, client, done) {
       if(err) {
@@ -102,8 +123,7 @@ passport.use(new LocalStrategy({
           }
       }
     */
-  }
-));
+
 		/*
 		User.findOne({email:username}).exec(function(err, user) {
 			console.log("DEBUG 3");
