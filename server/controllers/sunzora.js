@@ -300,7 +300,7 @@ exports.createNewContest = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		var sql = 'INSERT INTO contest (title, description, start_date, end_date) VALUES ("' + req.body.title + '", "' + req.body.description + '", now(), "' + req.body.deadline + '")';
+    		var sql = "INSERT INTO contest (title, description, start_date, end_date) VALUES (\'" + req.body.title + "\', \'" + req.body.description + "\', now(), \'" + req.body.deadline + "\')";
     		console.log(sql);
     		client.query(sql, function(err, result) {
       			done();
@@ -338,18 +338,16 @@ exports.createEntry = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	}
-    		client.query('INSERT INTO entry (contest_id, user_id, selected_rating) VALUES (' + req.body.cid + ', ' + req.body.uid + ', ' + req.body.content + ')', function(err, result) {
+    		client.query("INSERT INTO entry (contest_id, user_id, text_details) VALUES (\'" + req.body.cid + "\', \'" + req.body.uid + "\', \'" + req.body.content + "\')", function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+    				res.send({success: true});
       			}
-     		
-    		//console.log(result.rows);
-    		res.send({success: true});
-    		});
+    	});
     });
-	res.send({success: true});
 }
 
 
@@ -369,25 +367,22 @@ exports.createEntry = function(req, res, next) {
 exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
 	var cid = req.param("cid");
-	console.log(uid + " " + cid);
-	var entry = { title: "This shit was dynamically generated", rating: null };
-	res.send({success: true, entry: entry});
-
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
+    	} else {
     		client.query('SELECT * FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;', function(err, result) {
       			done();
 
       			if(err) {
           			console.log('error:', err);
+ 		    		res.send({success: false});
+      			} else {
+		    		console.log(result.rows);
+		    		res.send({success: true, result: result});
       			}
-     		
-    		console.log(result.rows);
-
-    		res.send({success: true});
     		});
+    	}
     });
 }
 
