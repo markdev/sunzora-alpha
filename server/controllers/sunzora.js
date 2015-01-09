@@ -262,7 +262,7 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		    		res.send({success: false});
       			} else {
 		    		console.log(result.rows);
-		    		res.send({success: true, contests: result.rows});
+		    		res.send({success: true, entries: result.rows});
       			}
     		});
     	}
@@ -352,11 +352,13 @@ exports.createEntry = function(req, res, next) {
 
 
 
+
 /**
 	Goal: Gets a random entry that the user has not yet rated
 	Parameters: req.param('uid'), req.param('cid')
 	Returns:
 	{
+		eid: 6
 		title: "This is an entry",
 		rating: null
 	}
@@ -366,11 +368,12 @@ exports.createEntry = function(req, res, next) {
 exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
 	var cid = req.param("cid");
+	console.log("ding!");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		var sql = 'SELECT * FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;'
+    		var sql = 'SELECT entry.entry_id AS eid, entry.text_details AS content FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;'
     		console.log(sql);
     		client.query(sql, function(err, result) {
       			done();
@@ -378,8 +381,8 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
           			console.log('error:', err);
  		    		res.send({success: false});
       			} else {
-		    		console.log(result);
-		    		res.send({success: true, result: result.rows});
+		    		console.log(result.rows);
+		    		res.send({success: true, entry: result.rows[0]});
       			}
     		});
     	}
@@ -407,12 +410,14 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
 
 */
 exports.addRating = function(req, res, next) {
-
+	console.log(req.body);
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT rating_upsert(' + req.body.eid + ', ' + req.body.uid + ', CAST(' + req.body.rating + ' AS INT2));', function(err, result) {
+    		var sql = 'SELECT rating_upsert(' + req.body.eid + ', ' + req.body.uid + ', CAST(' + req.body.rating + ' AS INT2));';
+    		console.log(sql);
+    		client.query(sql, function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);

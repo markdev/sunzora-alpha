@@ -72,17 +72,18 @@ angular
 			})
 	}])
 
-	.controller('ContestDetailsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
-		console.log($stateParams.id);
+	.controller('ContestDetailsCtrl', ['$scope', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $rootScope, $stateParams, SunzoraFactory) {
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
 					$scope.contest = response.contest;
 				}
 			})
-		SunzoraFactory.getEntriesAndScoresByContestId($stateParams.id)
+		SunzoraFactory.getEntriesAndScoresByContestId($rootScope.currentUser.id, $stateParams.id)
 			.then(function(response){
+				console.log(response);
 				if (response.success == true) {
+					console.log("here be the entries");
 					$scope.entries = response.entries;
 				}
 			})
@@ -151,7 +152,7 @@ angular
 		};
 	}])
 
-	.controller('ContestJudgeCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+	.controller('ContestJudgeCtrl', ['$scope', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $rootScope, $stateParams, SunzoraFactory) {
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
@@ -161,25 +162,26 @@ angular
 		$scope.current = 0;
 		$scope.first = true;
 		$scope.last = null;
-		$scope.entries = [
-			{ id: 1, title: "This is the first entry", rating: null },
-			{ id: 2, title: "This is the second entry", rating: null },
-			{ id: 3, title: "This is the third entry", rating: null },
-			{ id: 4, title: "This is the fourth entry", rating: null },
-			{ id: 5, title: "This is the fifth entry", rating: null }
-		];
+		$scope.entries = [];
 		var adjustButtons = function() {
 			$scope.first = ($scope.current == 0)?  true : false;
 			$scope.last = ($scope.current == ($scope.entries.length-1))? true : false;
 		}
 		var getNewEntry = function() {
-			SunzoraFactory.getNewEntry($stateParams.id)
+			SunzoraFactory.getNewEntry($rootScope.currentUser.id, $stateParams.id)
 				.then(function(response) {
 					if (response.success) {
-						$scope.entries[$scope.entries.length] = response.entry;
+						console.log(response);
+						$scope.entries[$scope.entries.length] = {
+							id: response.entry.eid,
+							title: response.entry.content,
+							rating: null	
+						};
 					} 
 				})
 		}
+		//initialize with the first entry
+		getNewEntry();
 		$scope.slideLeft = function() {
 			$scope.current -= 1;
 			adjustButtons();
@@ -193,8 +195,10 @@ angular
 		}
 		$scope.rateThis = function(score) {
 			var postData = {};
-			postData.score = score;
-			postData.entry = $scope.entries[$scope.current].id;
+			console.log($scope.entries);
+			postData.uid = $rootScope.currentUser.id;
+			postData.rating = score;
+			postData.eid = $scope.entries[$scope.current].id;
 			SunzoraFactory.addRating(postData)
 				.then(function(response) {
 					$scope.entries[$scope.current].rating = score;
