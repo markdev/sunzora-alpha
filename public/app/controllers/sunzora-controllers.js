@@ -12,8 +12,8 @@ angular
 	}])
 
 	.controller('LoginCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
-		$scope.email = "";
-		$scope.password = "";
+		$scope.email = "mark.karavan@gmail.com";
+		$scope.password = "pass4321";
 		$scope.submit = function() {
 			var postData = {};
 			postData.email = $scope.email;
@@ -28,7 +28,7 @@ angular
 					}
 				})
 		};
-		//$scope.submit();
+		$scope.submit();
 	}])
 
 	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
@@ -52,12 +52,16 @@ angular
 		}
 	}])
 
-	.controller('ContestListCtrl', ['$scope', '$rootScope', 'SunzoraFactory', function($scope, $rootScope, SunzoraFactory) {
+	.controller('ContestListCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
 		$scope.canCreate = ($rootScope.currentUser.permissions.indexOf('create_contest') > -1)? true : false;
+		$scope.go = function () {
+			console.log("bang bang");
+		}
 		SunzoraFactory.getAllActiveContests()
 			.then(function(response) {
 				if (response.success == true) {
 					$scope.activeContests = response.contests;
+					console.log($scope.activeContests);
 				}
 			})
 		SunzoraFactory.getAllCompletedContests()
@@ -69,10 +73,10 @@ angular
 	}])
 
 	.controller('ContestDetailsCtrl', ['$scope', '$stateParams', 'SunzoraFactory', function($scope, $stateParams, SunzoraFactory) {
+		console.log($stateParams.id);
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
-					console.log(response.contest);
 					$scope.contest = response.contest;
 				}
 			})
@@ -124,7 +128,7 @@ angular
 		}
 	}])
 
-	.controller('ContestAddEntryCtrl', ['$scope', '$state', '$stateParams', 'SunzoraFactory', function($scope, $state, $stateParams, SunzoraFactory) {
+	.controller('ContestAddEntryCtrl', ['$scope', '$state', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $state, $rootScope, $stateParams, SunzoraFactory) {
 		$scope.content = "This is the entry";
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
@@ -136,7 +140,8 @@ angular
 			console.log("submitting");
 			var postData = {};
 			postData.content = $scope.content;
-			postData.contest = $stateParams.id;
+			postData.cid = $stateParams.id;
+			postData.uid = $rootScope.currentUser.id;
 			SunzoraFactory.createEntry(postData)
 				.then(function(response) {
 					if (response.success == true) {

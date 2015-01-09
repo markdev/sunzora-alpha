@@ -94,7 +94,6 @@ exports.logout = function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllContests =  function(req, res, next) {
-
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
@@ -139,7 +138,7 @@ exports.getAllActiveContests =  function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT * FROM public.contest WHERE contest.end_date > current_timestamp;', function(err, result) {
+    		client.query('SELECT contest.contest_id AS id, contest.title AS title, contest.end_date AS deadline FROM public.contest WHERE contest.end_date > current_timestamp;', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
@@ -212,7 +211,7 @@ exports.getContestById  = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT contest_id AS id, title AS title, end_date AS deadline FROM public.contest WHERE contest.contest_id = ' + cid + ';', function(err, result) {
+    		client.query('SELECT contest_id AS id, title AS title, description AS description, end_date AS deadline FROM public.contest WHERE contest.contest_id = ' + cid + ';', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
@@ -220,8 +219,7 @@ exports.getContestById  = function(req, res, next) {
       				console.log("here's the result");
 		    		console.log(result);
 		    		var contest = result.rows[0];
-		    		//contest.completed = (timestamp < contest.deadline)? false : true;
-		    		res.send({success: true, contests: result.rows});
+		    		res.send({success: true, contest: contest});
       			}
     		});
     	}
@@ -332,12 +330,12 @@ exports.createNewContest = function(req, res, next) {
 */
 exports.createEntry = function(req, res, next) {
 	console.log(req.body);
-
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
     		var sql = "INSERT INTO entry (contest_id, user_id, text_details) VALUES (\'" + req.body.cid + "\', \'" + req.body.uid + "\', \'" + req.body.content + "\')";
+    		console.log(sql);
     		client.query(sql, function(err, result) {
       			done();
       			if(err) {
