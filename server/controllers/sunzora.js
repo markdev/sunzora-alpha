@@ -140,18 +140,17 @@ exports.getAllActiveContests =  function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
+    	} else {
     		client.query('SELECT * FROM public.contest WHERE contest.end_date > current_timestamp;', function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+    				res.send({success: true, contests: result.rows});
       			}
-
-    		console.log(result.rows);
-
-    		res.send({success: true, contests: result.rows});
     		});
+    	}
     });
 }
 
@@ -178,25 +177,21 @@ exports.getAllActiveContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllCompletedContests =  function(req, res, next) {
-
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
+    	} else {
     		client.query('SELECT * FROM public.contest WHERE contest.end_date <= current_timestamp;', function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+    				res.send({success: true, contests: result.rows});
       			}
-     		
-
-    		console.log(result.rows);
-
-    		res.send({success: true, contests: result.rows});
     		});
+    	}
     });
-
 }
 
 
