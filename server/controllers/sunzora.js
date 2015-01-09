@@ -216,19 +216,20 @@ exports.getContestById  = function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
-    		client.query('SELECT * FROM public.contest WHERE contest.contest_id = ' + cid + ';', function(err, result) {
+    	} else {
+    		client.query('SELECT contest_id AS id, title AS title, end_date AS deadline FROM public.contest WHERE contest.contest_id = ' + cid + ';', function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+      			} else {
+      				console.log("here's the result");
+		    		console.log(result);
+		    		var contest = result.rows[0];
+		    		//contest.completed = (timestamp < contest.deadline)? false : true;
+		    		res.send({success: true, contests: result.rows});
       			}
-     		
-
-    		console.log(result.rows);
-
-    		res.send({success: true, contests: result.rows});
     		});
+    	}
     });
 }
 
@@ -260,16 +261,18 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
-    		client.query('SELECT entry.text_details AS content, AVG(rating.selected_rating) AS score FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = ' + uid + ' AND entry.contest_id = ' + cid + ' GROUP BY entry.text_details;', function(err, result) {
+    	} else {
+    		client.query('SELECT entry.text_details AS content, CAST(AVG(rating.selected_rating) AS DECIMAL(10,2)) AS score FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = ' + uid + ' AND entry.contest_id = ' + cid + ' GROUP BY entry.text_details;', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
+		    		res.send({success: false});
+      			} else {
+		    		console.log(result.rows);
+		    		res.send({success: true, contests: result.rows});
       			}
-     		
-    		console.log(result.rows);
-    		res.send({success: true, contests: result.rows});
     		});
+    	}
     });
 }
 
@@ -293,28 +296,29 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		INSERT INTO contest 
 		VALUES (title, description,end_date,start_date);
 */
+
 exports.createNewContest = function(req, res, next) {
 	console.log(req.body);
-	console.log("BOOP BOOP BOOP");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		var sql = "INSERT INTO contest (title, description, start_date, end_date) VALUES (\'" + req.body.title + "\', \'" + req.body.description + "\', now(), \'" + req.body.deadline + "\')";
+    		var sql = "INSERT INTO contest (user_id, title, description, start_date, end_date) VALUES (\'" + req.body.uid + "\', \'" + req.body.title + "\', \'" + req.body.description + "\', now(), \'" + req.body.deadline + "\')";
     		console.log(sql);
     		client.query(sql, function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+	    			console.log(result);
+	    			res.send({success: true});
       			}
-     		
-    			console.log(result);
-    			res.send({success: true});
     		});
     	}
     });
 }
+
 
 
 
@@ -337,8 +341,9 @@ exports.createEntry = function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
-    		client.query("INSERT INTO entry (contest_id, user_id, text_details) VALUES (\'" + req.body.cid + "\', \'" + req.body.uid + "\', \'" + req.body.content + "\')", function(err, result) {
+    	} else {
+    		var sql = "INSERT INTO entry (contest_id, user_id, text_details) VALUES (\'" + req.body.cid + "\', \'" + req.body.uid + "\', \'" + req.body.content + "\')";
+    		client.query(sql, function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
@@ -346,7 +351,8 @@ exports.createEntry = function(req, res, next) {
       			} else {
     				res.send({success: true});
       			}
-    	});
+      		});
+    	}
     });
 }
 
