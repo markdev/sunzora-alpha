@@ -11,7 +11,7 @@ module.exports = function(app) {
 	app.get('/api/entriesAndScores/:uid/:cid'	, api.getEntriesAndScoresByUserIdAndContestId);
 	app.post('/api/contests'				, api.createNewContest);
 	app.post('/api/entry' 					, api.createEntry);
-	app.get('/api/randomEntryByUserIdAndContestId/:uid/:cid', api.randomEntryByUserIdAndContestId);
+	app.post('/api/randomEntryByUserIdAndContestId/', api.randomEntryByUserIdAndContestId);
 	app.post('/api/addRating' 				, api.addRating);
 	app.get('/api/resultsByContest/:cid' 		, api.getResultsByContest);
 

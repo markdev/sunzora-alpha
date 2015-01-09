@@ -355,7 +355,12 @@ exports.createEntry = function(req, res, next) {
 
 /**
 	Goal: Gets a random entry that the user has not yet rated
-	Parameters: req.param('uid'), req.param('cid')
+	Parameters:
+	{
+		uid: 1,
+		cid: 2,
+		previous: [23,53,63,61]
+	}
 	Returns:
 	{
 		eid: 6
@@ -366,9 +371,11 @@ exports.createEntry = function(req, res, next) {
 	- if no such entry, return {success: false}
 */
 exports.randomEntryByUserIdAndContestId = function(req, res, next) {
-	var uid = req.param("uid");
-	var cid = req.param("cid");
-	console.log("ding!");
+	//var uid = req.param("uid");
+	var uid = req.body.uid;
+	//var cid = req.param("cid");
+	var cid = req.body.cid;
+	var previous = req.body.previous;
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
