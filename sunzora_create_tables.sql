@@ -1,18 +1,3 @@
-CREATE TABLE contest
-(
-  title character varying(100),
-  description character varying(250),
-  end_date timestamp with time zone,
-  start_date timestamp with time zone,
-  contest_id serial,
-  CONSTRAINT contest_pkey PRIMARY KEY (contest_id)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE contest
-  OWNER TO postgres;
-
 CREATE TABLE users
 (
   email text,
@@ -26,6 +11,24 @@ WITH (
 ALTER TABLE users
   OWNER TO postgres;
 
+CREATE TABLE contest
+(
+  title character varying(100),
+  description character varying(250),
+  end_date timestamp with time zone,
+  start_date timestamp with time zone,
+  contest_id serial,
+  user_id integer,
+  CONSTRAINT contest_pkey PRIMARY KEY (contest_id)
+  CONSTRAINT contest_user_id_fkey FOREIGN KEY (user_id)
+    REFERENCES users (user_id) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE contest
+  OWNER TO postgres;
 CREATE TABLE permission
 (
   permission_id serial,
@@ -114,9 +117,9 @@ END;
 $$
 LANGUAGE plpgsql;
 
-INSERT INTO contest (title, description, end_date, start_date)
-VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','now()'),
-('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05');
+INSERT INTO contest (title, description, end_date, start_date, user_id)
+VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','now()', '1'),
+('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05', '2');
 
 INSERT INTO users (email, password)
 VALUES ('tlebeda@gmail.com', 'pass1234'),
