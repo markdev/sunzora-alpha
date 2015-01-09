@@ -98,19 +98,17 @@ exports.getAllContests =  function(req, res, next) {
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
-    	}
+    	} else {
     		client.query('SELECT * FROM public.contest ORDER BY contest.end_date DESC;', function(err, result) {
       			done();
-
       			if(err) {
           			console.log('error:', err);
+          			res.send({success: false});
+      			} else {
+    				res.send({success: true, contests: result.rows});
       			}
-     		
-
-    		console.log(result.rows);
-
-    		res.send({success: true, contests: result.rows});
     		});
+    	}
     });
 }
 
