@@ -54,9 +54,6 @@ angular
 
 	.controller('ContestListCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
 		$scope.canCreate = ($rootScope.currentUser.permissions.indexOf('create_contest') > -1)? true : false;
-		$scope.go = function () {
-			console.log("bang bang");
-		}
 		SunzoraFactory.getAllActiveContests()
 			.then(function(response) {
 				if (response.success == true) {
