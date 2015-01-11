@@ -160,12 +160,17 @@ angular
 		$scope.first = true;
 		$scope.last = null;
 		$scope.entries = [];
+		$scope.previous = [];
 		var adjustButtons = function() {
 			$scope.first = ($scope.current == 0)?  true : false;
 			$scope.last = ($scope.current == ($scope.entries.length-1))? true : false;
 		}
 		var getNewEntry = function() {
-			SunzoraFactory.getNewEntry($rootScope.currentUser.id, $stateParams.id)
+			var postData = {};
+			postData.uid = $rootScope.currentUser.id;
+			postData.cid = $stateParams.id;
+			postData.previous = $scope.previous;
+			SunzoraFactory.getNewEntry(postData)
 				.then(function(response) {
 					if (response.success) {
 						console.log(response);
@@ -174,6 +179,7 @@ angular
 							title: response.entry.content,
 							rating: null	
 						};
+						$scope.previous[$scope.previous.length] = response.entry.eid;
 					} 
 				})
 		}

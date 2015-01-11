@@ -94,6 +94,7 @@ exports.logout = function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllContests =  function(req, res, next) {
+	console.log("getting all contests");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
@@ -133,7 +134,7 @@ exports.getAllContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllActiveContests =  function(req, res, next) {
-
+	console.log("getting all active contests");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
@@ -174,6 +175,7 @@ exports.getAllActiveContests =  function(req, res, next) {
 	- Active contests at the top, expired contests at the bottom
 */
 exports.getAllCompletedContests =  function(req, res, next) {
+	console.log("getting all completed contests");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
@@ -383,12 +385,13 @@ exports.randomEntryByUserIdAndContestId = function(req, res, next) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
     		var sql = 'SELECT entry.entry_id AS eid, entry.text_details AS content FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) AND entry_id NOT IN (SELECT entry.entry_id FROM public.entry WHERE entry.entry_id = ANY($1::int[])) ORDER BY random() LIMIT 1;'
-    		console.log(sql);
     		client.query(sql, [previous], function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
  		    		res.send({success: false});
+      			} else if (result.rows[0] == undefined) { //empty set
+      				res.send({success: false});
       			} else {
 		    		console.log(result.rows);
 		    		res.send({success: true, entry: result.rows[0]});

@@ -104,7 +104,7 @@ angular
 
 		SunzoraFactory.getNewEntry = function(uid, cid) {
 			var deferred = $q.defer();
-			$http.get("/api/randomEntryByUserIdAndContestId/" + uid + "/" + cid)
+			$http.post("/api/randomEntryByUserIdAndContestId/", postData)
 				.success(function(response) {
 					deferred.resolve(response)					
 				})
@@ -128,7 +128,6 @@ angular
 				})
 			return deferred.promise;
 		}
-
 
 		return SunzoraFactory;
 	}])
