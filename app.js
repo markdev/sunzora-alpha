@@ -91,8 +91,6 @@ passport.deserializeUser(function(userObj, done) {
   });
   
 
-
-
 passport.use(new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
@@ -113,9 +111,10 @@ passport.use(new LocalStrategy({
               for (var i = 0; i<result.rows.length; i++) {
                 user.permissions[user.permissions.length] = result.rows[i].name;
               }
-              console.log(permissions);
+              console.log(user.permissions);
               console.log("authenticated!");
               return done(null, {id: user.user_id, email: user.email, permissions: user.permissions });
+              //return done(null, {id: 2, email: "mark.karavan@gmail.com", permissions: ["create_contest", "submit_entry"]});
             } else {
               console.log("not found");
               return done(null, false);
@@ -127,23 +126,26 @@ passport.use(new LocalStrategy({
 ));    
 
 
-    /*
-    pg.connect(SunzoraconString, function(err, client, done) {
-      if(err) {
-        return console.error('Sunzora connection issue: ', err);
+/*
+pg.connect(SunzoraconString, function(err, client, done) {
+  if(err) {
+    return console.error('Sunzora connection issue: ', err);
+  } else {
+    //shit, this should also contain the permissions
+    client.query('SELECT * FROM users WHERE email="' + username + '" AND password="' + password + '"', function(err, result) {
+      if (username==result.rows.email && password==result.rows.password) {
+        console.log("authenticated!");
+        // permissions must be serialized into an array of some sort
+        return done(null, {id: result.rows.id, email: result.rows.email, permissions: result.rows.permissions });
       } else {
-        //shit, this should also contain the permissions
-        client.query('SELECT * FROM users WHERE email="' + username + '" AND password="' + password + '"', function(err, result) {
-          if (username==result.rows.email && password==result.rows.password) {
-            console.log("authenticated!");
-            // permissions must be serialized into an array of some sort
-            return done(null, {id: result.rows.id, email: result.rows.email, permissions: result.rows.permissions });
-          } else {
-            console.log("not found");
-            return done(null, false);
-          }
+        console.log("not found");
+        return done(null, false);
       }
-    */
+    });
+  }
+});
+*/
+    
 
 		/*
 		User.findOne({email:username}).exec(function(err, user) {

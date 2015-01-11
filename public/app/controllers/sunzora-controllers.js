@@ -18,6 +18,8 @@ angular
 			var postData = {};
 			postData.email = $scope.email;
 			postData.password = $scope.password;
+			console.log("from controller");
+			console.log(postData);
 			SunzoraFactory.login(postData)
 				.then(function(response) {
 					if (response.success == true) {
@@ -53,6 +55,8 @@ angular
 	}])
 
 	.controller('ContestListCtrl', ['$scope', '$state', '$rootScope', 'SunzoraFactory', function($scope, $state, $rootScope, SunzoraFactory) {
+		console.log("current user:");
+		console.log($rootScope.currentUser);
 		$scope.canCreate = ($rootScope.currentUser.permissions.indexOf('create_contest') > -1)? true : false;
 		SunzoraFactory.getAllActiveContests()
 			.then(function(response) {
