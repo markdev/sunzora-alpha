@@ -28,7 +28,7 @@ angular
 					}
 				})
 		};
-		$scope.submit();
+		//$scope.submit();
 	}])
 
 	.controller('LogoutCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
