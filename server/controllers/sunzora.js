@@ -371,18 +371,20 @@ exports.createEntry = function(req, res, next) {
 	- if no such entry, return {success: false}
 */
 exports.randomEntryByUserIdAndContestId = function(req, res, next) {
+
 	//var uid = req.param("uid");
 	var uid = req.body.uid;
 	//var cid = req.param("cid");
 	var cid = req.body.cid;
 	var previous = req.body.previous;
+
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		var sql = 'SELECT entry.entry_id AS eid, entry.text_details AS content FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) ORDER BY random() LIMIT 1;'
+    		var sql = 'SELECT entry.entry_id AS eid, entry.text_details AS content FROM public.entry WHERE contest_id = ' + cid + ' AND entry_id NOT IN (SELECT entry.entry_id FROM public.rating, public.entry WHERE rating.user_id = ' + uid + ' AND rating.entry_id = entry.entry_id) AND entry_id NOT IN (SELECT entry.entry_id FROM public.entry WHERE entry.entry_id = ANY($1::int[])) ORDER BY random() LIMIT 1;'
     		console.log(sql);
-    		client.query(sql, function(err, result) {
+    		client.query(sql, [previous], function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
