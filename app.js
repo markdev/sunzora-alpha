@@ -12,7 +12,6 @@ var express         = require('express')
   , multer			    = require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
   , fs              = require('fs')
-  , vhostManager    = require("express-vhost-manager")
   ;
 
 var app = express();
@@ -21,8 +20,6 @@ var dbsetup = fs.readFileSync('./dbsetup.sql').toString();
 var sunzoracreate = fs.readFileSync('sunzora_create_db.sql').toString();
 var sunzoradrop = fs.readFileSync('sunzora_drop_db.sql').toString();
 var tablecreate = fs.readFileSync('sunzora_create_tables.sql').toString();
-
-
 
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
@@ -47,7 +44,6 @@ app.use(passport.session());
 app.use(serveStatic(__dirname + '/public'));
 
 passport.serializeUser(function(user, done) {
-  console.log("serializing user: ");
   console.log(user);
 	if(user) {
 		done(null, user);
@@ -55,13 +51,7 @@ passport.serializeUser(function(user, done) {
 });
 
 var SunzoraconString = "postgres://postgres:irdlhajbis@localhost:5432/sunzora";
-/*
-passport.deserializeUser(function(id, done) {
-  console.log("deserializeUser:");
-  console.log(id);
-	return done(null, false);	
-});
-*/
+
 passport.deserializeUser(function(userObj, done) {
 	console.log("Deserializing User");
   console.log(userObj);
@@ -69,9 +59,7 @@ passport.deserializeUser(function(userObj, done) {
       if(err) {
           return console.error('Sunzora connection issue: ', err);
       } else {
-        //var sql = "SELECT * FROM public.users WHERE users.user_id = " + userObj.id;
         var sql = "SELECT users.user_id, users.email, permission.name FROM public.users, public.permission, public.permission_link WHERE users.user_id = permission_link.user_id AND permission.permission_id = permission_link.permission_id AND users.email = '" + userObj.email + "'";
-        console.log(sql);
         client.query(sql, function(err, result) {
           psDone();
           if (result.rows) {
@@ -89,7 +77,6 @@ passport.deserializeUser(function(userObj, done) {
       }
 	  });
   });
-  
 
 passport.use(new LocalStrategy({
 		usernameField: 'email',
@@ -114,7 +101,6 @@ passport.use(new LocalStrategy({
               console.log(user.permissions);
               console.log("authenticated!");
               return done(null, {id: user.user_id, email: user.email, permissions: user.permissions });
-              //return done(null, {id: 2, email: "mark.karavan@gmail.com", permissions: ["create_contest", "submit_entry"]});
             } else {
               console.log("not found");
               return done(null, false);
@@ -126,51 +112,6 @@ passport.use(new LocalStrategy({
 ));    
 
 
-/*
-pg.connect(SunzoraconString, function(err, client, done) {
-  if(err) {
-    return console.error('Sunzora connection issue: ', err);
-  } else {
-    //shit, this should also contain the permissions
-    client.query('SELECT * FROM users WHERE email="' + username + '" AND password="' + password + '"', function(err, result) {
-      if (username==result.rows.email && password==result.rows.password) {
-        console.log("authenticated!");
-        // permissions must be serialized into an array of some sort
-        return done(null, {id: result.rows.id, email: result.rows.email, permissions: result.rows.permissions });
-      } else {
-        console.log("not found");
-        return done(null, false);
-      }
-    });
-  }
-});
-*/
-    
-
-		/*
-		User.findOne({email:username}).exec(function(err, user) {
-			console.log("DEBUG 3");
-			if (user && user.authenticate(password)) {
-				console.log("authenticated!");
-				return done(null, user);
-			} else {
-				console.log("not found");
-				return done(null, false);
-			}
-		});
-		*/
-
-/* initialization of database
-Connect to Postgres{
-  Drop Sunzora{
-    Create Sunzora{
-      Connect to Sunzora{
-        Create Tables{
-        } 
-      }
-    }
-  }
-}*/
 //Initiate Connection: Postgres DB
 pg.connect(config.postgresconString, function(err, client, done) {
     if(err) {

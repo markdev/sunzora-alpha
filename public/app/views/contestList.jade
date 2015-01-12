@@ -16,11 +16,11 @@ ul(class="contests" ng-repeat="contest in activeContests")
 						table
 							tr
 								td
-									a(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
+									button(class="details" ui-sref="contests.details({id: '{{contest.id}}' })") Details
 								td
-									a(class="details" ui-sref="contests.addEntry({id: '{{contest.id}}' })") Add Entry
+									button(class="details" ui-sref="contests.addEntry({id: '{{contest.id}}' })") Add Entry
 								td
-									a(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
+									button(class="judge" ui-sref="contests.judge({id: '{{contest.id}}' })") Judge
 hr
 h1.title Completed Contests				
 ul(class="contests" ng-repeat="contest in completedContests")

@@ -23,15 +23,12 @@ module.exports = function(app) {
 	//render layout
 	app.get('*', function(req, res) {
 		var currentUser = {};
-		console.log("USER:");
-		console.log(req.user);
+		//console.log(req.user);
 		if(req.user) {
 			currentUser = {
-				_id: req.user._id
-				, firstName: req.user.firstName
-				, lastName: req.user.lastName
+				  id: req.user.id
 				, email: req.user.email
-				, roles: req.user.roles
+				, permissions: req.user.permissions
 			}
 		}
 		res.render('layout', {
@@ -40,6 +37,7 @@ module.exports = function(app) {
 	});
 
 }
+
 
 
 
