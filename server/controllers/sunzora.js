@@ -213,15 +213,22 @@ exports.getContestById  = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT contest_id AS id, title AS title, description AS description, end_date AS deadline FROM public.contest WHERE contest.contest_id = ' + cid + ';', function(err, result) {
+    		var sql = "SELECT contest_id AS id, title AS title, description AS description, end_date AS deadline FROM public.contest WHERE contest.contest_id = " + cid + ";";
+    		console.log(sql);
+    		client.query(sql, function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
       			} else {
-      				console.log("here's the result");
-		    		console.log(result);
 		    		var contest = result.rows[0];
-		    		res.send({success: true, contest: contest});
+		    		if (contest.deadline.getTime() <= Date.now()){
+		    			contest["completed"] = true;
+		    			res.send({success:true, contest: contest});
+		    		} else {
+		    			contest["completed"] = false;
+		    			res.send({success:true, contest: contest});
+		    		}
+		    		//res.send({success: true, contest: contest});
       			}
     		});
     	}
