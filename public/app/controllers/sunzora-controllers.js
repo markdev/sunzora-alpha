@@ -90,15 +90,15 @@ angular
 			})
 	}])
 
-	.controller('ContestCreateCtrl', ['$scope', '$state', 'SunzoraFactory', function($scope, $state, SunzoraFactory) {
+	.controller('ContestCreateCtrl', ['$scope', '$rootScope', '$state', 'SunzoraFactory', function($scope, $rootScope, $state, SunzoraFactory) {
 		$scope.ctitle = "My contest"; // calling it ctitle to avoid collisions with top level title
 		$scope.description = "this be the desc of my contest";
 
 		$scope.months = [ {name: "Jan", num: 1}, {name: "Feb", num: 2}, {name: "Mar", num: 3}, {name: "Apr", num: 4}, {name: "May", num: 5}, {name: "Jun", num: 6}, {name: "Jul", num: 7}, {name: "Aug", num: 8}, {name: "Sep", num: 9}, {name: "Oct", num: 10}, {name: "Nov", num: 11}, {name: "Dec", num: 12} ];
-		$scope.myMonth = $scope.months[0];
+		$scope.myMonth = $scope.months[1];
 		$scope.days = [ {name: "1"}, {name: "2"}, {name: "3"}, {name: "4"}, {name: "5"}, {name: "6"}, {name: "7"}, {name: "8"}, {name: "9"}, {name: "10"}, {name: "11"}, {name: "12"}, {name: "13"}, {name: "14"}, {name: "15"}, {name: "16"}, {name: "17"}, {name: "18"}, {name: "19"}, {name: "20"}, {name: "21"}, {name: "22"}, {name: "23"}, {name: "24"}, {name: "25"}, {name: "26"}, {name: "27"}, {name: "28"}, {name: "29"}, {name: "30"}, {name: "31"} ];
 		$scope.myDay = $scope.days[0];
-		$scope.years = [{name: "2014"}, {name: "2015"}, {name: "2016"}];
+		$scope.years = [{name: "2015"}, {name: "2016"}];
 		$scope.myYear = $scope.years[0];
 		$scope.hours = [ {name: "00"}, {name: "01"}, {name: "02"}, {name: "03"}, {name: "04"}, {name: "05"}, {name: "06"}, {name: "07"}, {name: "08"}, {name: "09"}, {name: "10"}, {name: "11"}, {name: "12"}, {name: "13"}, {name: "14"}, {name: "15"}, {name: "16"}, {name: "17"}, {name: "18"}, {name: "19"}, {name: "20"}, {name: "21"}, {name: "22"}, {name: "23"} ];
 		$scope.myHour = $scope.hours[0];
@@ -117,10 +117,12 @@ angular
 			var timestamp = yyyy + "-" + mm + "-" + dd + " " + hh + ":" + min + ":00-05";
 
 			var postData = {};
+			postData.uid = $rootScope.currentUser.id;
 			postData.deadline = timestamp;
 			postData.title = $scope.ctitle;
 			postData.description = $scope.description;
-			postData.deadline = $scope.deadline;
+			console.log("Post data:");
+			console.log(postData);
 			SunzoraFactory.createContest(postData)
 				.then(function(response) {
 					if (response.success == true) {
