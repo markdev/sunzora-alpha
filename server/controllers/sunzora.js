@@ -264,7 +264,9 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT entry.text_details AS content, CAST(AVG(rating.selected_rating) AS DECIMAL(10,2)) AS score FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = ' + uid + ' AND entry.contest_id = ' + cid + ' GROUP BY entry.text_details;', function(err, result) {
+    		var sql = "SELECT entry.text_details AS content, CAST(AVG(rating.selected_rating) AS DECIMAL(10,2)) AS score FROM public.rating RIGHT OUTER JOIN public.entry ON (rating.entry_id = entry.entry_id) WHERE entry.user_id = " + uid + " AND entry.contest_id = " + cid + " GROUP BY entry.text_details;";
+    		console.log('getEntriesAndScoresByUserIdAndContestId: ' + sql);
+    		client.query(sql, function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
