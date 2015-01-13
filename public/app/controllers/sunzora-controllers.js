@@ -168,8 +168,9 @@ angular
 		$scope.entries = [];
 		$scope.previous = [];
 		var adjustButtons = function() {
+			console.log($scope.entries);
 			$scope.first = ($scope.current == 0)?  true : false;
-			$scope.last = ($scope.current == ($scope.entries.length-1))? true : false;
+			$scope.last = ($scope.current == ($scope.entries.length))? true : false;
 		}
 		var getNewEntry = function() {
 			var postData = {};
@@ -186,8 +187,10 @@ angular
 							rating: null	
 						};
 						$scope.previous[$scope.previous.length] = response.entry.eid;
+						adjustButtons();
 					} 
 				})
+			//adjustButtons();
 		}
 		//initialize with the first entry
 		getNewEntry();
@@ -196,7 +199,12 @@ angular
 			adjustButtons();
 		}
 		$scope.slideRight = function() {
-			$scope.current += 1;
+			if ($scope.current < $scope.entries.length) {
+				console.log("length is: " + $scope.entries.length);
+				$scope.current += 1;
+			} else {
+
+			}
 			if ($scope.entries.length - $scope.current < 3) {
 				getNewEntry();
 			}

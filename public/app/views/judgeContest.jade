@@ -16,6 +16,7 @@ table#judgeContent
 			button(ng-if="!first" ng-click="slideLeft()") Prev
 		td
 			div {{ entries[current].title }}
+				p(ng-show="last") No more entries to show
 		td(class="slider")
 			button(ng-if="!last" ng-click="slideRight()") Next
 br
