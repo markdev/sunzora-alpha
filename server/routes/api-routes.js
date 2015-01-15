@@ -14,6 +14,7 @@ module.exports = function(app) {
 	app.post('/api/randomEntryByUserIdAndContestId/', api.randomEntryByUserIdAndContestId);
 	app.post('/api/addRating' 				, api.addRating);
 	app.get('/api/resultsByContest/:cid' 		, api.getResultsByContest);
+	//app.get('/api/resultsByContest/:cid' 		, function () {console.log('SHABAM');} );
 
 	app.get('/views/*', function(req, res) {
 		var file = req.params[0];

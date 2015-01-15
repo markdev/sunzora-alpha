@@ -180,7 +180,7 @@ exports.getAllCompletedContests =  function(req, res, next) {
 		if(err) {
       		return console.error('Sunzora connection issue: ', err);
     	} else {
-    		client.query('SELECT * FROM public.contest WHERE contest.end_date <= current_timestamp;', function(err, result) {
+    		client.query('SELECT contest.contest_id AS id, contest.title AS title, contest.end_date AS deadline FROM public.contest WHERE contest.end_date <= current_timestamp;', function(err, result) {
       			done();
       			if(err) {
           			console.log('error:', err);
@@ -474,6 +474,8 @@ exports.addRating = function(req, res, next) {
 		SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = cid GROUP BY entry.text_details;	
 */
 exports.getResultsByContest = function(req, res, next) {
+	console.log("FUCCCCCCK");
+	console.log("What the devil!?!?!?");
 	var cid = req.param("cid");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {

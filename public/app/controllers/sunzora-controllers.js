@@ -62,7 +62,6 @@ angular
 			.then(function(response) {
 				if (response.success == true) {
 					$scope.activeContests = response.contests;
-					console.log($scope.activeContests);
 				}
 			})
 		SunzoraFactory.getAllCompletedContests()
@@ -155,20 +154,37 @@ angular
 		};
 	}])
 
-	.controller('ContestJudgeCtrl', ['$scope', '$rootScope', '$stateParams', 'SunzoraFactory', function($scope, $rootScope, $stateParams, SunzoraFactory) {
-		SunzoraFactory.getContestById($stateParams.id)
-			.then(function(response){
-				if (response.success == true) {
-					$scope.contest = response.contest;
-				}
-			})
+	.controller('ContestJudgeCtrl', ['$scope', '$state', '$rootScope', '$interval', '$stateParams', 'SunzoraFactory', function($scope, $state, $rootScope, $interval, $stateParams, SunzoraFactory) {
 		$scope.current = 0;
 		$scope.first = true;
 		$scope.last = null;
 		$scope.entries = [];
 		$scope.previous = [];
+		$scope.timeRemaining = 1000;	
+		$scope.timestamp = null;	
+		SunzoraFactory.getContestById($stateParams.id)
+			.then(function(response){
+				if (response.success == true) {
+					$scope.contest = response.contest;
+					$scope.timestamp = response.contest.deadline;
+				}
+			})
+
+		var promise = $interval(function() {
+			console.log($scope.contest.deadline);
+			$scope.timeRemaining -= 1;
+			if ($scope.timeRemaining == 0) {
+				$scope.endContest();
+			}
+			//$scope.$apply();
+		}, 1000);
+
+		$scope.endContest = function () {
+			$interval.cancel(promise);
+			$state.go('contests.list');
+		}
+
 		var adjustButtons = function() {
-			console.log($scope.entries);
 			$scope.first = ($scope.current == 0)?  true : false;
 			$scope.last = ($scope.current == ($scope.entries.length))? true : false;
 		}
