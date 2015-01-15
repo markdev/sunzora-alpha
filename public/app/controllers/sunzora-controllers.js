@@ -160,13 +160,15 @@ angular
 		$scope.last = null;
 		$scope.entries = [];
 		$scope.previous = [];
-		$scope.timeRemaining = 1000;	
+		$scope.timeRemaining = 100;	
 		$scope.timestamp = null;	
 		SunzoraFactory.getContestById($stateParams.id)
 			.then(function(response){
 				if (response.success == true) {
 					$scope.contest = response.contest;
-					$scope.timestamp = response.contest.deadline;
+					$scope.currentTime = Date.now();
+					$scope.deadline = new Date(response.contest.deadline).getTime();
+					$scope.timeRemaining = $scope.deadline - $scope.currentTime;
 				}
 			})
 

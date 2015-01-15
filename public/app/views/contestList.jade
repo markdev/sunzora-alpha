@@ -33,4 +33,4 @@ ul(class="contests" ng-repeat="contest in completedContests")
 						br
 						span {{ contest.deadline }}
 					td.buttons
-						a(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details
+						button(class="details" ui-sref="contests.results({id: '{{contest.id}}' })") Details
