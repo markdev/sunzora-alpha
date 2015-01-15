@@ -113,7 +113,7 @@ passport.use(new LocalStrategy({
 
 
 //Initiate Connection: Postgres DB
-pg.connect(config.postgresconString, function(err, client, done) {
+/*pg.connect(config.postgresconString, function(err, client, done) {
     if(err) {
       return console.error('Postgres connection issue: ', err);//exception for connecting
     }
@@ -153,7 +153,7 @@ pg.connect(config.postgresconString, function(err, client, done) {
       //output: 1
         });
     });
-});
+});*/
 
 require('./server/routes/api-routes')(app);
 
