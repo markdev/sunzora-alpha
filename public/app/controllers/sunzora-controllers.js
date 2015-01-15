@@ -166,16 +166,15 @@ angular
 			.then(function(response){
 				if (response.success == true) {
 					$scope.contest = response.contest;
-					$scope.currentTime = Date.now();
-					$scope.deadline = new Date(response.contest.deadline).getTime();
+					$scope.currentTime = Math.round(Date.now() / 1000);
+					$scope.deadline = new Date(response.contest.deadline).getTime() / 1000;
 					$scope.timeRemaining = $scope.deadline - $scope.currentTime;
 				}
 			})
 
 		var promise = $interval(function() {
-			console.log($scope.contest.deadline);
 			$scope.timeRemaining -= 1;
-			if ($scope.timeRemaining == 0) {
+			if ($scope.timeRemaining <= 0) {
 				$scope.endContest();
 			}
 			//$scope.$apply();
