@@ -1,3 +1,34 @@
+/************Create Master Process and Starts Worker Processes*************/
+
+
+//Include Cluster
+var cluster = require('cluster');
+
+//Code to run if we're in the master process
+if(cluster.isMaster){
+
+// Count the machine's CPUs
+var cpuCount = require('os').cpus().length;
+
+
+// Create a worker for each CPU
+for (var i=0; i< cpuCount; i += 1) {
+  cluster.fork();
+}
+
+cluster.on('exit', function (worker) {
+
+  //Replace the dead worker,
+  //we're not sentimental
+  console.log('Worker ' + worker.id + ' died :(');
+    cluster.fork();
+
+});
+
+/******************************Worker Processes************************/
+}else {
+
+
 // Declare variables
 var express         = require('express')
   , os              = require('os')
@@ -158,9 +189,9 @@ passport.use(new LocalStrategy({
 require('./server/routes/api-routes')(app);
 
 app.listen(config.port);
-console.log("app is listening on port " + config.port + "...");
+console.log("app " + cluster.worker.id + " is listening on port " + config.port + "...");
 
-
+}
 
 
 
