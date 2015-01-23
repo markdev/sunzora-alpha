@@ -2,7 +2,7 @@
 
 
 //Include Cluster
-var cluster = require('cluster');
+/*var cluster = require('cluster');
 
 //Code to run if we're in the master process
 if(cluster.isMaster){
@@ -24,9 +24,9 @@ cluster.on('exit', function (worker) {
     cluster.fork();
 
 });
-
+*/
 /******************************Worker Processes************************/
-}else {
+//}else {
 
 
 // Declare variables
@@ -39,6 +39,7 @@ var express         = require('express')
   , serveStatic     = require('serve-static')
   , expressSession  = require('express-session')
   , passport		    = require('passport')
+  , portscanner     = require('portscanner')
   , LocalStrategy   = require('passport-local').Strategy
   , multer			    = require('multer')
   , RedisStore      = require('connect-redis')(expressSession)
@@ -188,10 +189,15 @@ passport.use(new LocalStrategy({
 
 require('./server/routes/api-routes')(app);
 
-app.listen(config.port);
-console.log("app " + cluster.worker.id + " is listening on port " + config.port + "...");
+portscanner.findAPortNotInUse(2343, 2345, '127.0.0.1', function(error, port2) {
+  app.listen(port2);
+  console.log("app " /*+ cluster.worker.id */+ " is listening on port " + port2 + "...");
+})
 
-}
+//app.listen(config.port);
+//console.log("app " + cluster.worker.id + " is listening on port " + config.port + "...");
+
+//}
 
 
 
