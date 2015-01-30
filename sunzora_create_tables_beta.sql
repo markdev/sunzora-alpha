@@ -1,6 +1,10 @@
 CREATE TABLE users
 (
   fb_user_id serial,
+  email character varying(70),
+  first_name character varying(70),
+  gender character varying(6),
+  last_name character varying(70),
   CONSTRAINT "User_pkey" PRIMARY KEY (fb_user_id)
 )
 WITH (
