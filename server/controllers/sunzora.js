@@ -283,6 +283,41 @@ exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 
 
 
+/**
+	Goal: Creates a new user
+	Parameters: 
+	{
+		email: "foo@bar.com",
+		password: "password1"
+	}
+	Returns: {success: true}
+*/
+exports.createUser = function(req, res, next) {
+	console.log(req.body);
+	pg.connect(SunzoraconString, function(err, client, done) {
+		if(err) {
+      		return console.error('Sunzora connection issue: ', err);
+    	} else {
+    		var sql = "INSERT INTO users (email, password) VALUES ('" + req.body.email + "', '" + req.body.password + "');"
+    		console.log(sql);
+    		res.send({success: true});
+    		/*
+    		client.query(sql, function(err, result) {
+      			done();
+      			if(err) {
+          			console.log('error:', err);
+					res.send({success: false});
+      			} else {
+		    		console.log(result.rows);
+		    		res.send({success: true});
+      			}
+    		});
+			*/
+    	}
+    });	
+}
+
+
 
 /**
 	Goal: Creates a new contest
@@ -474,8 +509,6 @@ exports.addRating = function(req, res, next) {
 		SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.contest_id = cid GROUP BY entry.text_details;	
 */
 exports.getResultsByContest = function(req, res, next) {
-	console.log("FUCCCCCCK");
-	console.log("What the devil!?!?!?");
 	var cid = req.param("cid");
 	pg.connect(SunzoraconString, function(err, client, done) {
 		if(err) {

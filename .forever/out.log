@@ -1,0 +1,88 @@
+app 1 is listening on port 2345...
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+authenticated!
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+authenticated!
+getting all active contests
+getting all completed contests
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!
+Deserializing User
+{ id: 2,
+  email: 'mark.karavan@gmail.com',
+  permissions: [ 'submit_entry', 'create_contest' ] }
+authenticated!

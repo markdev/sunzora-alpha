@@ -9,12 +9,12 @@ module.exports = function(app) {
 	app.get('/api/contestsComplete'			, api.getAllCompletedContests);
 	app.get('/api/contests/:cid'			, api.getContestById);
 	app.get('/api/entriesAndScores/:uid/:cid'	, api.getEntriesAndScoresByUserIdAndContestId);
+	app.post('/api/user'  					, api.createUser);
 	app.post('/api/contests'				, api.createNewContest);
 	app.post('/api/entry' 					, api.createEntry);
 	app.post('/api/randomEntryByUserIdAndContestId/', api.randomEntryByUserIdAndContestId);
 	app.post('/api/addRating' 				, api.addRating);
 	app.get('/api/resultsByContest/:cid' 		, api.getResultsByContest);
-	//app.get('/api/resultsByContest/:cid' 		, function () {console.log('SHABAM');} );
 
 	app.get('/views/*', function(req, res) {
 		var file = req.params[0];
