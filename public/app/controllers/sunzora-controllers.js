@@ -47,46 +47,55 @@ angular
 				}
 			});
 			  
-				/**
-				 * IntentLogin
-	         */
-			$scope.IntentLogin = function() {
-				if(!userIsConnected) {
-					$scope.login();
-				}
-			};
-			  
-				/**
-				 * Login
-				 */
-			$scope.login = function() {
+		  /**
+			* Login
+			*/
+			$scope.loginFunc = function() {
 				Facebook.login(function(response) {
 					if (response.status == 'connected') {
-						console.log("loggging in");
 						$scope.logged = true;
-						$scope.me();
+						Facebook.api('/me', function(response) {
+						/**
+						 * Using $scope.$apply since this happens outside angular framework.
+						 */
+							$scope.$apply(function() {
+								$scope.user = response;
+								console.log("the response is:");
+								console.log(response);
+								$rootScope.currentUser = {
+									id: 1234,
+									fbid: response.id,
+									email: response.email,
+									first_name: response.first_name,
+									last_name: response.last_name,
+									gender: response.gender,
+									name: response.name,
+									permissions: ['submit_entry']
+								}; 
+								$state.go('contests.list');
+							});  
+						});
 					}
 				});
 			};
-	       
-		   /**
-			* me 
+	
+		  /**
+			* IntentLogin
 			*/
-			$scope.me = function() {
-				Facebook.api('/me', function(response) {
-				/**
-				 * Using $scope.$apply since this happens outside angular framework.
-				 */
-					$scope.$apply(function() {
-						$scope.user = response;
-					});  
-				});
+			$scope.IntentLogin = function() {
+				console.log("intentLogin");
+				if(!userIsConnected) {
+					console.log("not connected");
+					$scope.loginFunc();
+				}
 			};
-	      
-			/**
-			 * Logout
-			 */
+			  
+	       
+		  /**
+			* Logout
+			*/
 			$scope.logout = function() {
+				console.log("logout");
 				Facebook.logout(function() {
 					$scope.$apply(function() {
 						$scope.user   = {};
@@ -95,15 +104,16 @@ angular
 				});
 			}
 	      
-	      /**
-	       * Taking approach of Events :D
-	       */
+  	      /**
+	        * Taking approach of Events :D
+	        */
 			$scope.$on('Facebook:statusChange', function(ev, data) {
 				console.log('Status: ', data);
 				if (data.status == 'connected') {
 					$scope.$apply(function() {
 						$scope.salutation = true;
 						$scope.byebye     = false;    
+					//	$state.go('contests.list');
 					});
 				} else {
 					$scope.$apply(function() {

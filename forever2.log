@@ -471,3 +471,5 @@ SELECT contest_id AS id, title AS title, description AS description, end_date AS
 getting all active contests
 getting all active contests
 getting all active contests
+undefined
+getting all active contests

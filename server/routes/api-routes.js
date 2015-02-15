@@ -27,7 +27,12 @@ module.exports = function(app) {
 		if(req.user) {
 			currentUser = {
 				  id: req.user.id
+				, fbid: req.user.fbid
 				, email: req.user.email
+				, first_name: req.user.first_name
+				, last_name: req.user.last_name
+				, gender: req.user.gender
+				, name: req.user.name
 				, permissions: req.user.permissions
 			}
 		}
