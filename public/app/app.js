@@ -8,6 +8,23 @@ angular
 		  'ngRoute'
 		, 'ngTouch'
 		, 'ui.router'
+		, 'facebook'
+	])
+	.config([
+		'FacebookProvider',
+		function(FacebookProvider) {
+			var myAppId = '385531211607503';
+
+			// You can set appId with setApp method
+			// FacebookProvider.setAppId('myAppId');
+
+			/**
+			* After setting appId you need to initialize the module.
+			* You can pass the appId on the init method as a shortcut too.
+			*/
+			FacebookProvider.init(myAppId);
+
+		}	
 	])
 	.run(function($rootScope) {
 		$rootScope.currentUser = window.currentUser;
