@@ -1,10 +1,10 @@
 CREATE TABLE users
 (
-  fb_user_id serial,
+  fb_user_id integer,
   email text,
   first_name character varying(70),
-  gender character varying(6),
   last_name character varying(70),
+  gender character varying(6),
   CONSTRAINT "User_pkey" PRIMARY KEY (fb_user_id)
 )
 WITH (
@@ -16,12 +16,12 @@ ALTER TABLE users
 CREATE TYPE contest_type AS ENUM ('elo', 'star');
 CREATE TABLE contest
 (
+  contest_id serial,
   type contest_type,
   title character varying(100),
   description character varying(250),
   end_date timestamp with time zone,
   start_date timestamp with time zone,
-  contest_id serial,
   user_id integer,
   c_avatar character varying(40),
   CONSTRAINT contest_pkey PRIMARY KEY (contest_id),
@@ -49,11 +49,12 @@ ALTER TABLE permission
 
 CREATE TABLE entry
 (
-  contest_id integer,
   entry_id serial,
+  contest_id integer,
   user_id integer,
   image_details character varying(40) NOT NULL,
   text_details character varying(250),
+  created_ts timestamp with time zone,
   CONSTRAINT entry_pkey PRIMARY KEY (entry_id),
   CONSTRAINT entry_contest_id_fkey FOREIGN KEY (contest_id)
       REFERENCES contest (contest_id) MATCH SIMPLE
@@ -88,10 +89,10 @@ ALTER TABLE permission_link
 
 CREATE TABLE star_rating
 (
+  rating_id serial,
   entry_id integer NOT NULL,
   user_id integer,
   star_rating smallint,
-  rating_id serial,
   created_ts timestamp with time zone,
   CONSTRAINT rating_pkey PRIMARY KEY (rating_id),
   CONSTRAINT rating_entry_id_fkey FOREIGN KEY (entry_id)

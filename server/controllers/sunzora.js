@@ -239,9 +239,34 @@ exports.getContestById  = function(req, res, next) {
 
 
 /**
-	Goal: Gets a user's entries to a particular contest and current average scores for those entries
-	Parameters: req.param('uid'), req.param('cid')
-	Returns: entries = 
+API:
+getEntriesAndScoresByUserIdAndContestId
+Description:
+API designed to return all entries and current scores based on User ID and Contest ID
+
+Goal:
+Gets a user's entries to a particular contest and current average scores for those entries
+Pre-Conditions:
+None
+Active Disqualification:
+None
+
+Data Needed:
+Two request parameters:
+uid - User ID
+cid - Contest ID
+Failed End Condition:
+API returns “success” JSON object with value “false”
+Success End Condition:
+API returns “success” JSON object with value “true”
+
+Key Data Returned:
+Returns an “entries” JSON object with following data elements:
+content - var char
+score - decimal (10,2)
+
+Example:
+entries = 
 	[
 		{
 			content: "This is the first entry",
@@ -252,10 +277,16 @@ exports.getContestById  = function(req, res, next) {
 			score: 6.34
 		},
 	]
-	Notes:
-	- gets entries of the user for a particular contest, along with averaged scores
-	- Grab text details for contest and user
-		SELECT entry.text_details, AVG(rating.selected_rating) FROM public.rating, public.entry WHERE rating.entry_id = entry.entry_id AND entry.user_id = uid AND entry.contest_id = cid GROUP BY entry.text_details;
+Data to be used:
+Will be used to provide a user with a list of all entries submitted by the user and their current averaged rating within the contest they are viewing
+
+Mapping Document:
+Request elements
+req.param(‘uid’) = entry.user_id
+req.param(‘cid’) = entry.contest_id
+Response elements
+entries.content = entry.text_details
+entries.score = AVG(rating.selected_rating)
 */
 exports.getEntriesAndScoresByUserIdAndContestId = function(req, res, next) {
 	var uid = req.param("uid");
