@@ -25,7 +25,7 @@ angular
 				.error(function(err, user) {
 					deferred.resolve(err);
 				});
-			return deferred.promise;		
+			return deferred.promise;
 		}
 
 		SunzoraFactory.logout = function() {

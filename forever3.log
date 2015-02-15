@@ -479,3 +479,33 @@ getting all active contests
 undefined
 getting all active contests
 undefined
+getting all active contests
+getting all active contests
+getting all completed contests
+getting all completed contests
+undefined
+getting all active contests
+getting all active contests
+getting all active contests
+getting all active contests
+getting all active contests
+getting all completed contests
+undefined
+getting all active contests
+getting all active contests
+getting all completed contests
+SELECT contest_id AS id, title AS title, description AS description, end_date AS deadline FROM public.contest WHERE contest.contest_id = 4;
+getting all active contests
+getting all completed contests
+getting all completed contests
+getting all active contests
+getting all active contests
+getting all active contests
+getting all active contests
+getting all active contests
+undefined
+getting all active contests
+getting all active contests
+getting all completed contests
+undefined
+getting all completed contests

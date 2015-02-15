@@ -41,78 +41,84 @@ angular
 	  
 		var userIsConnected = false;
 			  
-			Facebook.getLoginStatus(function(response) {
+		Facebook.getLoginStatus(function(response) {
+			if (response.status == 'connected') {
+				userIsConnected = true;
+			}
+		});
+			  
+	    /**
+		 * Login
+		 */
+		$scope.loginFunc = function() {
+			Facebook.login(function(response) {
 				if (response.status == 'connected') {
-					userIsConnected = true;
+					$scope.logged = true;
+					Facebook.api('/me', function(response) {
+					/**
+					 * Using $scope.$apply since this happens outside angular framework.
+					 */
+						$scope.$apply(function() {
+							$scope.user = response;
+							$rootScope.currentUser = {
+								//id: 1234,
+								fbid: response.id,
+								email: response.email,
+								first_name: response.first_name,
+								last_name: response.last_name,
+								gender: response.gender,
+								name: response.name,
+								//permissions: ['submit_entry']
+							}; 
+							SunzoraFactory.login($rootScope.currentUser)
+								.then(function(data) {
+									//this is awaiting replacement
+									var permissions = ['submit_entry'];
+									$rootScope.currentUser.permissions = permissions;
+									$state.go('contests.list');
+								})
+						});  
+					});
 				}
 			});
-			  
-		  /**
-			* Login
-			*/
-			$scope.loginFunc = function() {
-				Facebook.login(function(response) {
-					if (response.status == 'connected') {
-						$scope.logged = true;
-						Facebook.api('/me', function(response) {
-						/**
-						 * Using $scope.$apply since this happens outside angular framework.
-						 */
-							$scope.$apply(function() {
-								$scope.user = response;
-								console.log("the response is:");
-								console.log(response);
-								$rootScope.currentUser = {
-									id: 1234,
-									fbid: response.id,
-									email: response.email,
-									first_name: response.first_name,
-									last_name: response.last_name,
-									gender: response.gender,
-									name: response.name,
-									permissions: ['submit_entry']
-								}; 
-								$state.go('contests.list');
-							});  
-						});
-					}
+		};
+
+	  	/**
+		 * IntentLogin
+		 */
+		$scope.IntentLogin = function() {
+			$scope.loginFunc();
+		};
+		  
+       
+	    /**
+		 * Logout
+		 */
+		 /*
+		$scope.logout = function() {
+			console.log("logout");
+			Facebook.logout(function() {
+				$scope.$apply(function() {
+					$scope.user   = {};
+					$scope.logged = false;  
 				});
-			};
-	
-		  /**
-			* IntentLogin
-			*/
-			$scope.IntentLogin = function() {
-				$scope.loginFunc();
-			};
-			  
-	       
-		  /**
-			* Logout
-			*/
-			$scope.logout = function() {
-				console.log("logout");
-				Facebook.logout(function() {
-					$scope.$apply(function() {
-						$scope.user   = {};
-						$scope.logged = false;  
-					});
-				});
-			}
+			});
+		}
+		*/
 	      
-  	      /**
-	        * Taking approach of Events :D
-	        */
-			$scope.$on('Facebook:statusChange', function(ev, data) {
-				console.log('Status: ', data);
-				if (data.status == 'connected') {
-					$scope.$apply(function() {
-						$scope.salutation = true;
-						$scope.byebye     = false;    
-					//	$state.go('contests.list');
-					});
-				} else {
-					$scope.$apply(function() {
+	    /**
+         * Taking approach of Events :D
+         */
+		$scope.$on('Facebook:statusChange', function(ev, data) {
+			console.log('Status: ', data);
+			if (data.status == 'connected') {
+				$scope.$apply(function() {
+					$scope.salutation = true;
+					$scope.byebye     = false;    
+				//	$state.go('contests.list');
+				});
+			} else {
+				$scope.$apply(function() {
 					$scope.salutation = false;
 					$scope.byebye     = true;
 				
@@ -124,7 +130,7 @@ angular
 			}
 		});
 
-
+		/*
 		$scope.submit = function() {
 			var postData = {};
 			postData.email = $scope.email;
@@ -141,6 +147,7 @@ angular
 					}
 				})
 		};
+		*/
 		//$scope.submit();
 	}])
 
