@@ -49,10 +49,21 @@ div.loginPage {
 				height: 1.5em;
 				margin: 1em 0em;
 			}
+		/*
 			button {
 				width: 10em;
 				height: 3em;
 				margin: 1em 0em;
+			}
+		*/
+			button.fblogin {
+				padding: 1em;
+				margin-top: 2em;
+				height: 3.5em;
+				font-size: 1em;
+				color: #FFF;
+				background-color: #3b5998;
+				border: none;
 			}
 		}
 	}

@@ -83,11 +83,7 @@ angular
 			* IntentLogin
 			*/
 			$scope.IntentLogin = function() {
-				console.log("intentLogin");
-				if(!userIsConnected) {
-					console.log("not connected");
-					$scope.loginFunc();
-				}
+				$scope.loginFunc();
 			};
 			  
 	       

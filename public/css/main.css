@@ -28,17 +28,28 @@ div.loginPage section.body {
     width: 20em;
     display: block;
     text-align: center;
-    margin: 0 auto; }
+    margin: 0 auto;
+    /*
+    	button {
+    		width: 10em;
+    		height: 3em;
+    		margin: 1em 0em;
+    	}
+    */ }
     div.loginPage section.body div.loginForm label {
       font-size: 1.6em; }
     div.loginPage section.body div.loginForm input {
       width: 15em;
       height: 1.5em;
       margin: 1em 0em; }
-    div.loginPage section.body div.loginForm button {
-      width: 10em;
-      height: 3em;
-      margin: 1em 0em; }
+    div.loginPage section.body div.loginForm button.fblogin {
+      padding: 1em;
+      margin-top: 2em;
+      height: 3.5em;
+      font-size: 1em;
+      color: #FFF;
+      background-color: #3b5998;
+      border: none; }
 
 header.main {
   position: fixed;
