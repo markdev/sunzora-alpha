@@ -3,6 +3,8 @@ div(class="loginPage")
 		h2 Log in to
 		img(src="/img/icons/sunzorawhite.png")
 	section(class="body")
+		button(type="button" class="btn btn-primary btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" data-ng-click="IntentLogin()") Login with Facebook
+		button(type="button" class="btn btn-danger btn-large" data-ng-show="!logged" data-ng-disabled="!facebookReady" data-ng-click="logout()") Logout
 		div(class="loginForm")
 			form(name="login" ng-submit="loginUser")
 				table
