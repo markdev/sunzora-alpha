@@ -24,6 +24,8 @@ module.exports = function(app) {
 	//render layout
 	app.get('*', function(req, res) {
 		var currentUser = {};
+		console.log("req.user=");
+		console.log(req.user);
 		if(req.user) {
 			currentUser = {
 				  id: req.user.id
