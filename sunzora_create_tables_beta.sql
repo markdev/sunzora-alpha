@@ -20,8 +20,8 @@ CREATE TABLE contest
   type contest_type,
   title character varying(100),
   description character varying(250),
+  start_date timestamp with time zone, 
   end_date timestamp with time zone,
-  start_date timestamp with time zone,
   user_id integer,
   c_avatar character varying(40),
   CONSTRAINT contest_pkey PRIMARY KEY (contest_id),
@@ -150,36 +150,47 @@ END;
 $$
 LANGUAGE plpgsql;
 
-INSERT INTO users (email, password)
-VALUES ('tlebeda@gmail.com', 'pass1234'),
-('mark.karavan@gmail.com', 'pass4321');
+INSERT INTO users (fb_user_id, email, first_name, last_name, gender)
+VALUES ('10152564612991689', '', '', '', ''),
+('310666765798989', '', '', '', '');
 
-INSERT INTO contest (title, description, end_date, start_date, user_id)
-VALUES ('best 3 word entries', 'Submit entries of 3 words and vote on best one','2015-12-31 11:46:13-05','now()', '1'),
-('best 5 word entries', 'Submit entries of 5 words and vote on best one', '2014-12-30 11:47:13-05', '2014-12-29 11:47:13-05', '2');
+INSERT INTO contest (type, title, description, start_date, end_date, user_id, c_avatar)
+VALUES ('elo', 'elo_con', 'This is an example elo contest', '12/29/2014 11:46:13', '', '1', '?'),
+('star', 'star_con', 'This is an example star contest', '12/29/2014 11:46:13', '12/30/2014 11:47:13', '2', '?');
 
 INSERT INTO permission (name)
 VALUES ('submit_entry'),
 ('create_contest');
 
-INSERT INTO entry (contest_id, user_id, text_details)
-VALUES ('1','1', 'Blue Man Dude'),
-('1', '2', 'Three Random Words'),
-('2', '1', 'Now I need five words'),
-('2', '1', 'I have submitted two entries'),
-('2', '2', 'Mark has one submission here');
+INSERT INTO entry (contest_id, user_id, image_details, text_details, created_ts)
+VALUES ('1', '1', '?', 'first', '12/29/2014 11:47:13'),
+('1', '2', '?', 'second', '12/29/2014 11:47:13'),
+('1', '2', '?', 'third', '12/29/2014 11:47:13'),
+('2', '1', '?', 'First', '12/29/2014 11:47:13'),
+('2', '1', '?', 'Second', '12/29/2014 11:47:13'),
+('2', '1', '?', 'Third', '12/29/2014 11:47:13'),
+('2', '2', '?', 'Fourth', '12/29/2014 11:47:13'),
+('2', '2', '?', 'Fifth', '12/29/2014 11:47:13'),
+('2', '2', '?', 'Sixth', '12/29/2014 11:47:13');
 
 INSERT INTO permission_link
 VALUES ('1', '1'),
 ('2', '1'),
 ('2', '2');
 
-INSERT INTO rating (entry_id, user_id, selected_rating)
-VALUES ('1', '1', '4'),
-('2', '1', '5'),
-('3', '1', '6'),
-('4', '1', '7'),
-('5', '1', '5'),
-('3', '2', '5'),
-('4', '2', '5'),
-('5', '2', '8');
+INSERT INTO star_rating (entry_id, user_id, star_rating, created_ts)
+VALUES ('1', '1', '4', '12/29/2014 11:47:13'),
+('2', '1', '5', '12/29/2014 11:47:13'),
+('1', '2', '6', '12/29/2014 11:47:13');
+
+INSERT INTO elo_rating (entry_id, user_id, elo_rating, competitor_id, outcome, created_ts)
+VALUES ('4', '11', '110', '5', 'w', '12/29/2014 11:47:13'),
+('5', '11', '90', '4', 'l', '12/29/2014 11:47:13'),
+('4', '22', '120', '6', 'w', '12/29/2014 11:47:13'),
+('6', '22', '90', '4', 'l', '12/29/2014 11:47:13'),
+('4', '33', '110', '7', 'l', '12/29/2014 11:47:13'),
+('7', '33', '110', '4', 'w', '12/29/2014 11:47:13'),
+('4', '44', '120', '8', 'w', '12/29/2014 11:47:13'),
+('8', '44', '90', '4', 'l', '12/29/2014 11:47:13'),
+('5', '55', '100', '6', 'w', '12/29/2014 11:47:13'),
+('6', '55', '80', '5', 'l', '12/29/2014 11:47:13');
