@@ -151,27 +151,27 @@ $$
 LANGUAGE plpgsql;
 
 INSERT INTO users (fb_user_id, email, first_name, last_name, gender)
-VALUES ('10152564612991689', '', '', '', ''),
-('310666765798989', '', '', '', '');
+VALUES ('10152564612991689', 'tlebeda@gmail.com', 'Tom', 'Lebeda', 'male'),
+('310666765798989', 'mark.karavan@gmail.com', 'Mark', 'Karavan', 'male');
 
-INSERT INTO contest (type, title, description, start_date, end_date, user_id, c_avatar)
-VALUES ('elo', 'elo_con', 'This is an example elo contest', '12/29/2014 11:46:13', '', '1', '?'),
-('star', 'star_con', 'This is an example star contest', '12/29/2014 11:46:13', '12/30/2014 11:47:13', '2', '?');
+INSERT INTO contest (type, title, description, start_date, end_date, user_id)
+VALUES ('elo', 'elo_con', 'This is an example elo contest', '12/29/2014 11:46:13', '', '1'),
+('star', 'star_con', 'This is an example star contest', '12/29/2014 11:46:13', '12/30/2014 11:47:13', '2');
 
 INSERT INTO permission (name)
 VALUES ('submit_entry'),
 ('create_contest');
 
-INSERT INTO entry (contest_id, user_id, image_details, text_details, created_ts)
-VALUES ('1', '1', '?', 'first', '12/29/2014 11:47:13'),
-('1', '2', '?', 'second', '12/29/2014 11:47:13'),
-('1', '2', '?', 'third', '12/29/2014 11:47:13'),
-('2', '1', '?', 'First', '12/29/2014 11:47:13'),
-('2', '1', '?', 'Second', '12/29/2014 11:47:13'),
-('2', '1', '?', 'Third', '12/29/2014 11:47:13'),
-('2', '2', '?', 'Fourth', '12/29/2014 11:47:13'),
-('2', '2', '?', 'Fifth', '12/29/2014 11:47:13'),
-('2', '2', '?', 'Sixth', '12/29/2014 11:47:13');
+INSERT INTO entry (contest_id, user_id, text_details, created_ts)
+VALUES ('1', '1', 'first', '12/29/2014 11:47:13'),
+('1', '2', 'second', '12/29/2014 11:47:13'),
+('1', '2', 'third', '12/29/2014 11:47:13'),
+('2', '1', 'First', '12/29/2014 11:47:13'),
+('2', '1', 'Second', '12/29/2014 11:47:13'),
+('2', '1', 'Third', '12/29/2014 11:47:13'),
+('2', '2', 'Fourth', '12/29/2014 11:47:13'),
+('2', '2', 'Fifth', '12/29/2014 11:47:13'),
+('2', '2', 'Sixth', '12/29/2014 11:47:13');
 
 INSERT INTO permission_link
 VALUES ('1', '1'),
